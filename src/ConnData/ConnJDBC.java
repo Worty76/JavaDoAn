@@ -30,6 +30,9 @@ public class ConnJDBC {
 		return connection;
 	
 }
+	
+	
+	
 	 public static List<HR> findAll(){
 		 List<HR> studentList = new ArrayList<>();
 		 String query = "SELECT * FROM humanresource";
@@ -54,29 +57,6 @@ public class ConnJDBC {
 		 }
 		 return studentList;
 	 }
-	 
-//	 public static List<HR> findAll2(){
-//		 List<HR> studentList2 = new ArrayList<>();
-//		 String query = "SELECT * FROM humanresource, student";
-//		 try {
-//			 Connection connection = getConnection();
-//			 Statement stmt = connection.createStatement();
-//			 ResultSet rs=stmt.executeQuery(query);
-//			 while(rs.next()) {
-//				 HR st = new HR(
-//						 rs.getString("idHumanResource"),
-//						 rs.getString("name"),
-//						 rs.getString("part"),
-//						 rs.getInt("workDay"),
-//						 rs.getString("experience"));
-//				 studentList2.add(st);
-//			 }
-//		 } catch(Exception e){
-//			 
-//		 }
-//		 return studentList2;
-//	 }
-	 
 	 
 	 public static void insert(HR st) {
 		 String query="insert into humanresource(idHumanResource,name,age,gender,address,position,part,workDay,experience) values(?,?,?,?,?,?,?,?,?);";
@@ -110,6 +90,7 @@ public class ConnJDBC {
 			// TODO: handle exception
 		} 
 	 }
+	
 	 public static void Update(HR st) {
 		String query = "Update humanresource set idHumanResource=?,name=?,age=?,gender=?,address=?,position=?,part=?,workDay=?,experience=? where id='"+st.getIdHumanResource()+"'";
 		
@@ -128,28 +109,10 @@ public class ConnJDBC {
 			pstmt.executeUpdate();
 		} catch (Exception e) {
 			// TODO: handle exception
+			JOptionPane.showMessageDialog(null, "Not Found! ");
 		}
 	 }	
-	 public static void Update222(HR st) {
-			String query = "Update humanresource set idHumanResource=?,name=?,age=?,gender=?,address=?,position=?,part=?,workDay=?,experience=? where name='"+st.getName()+"'";
-			
-			 try {
-				Connection connection = getConnection();
-				PreparedStatement pstmt= connection.prepareStatement(query);
-				pstmt.setString(1, st.getIdHumanResource());
-				 pstmt.setString(2, st.getName());
-				 pstmt.setInt(3, st.getAge());
-				 pstmt.setInt(4, st.getGender());	
-				 pstmt.setString(5, st.getAddress());
-				 pstmt.setString(6, st.getPosition());
-				 pstmt.setString(7, st.getPart());
-				 pstmt.setInt(8, st.getWorkDay());
-				 pstmt.setString(9, st.getExperience());
-				pstmt.executeUpdate();
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-		 }	
+
 	 public static List<HR> findByName(HR s) {
 		 List<HR> studentl = new ArrayList<>();
 		 String query = "SELECT * FROM humanresource, where name='"+ s.getName() +"'";
@@ -170,22 +133,42 @@ public class ConnJDBC {
 
 //-------------------------------------------------------------------crud 2--------------------------------------------------------------
 	 
-//	 public static void insert2(HR st) {
-//		 String query="insert into humanresource(idHumanResource,part,workDay,experience) values(?,?,?,?)";
-//		 
-//		 try {
-//			 Connection connection = getConnection();
-//			 PreparedStatement pstmt = connection.prepareStatement(query);
-//			 pstmt.setString(1, st.getIdHumanResource());
-//			 pstmt.setString(2, st.getPart());
-//			 pstmt.setInt(3, st.getWorkDay());
-//			 pstmt.setString(4, st.getExperience());
-//			 pstmt.execute();
-//		 } catch (Exception e ) {
-//			 System.out.println("rr here");
-//		 }
-//	 } 
-//	 
+	 public static void insertPR(Project st) {
+		 String query="insert into projects(idProject,nameProject,numberOfEmployees) values(?,?,?);";
+		 
+		 try {
+			 Connection connection = getConnection();
+			 PreparedStatement pstmt = connection.prepareStatement(query);
+			 pstmt.setString(1, st.getIdProject());
+			 pstmt.setString(2, st.getNameProject());
+			 pstmt.setInt(3, st.getNOE());
+			 pstmt.execute();
+		 } catch (Exception e ) {	
+			 
+			 System.out.println("rr here");
+		 }
+	 } 
+	 public static List<Project> findAllPR(){
+		 List<Project> projectList = new ArrayList<>();
+		 String query = "SELECT * FROM projects";
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 Project st = new Project(
+						 rs.getString("idProject"),
+						 rs.getString("nameProject"),
+						 rs.getInt("numberOfEmployees")
+						 );
+				 projectList.add(st);
+			 }
+		 } catch(Exception e){
+			 
+		 }
+		 return projectList;
+	 }
+
 	 
 	 
 }

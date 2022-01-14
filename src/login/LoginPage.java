@@ -39,8 +39,10 @@ public class LoginPage implements ActionListener{
 		
 		messageLabel.setBounds(444,205,164,35);
 		messageLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		userIDField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		
 		userIDField.setBounds(456,100,200,25);
+		userPasswordField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		userPasswordField.setBounds(456,150,200,25);
 		loginButton.setForeground(new Color(255, 255, 255));
 		loginButton.setFont(new Font("Century Gothic", Font.PLAIN, 16));

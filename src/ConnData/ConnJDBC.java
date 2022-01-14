@@ -115,7 +115,7 @@ public class ConnJDBC {
 
 	 public static List<HR> findByName(HR s) {
 		 List<HR> studentl = new ArrayList<>();
-		 String query = "SELECT * FROM humanresource, where name='"+ s.getName() +"'";
+		 String query = "SELECT * FROM humanresource where name='"+ s.getName() +"'";
 		 try {
 			 Connection connection = getConnection();
 			 Statement stmt = connection.createStatement();

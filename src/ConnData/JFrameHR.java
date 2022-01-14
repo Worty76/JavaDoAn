@@ -119,7 +119,7 @@ public class JFrameHR extends JFrame {
 		JLabel lblNewLabel = new JLabel("human resource management");
 		lblNewLabel.setBackground(Color.WHITE);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		lblNewLabel.setBounds(515, 11, 342, 51);
 		contentPane.add(lblNewLabel);
 		JLabel lblNewLabel_3 = new JLabel("Welcome back ");
@@ -199,34 +199,34 @@ public class JFrameHR extends JFrame {
 		ProjectContainer.setBackground(myWhite);
 			
 			JLabel lblNewLabel_1_5_1 = new JLabel("IDProject:");
-			lblNewLabel_1_5_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lblNewLabel_1_5_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			lblNewLabel_1_5_1.setBounds(1021, 15, 93, 36);
 			ProjectContainer.add(lblNewLabel_1_5_1);
 			
 			JLabel lblNewLabel_1_5_1_1 = new JLabel("Name Project:");
-			lblNewLabel_1_5_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lblNewLabel_1_5_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			lblNewLabel_1_5_1_1.setBounds(1002, 65, 112, 36);
 			ProjectContainer.add(lblNewLabel_1_5_1_1);
 			
 			JLabel lblNewLabel_1_5_1_1_1 = new JLabel("Number Of Employees:");
-			lblNewLabel_1_5_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lblNewLabel_1_5_1_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			lblNewLabel_1_5_1_1_1.setBounds(948, 112, 159, 36);
 			ProjectContainer.add(lblNewLabel_1_5_1_1_1);
 			
 			txtIdProject = new JTextField();
-			txtIdProject.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			txtIdProject.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 			txtIdProject.setColumns(10);
 			txtIdProject.setBounds(1113, 16, 93, 36);
 			ProjectContainer.add(txtIdProject);
 			
 			txtNameProject = new JTextField();
-			txtNameProject.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			txtNameProject.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 			txtNameProject.setColumns(10);
 			txtNameProject.setBounds(1112, 66, 136, 36);
 			ProjectContainer.add(txtNameProject);
 			
 			txtNOE = new JTextField();
-			txtNOE.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			txtNOE.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 			txtNOE.setColumns(10);
 			txtNOE.setBounds(1113, 112, 93, 36);
 			ProjectContainer.add(txtNOE);
@@ -236,57 +236,57 @@ public class JFrameHR extends JFrame {
 			
 			JLabel lblNewLabel_1 = new JLabel("Name:");
 			lblNewLabel_1.setBounds(1025, 68, 93, 36);
-			lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lblNewLabel_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			HRcontainer.add(lblNewLabel_1);
 			
 			
 			JLabel lblNewLabel_1_1 = new JLabel("Age:");
 			lblNewLabel_1_1.setBounds(1025, 115, 93, 36);
-			lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lblNewLabel_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			HRcontainer.add(lblNewLabel_1_1);
 			
 			JLabel lblNewLabel_1_2 = new JLabel("Gender:");
 			lblNewLabel_1_2.setBounds(1025, 162, 93, 36);
-			lblNewLabel_1_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lblNewLabel_1_2.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			HRcontainer.add(lblNewLabel_1_2);
 			
 			JLabel lblNewLabel_1_3 = new JLabel("Address:");
 			lblNewLabel_1_3.setBounds(1025, 209, 93, 36);
-			lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lblNewLabel_1_3.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			HRcontainer.add(lblNewLabel_1_3);
 			
 			JLabel lblNewLabel_1_4 = new JLabel("Position:");
 			lblNewLabel_1_4.setBounds(1025, 256, 93, 36);
-			lblNewLabel_1_4.setFont(new Font("Tahoma", Font.BOLD, 14));
+			lblNewLabel_1_4.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			HRcontainer.add(lblNewLabel_1_4);
 			
 			txtName = new JTextField();
 			txtName.setBounds(1113, 69, 200, 36);
-			txtName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			txtName.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 			HRcontainer.add(txtName);
 			txtName.setColumns(10);
 			
 			txtAge = new JTextField();
 			txtAge.setBounds(1113, 115, 200, 36);
-			txtAge.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			txtAge.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 			txtAge.setColumns(10);
 			HRcontainer.add(txtAge);
 			
 			txtPosition = new JTextField();
 			txtPosition.setBounds(1113, 256, 200, 36);
-			txtPosition.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			txtPosition.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 			txtPosition.setColumns(10);
 			HRcontainer.add(txtPosition);
 			
 			txtAddress = new JTextField();
 			txtAddress.setBounds(1113, 209, 200, 36);
-			txtAddress.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			txtAddress.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 			txtAddress.setColumns(10);
 			HRcontainer.add(txtAddress);
 			
 			JComboBox cbGender = new JComboBox();
 			cbGender.setBounds(1113, 162, 109, 36);
-			cbGender.setFont(new Font("Tahoma", Font.BOLD, 14));
+			cbGender.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 			cbGender.setModel(new DefaultComboBoxModel(new String[] {"Male", "Female"}));
 			HRcontainer.add(cbGender);
 			
@@ -324,7 +324,7 @@ public class JFrameHR extends JFrame {
 				}
 			});
 			btnNewButton.setBackground(ADD);
-			btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 14));
+			btnNewButton.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			contentPane.add(btnNewButton);
 			
 			
@@ -353,7 +353,7 @@ public class JFrameHR extends JFrame {
 			});
 			
 			btnDelete.setBackground(EXIT);
-			btnDelete.setFont(new Font("Tahoma", Font.BOLD, 14));
+			btnDelete.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			contentPane.add(btnDelete);
 			
 			JButton btnFind = new JButton("Find");
@@ -374,11 +374,12 @@ public class JFrameHR extends JFrame {
 			
 			});
 			
-			btnFind.setFont(new Font("Tahoma", Font.BOLD, 14));
+			btnFind.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			contentPane.add(btnFind);
 			
 				
 				JButton btnRefresh = new JButton("Refresh");
+				btnRefresh.setForeground(Color.WHITE);
 				btnRefresh.setBounds(1025, 569, 93, 36);
 				btnRefresh.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -393,7 +394,7 @@ public class JFrameHR extends JFrame {
 					}
 				});
 				btnRefresh.setBackground(REFRESH);
-				btnRefresh.setFont(new Font("Tahoma", Font.BOLD, 14));
+				btnRefresh.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				contentPane.add(btnRefresh);
 				
 				JButton btnUpdate = new JButton("Update");
@@ -418,7 +419,7 @@ public class JFrameHR extends JFrame {
 						showData(ConnJDBC.findAll());
 					}
 				});
-				btnUpdate.setFont(new Font("Tahoma", Font.BOLD, 14));
+				btnUpdate.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				contentPane.add(btnUpdate);
 				
 				JScrollPane scrollPane = new JScrollPane();
@@ -475,7 +476,7 @@ public class JFrameHR extends JFrame {
 				table.getColumnModel().getColumn(6).setMinWidth(100);
 				table.getColumnModel().getColumn(8).setPreferredWidth(92);
 				table.getColumnModel().getColumn(8).setMinWidth(92);
-				table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				table.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				
 				JButton btnExit = new JButton("Exit");
 				btnExit.setBounds(1229, 616, 96, 36);
@@ -485,64 +486,64 @@ public class JFrameHR extends JFrame {
 						  System.exit(0); 
 					}
 				});
-				btnExit.setFont(new Font("Tahoma", Font.BOLD, 14));
+				btnExit.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				contentPane.add(btnExit);
 				
 				txtID = new JTextField();
 				txtID.setBounds(1229, 535, 96, 23);
 				txtID.setHorizontalAlignment(SwingConstants.CENTER);
-				txtID.setFont(new Font("Tahoma", Font.PLAIN, 16));
+				txtID.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 				contentPane.add(txtID);
 				txtID.setColumns(10);
 				
 				JLabel lblNewLabel_2 = new JLabel("ID to delete");
 				lblNewLabel_2.setBounds(1239, 519, 75, 14);
-				lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+				lblNewLabel_2.setFont(new Font("Century Gothic", Font.BOLD, 11));
 				lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(lblNewLabel_2);
 				
 				JLabel lblNewLabel_1_5 = new JLabel("IDHM:");
 				lblNewLabel_1_5.setBounds(1025, 21, 93, 36);
-				lblNewLabel_1_5.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblNewLabel_1_5.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				HRcontainer.add(lblNewLabel_1_5);
 				
 				txtIDHM = new JTextField();
 				txtIDHM.setBounds(1113, 21, 77, 36);
-				txtIDHM.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				txtIDHM.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtIDHM.setColumns(10);
 				HRcontainer.add(txtIDHM);
 				
 				JLabel lblNewLabel_1_4_2 = new JLabel("Part:");
 				lblNewLabel_1_4_2.setBounds(1025, 303, 93, 36);
-				lblNewLabel_1_4_2.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblNewLabel_1_4_2.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				HRcontainer.add(lblNewLabel_1_4_2);
 				
 				JLabel lblNewLabel_1_4_3 = new JLabel("WorkDay:");
 				lblNewLabel_1_4_3.setBounds(1025, 350, 93, 36);
-				lblNewLabel_1_4_3.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblNewLabel_1_4_3.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				HRcontainer.add(lblNewLabel_1_4_3);
 				
 				txtPart = new JTextField();
 				txtPart.setBounds(1113, 303, 200, 36);
-				txtPart.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				txtPart.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtPart.setColumns(10);
 				HRcontainer.add(txtPart);
 				
 				txtWorkDay = new JTextField();
 				txtWorkDay.setBounds(1113, 350, 200, 36);
-				txtWorkDay.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				txtWorkDay.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtWorkDay.setColumns(10);
 				HRcontainer.add(txtWorkDay);
 				
 				txtExperience = new JTextField();
 				txtExperience.setBounds(1113, 397, 200, 36);
-				txtExperience.setFont(new Font("Tahoma", Font.PLAIN, 14));
+				txtExperience.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtExperience.setColumns(10);
 				HRcontainer.add(txtExperience);
 				
 				JLabel lblNewLabel_1_4_3_1 = new JLabel("Experience:");
 				lblNewLabel_1_4_3_1.setBounds(1025, 397, 93, 36);
-				lblNewLabel_1_4_3_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+				lblNewLabel_1_4_3_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				HRcontainer.add(lblNewLabel_1_4_3_1);
 			HRcontainer.setVisible(true);
 			ProjectContainer.setVisible(false);

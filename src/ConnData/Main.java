@@ -65,10 +65,11 @@ public class Main extends JFrame {
 	private static boolean check = false;
 	private JTextField txtPart;
 	private JTextField txtWorkDay;
-	private Color myWhite = new Color(208, 225, 199);
-	private Color ADD = new Color(30, 41, 92);
+	private Color myWhite = new Color(230, 232, 210);
+	private Color ADD = new Color(35, 78, 112);
 	private Color EXIT = new Color(200, 52, 2);
 	private Color REFRESH = new Color(138, 187, 17);
+	private Color redirect = new Color(167, 190, 174);
 	private JTextField txtEmail;
 	Panel HRcontainer = new Panel();
 	private static JTable table_1;
@@ -95,14 +96,11 @@ public class Main extends JFrame {
 			public void run() {
 				try {
 				
-//					IDandPasswords idandPasswords = new IDandPasswords();
-//					
-//					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
+					IDandPasswords idandPasswords = new IDandPasswords();
+					
+					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
 					
 					
-					Main frame = new Main();
-					frame.setVisible(true);
-					frame.setTitle("Human Resource Management");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -115,7 +113,7 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 //String userID
-	public Main() {
+	public Main(String userID) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/ConnData/606587.png"))); 
 	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -132,12 +130,17 @@ public class Main extends JFrame {
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		lblNewLabel.setBounds(515, 11, 342, 51);
 		contentPane.add(lblNewLabel);
-		JLabel lblNewLabel_3 = new JLabel("Welcome back ");
+		JLabel lblNewLabel_3 = new JLabel("Hello!");
+		lblNewLabel_3.setText("Hello " + userID);
 		lblNewLabel_3.setFont(new Font("Century Gothic", Font.PLAIN, 19));
-		lblNewLabel_3.setBounds(10, 18, 163, 36);
+		lblNewLabel_3.setBounds(32, 18, 163, 36);
+	
 		contentPane.add(lblNewLabel_3);
 		
+		
 		JButton btnProject = new JButton("Projects");
+		btnProject.setForeground(Color.WHITE);
+		btnProject.setBackground(redirect);
 		btnProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HRcontainer.setVisible(false);
@@ -147,10 +150,12 @@ public class Main extends JFrame {
 			}
 		});
 		btnProject.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		btnProject.setBounds(987, 19, 111, 36);
+		btnProject.setBounds(960, 19, 111, 36);
 		contentPane.add(btnProject);
 		
 		JButton btnProject_1 = new JButton("Department");
+		btnProject_1.setForeground(Color.WHITE);
+		btnProject_1.setBackground(redirect);
 		btnProject_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DepartmentContainer.setVisible(true);
@@ -159,11 +164,13 @@ public class Main extends JFrame {
 				
 			}
 		});
-		btnProject_1.setFont(new Font("Century Gothic", Font.PLAIN, 13));
-		btnProject_1.setBounds(1229, 19, 111, 36);
+		btnProject_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		btnProject_1.setBounds(1202, 19, 138, 36);
 		contentPane.add(btnProject_1);
-		
+	
 		JButton btnHumanResource = new JButton("HR");
+		btnHumanResource.setForeground(Color.WHITE);
+		btnHumanResource.setBackground(redirect);
 		btnHumanResource.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				HRcontainer.setVisible(true);
@@ -172,7 +179,7 @@ public class Main extends JFrame {
 			}
 		});
 		btnHumanResource.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		btnHumanResource.setBounds(1108, 19, 111, 36);
+		btnHumanResource.setBounds(1081, 19, 111, 36);
 		contentPane.add(btnHumanResource);
 			HRcontainer.setBounds(10, 68, 1350, 470);
 			contentPane.add(HRcontainer);
@@ -235,7 +242,7 @@ public class Main extends JFrame {
 			HRcontainer.add(cbGender);
 			
 			JButton btnNewButton = new JButton("Add");
-			btnNewButton.setBounds(1126, 585, 93, 36);
+			btnNewButton.setBounds(1025, 585, 93, 36);
 			btnNewButton.setForeground(Color.WHITE);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -322,7 +329,7 @@ public class Main extends JFrame {
 				}
 			});
 			
-			btnDelete.setBackground(EXIT);
+			btnDelete.setBackground(new Color(184, 80, 67));
 			btnDelete.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			contentPane.add(btnDelete);
 			
@@ -338,19 +345,18 @@ public class Main extends JFrame {
 						st.setName(txtName.getText());
 						showData(ConnJDBC.findByName(st));
 					}
-			//		st.setName(txtName.getText());
-				//	showData(ConnJDBC.findByName(st));
+					
 				}
 			
 			});
 			
 			btnFind.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			contentPane.add(btnFind);
-			
+			btnFind.setBackground(redirect);
 				
 				JButton btnRefresh = new JButton("Refresh");
 				btnRefresh.setForeground(Color.WHITE);
-				btnRefresh.setBounds(1025, 585, 93, 36);
+				btnRefresh.setBounds(1126, 585, 93, 36);
 				btnRefresh.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						txtIDHM.setText("");
@@ -391,6 +397,7 @@ public class Main extends JFrame {
 				});
 				btnUpdate.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				contentPane.add(btnUpdate);
+				btnUpdate.setBackground(redirect);
 				
 				JScrollPane scrollPane = new JScrollPane();
 				scrollPane.setBounds(34, 21, 955, 343);
@@ -454,12 +461,12 @@ public class Main extends JFrame {
 				
 				btnExit.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						  System.exit(0); 
+						  
 					}
 				});
 				btnExit.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				contentPane.add(btnExit);
-				
+				btnExit.setBackground(redirect);
 				txtID = new JTextField();
 				txtID.setBounds(1229, 556, 96, 21);
 				txtID.setHorizontalAlignment(SwingConstants.CENTER);
@@ -518,14 +525,24 @@ public class Main extends JFrame {
 				HRcontainer.add(lblNewLabel_1_4_3_1);
 				
 				textIdProject = new JTextField();
-				textIdProject.setBounds(1113, 439, 200, 31);
+				textIdProject.setBounds(860, 380, 109, 31);
 				HRcontainer.add(textIdProject);
 				textIdProject.setColumns(10);
 				
 				JLabel lblNewLabel_1_4_3_1_1 = new JLabel("ID Project:");
 				lblNewLabel_1_4_3_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
-				lblNewLabel_1_4_3_1_1.setBounds(1025, 434, 93, 36);
+				lblNewLabel_1_4_3_1_1.setBounds(787, 375, 93, 36);
 				HRcontainer.add(lblNewLabel_1_4_3_1_1);
+				
+				textIDDP = new JTextField();
+				textIDDP.setBounds(860, 422, 109, 31);
+				HRcontainer.add(textIDDP);
+				textIDDP.setColumns(10);
+				
+				JLabel lblNewLabel_1_4_3_1_1_1 = new JLabel("ID Department:");
+				lblNewLabel_1_4_3_1_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
+				lblNewLabel_1_4_3_1_1_1.setBounds(752, 417, 128, 36);
+				HRcontainer.add(lblNewLabel_1_4_3_1_1_1);
 				ProjectContainer.setBounds(20, 65, 1350, 435);
 				contentPane.add(ProjectContainer);
 				ProjectContainer.setLayout(null);
@@ -535,6 +552,7 @@ public class Main extends JFrame {
 				ProjectContainer.add(scrollPane_1);
 				
 				table_1 = new JTable();
+				table_1.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				table_1.setModel(new DefaultTableModel(
 					new Object[][] {
 						{null, null, null},
@@ -592,7 +610,7 @@ public class Main extends JFrame {
 				txtNameProject = new JTextField();
 				txtNameProject.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtNameProject.setColumns(10);
-				txtNameProject.setBounds(1106, 62, 136, 39);
+				txtNameProject.setBounds(1113, 62, 136, 39);
 				ProjectContainer.add(txtNameProject);
 				
 				txtNOE = new JTextField();
@@ -610,7 +628,7 @@ public class Main extends JFrame {
 				txtIdDepart = new JTextField();
 				txtIdDepart.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtIdDepart.setColumns(10);
-				txtIdDepart.setBounds(1107, 21, 126, 38);
+				txtIdDepart.setBounds(1103, 21, 126, 38);
 				DepartmentContainer.add(txtIdDepart);
 				
 				JLabel lblNewLabel_1_5_1_2 = new JLabel("ID Department:");
@@ -623,6 +641,7 @@ public class Main extends JFrame {
 				DepartmentContainer.add(scrollPane_1_1);
 				
 				table_2 = new JTable();
+				table_2.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				table_2.setModel(new DefaultTableModel(
 					new Object[][] {
 						{null, null, null},
@@ -657,7 +676,7 @@ public class Main extends JFrame {
 				txtNOEDepart = new JTextField();
 				txtNOEDepart.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtNOEDepart.setColumns(10);
-				txtNOEDepart.setBounds(1107, 110, 126, 38);
+				txtNOEDepart.setBounds(1103, 110, 126, 38);
 				DepartmentContainer.add(txtNOEDepart);
 				
 				JLabel lblNewLabel_1_5_1_2_1 = new JLabel("Name Department:");
@@ -670,12 +689,8 @@ public class Main extends JFrame {
 				lblNewLabel_1_5_1_2_1_1.setBounds(941, 110, 163, 36);
 				DepartmentContainer.add(lblNewLabel_1_5_1_2_1_1);
 				
-				textIDDP = new JTextField();
-				textIDDP.setBounds(873, 577, 86, 20);
-				contentPane.add(textIDDP);
-				textIDDP.setColumns(10);
-				
 				JButton btnDetails = new JButton("Details Human Resources");
+				btnDetails.setForeground(Color.WHITE);
 				btnDetails.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						DetailsHR frame = new DetailsHR();
@@ -683,6 +698,7 @@ public class Main extends JFrame {
 						frame.setVisible(true);
 					}
 				});
+				btnDetails.setBackground(new Color(184, 80, 67));
 				btnDetails.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 				btnDetails.setBounds(20, 627, 231, 36);
 				contentPane.add(btnDetails);
@@ -746,17 +762,6 @@ public class Main extends JFrame {
 	    	});
 	    });
 	    }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	}
 	
 	

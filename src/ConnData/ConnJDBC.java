@@ -80,7 +80,7 @@ public class ConnJDBC {
 			 pstmt.setString(11, st.getIdDepartment());
 			 pstmt.execute();
 		 } catch (Exception e ) {	
-			 JOptionPane.showMessageDialog(null, "The idhm is duplicated!", "Error", JOptionPane.ERROR_MESSAGE);
+			 JOptionPane.showMessageDialog(null, "Duplicating idhm or invalid idProject or idDepartment", "Error", JOptionPane.ERROR_MESSAGE);
 			 System.out.println("rr here");
 		 }
 	 } 
@@ -120,7 +120,10 @@ public class ConnJDBC {
 
 	 public static List<HR> findByName(HR s) {
 		 List<HR> studentl = new ArrayList<>();
-		 String query = "SELECT * FROM humanresource where name='"+ s.getName() +"'";
+		 String query = "SELECT * FROM humanresource where name='"+ s.getName() + "'";
+		 
+//		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
+//			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;
 		 try {
 			 Connection connection = getConnection();
 			 Statement stmt = connection.createStatement();

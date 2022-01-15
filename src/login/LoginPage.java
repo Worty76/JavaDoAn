@@ -115,9 +115,9 @@ public class LoginPage implements ActionListener{
 					frame.dispose();
 //					WelcomePage welcomePage = new WelcomePage(userID);
 					try {
-//						JFrameHR frame = new JFrameHR(userID);
-//						frame.setVisible(true);
-						WelcomePage frame = new WelcomePage(userID);
+						Main frame = new Main(userID);
+						frame.setVisible(true);
+						frame.setTitle("Human Resource Management");
 					} catch (Exception x) {
 						x.printStackTrace();
 					}

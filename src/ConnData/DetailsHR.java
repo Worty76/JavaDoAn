@@ -1,6 +1,7 @@
 package ConnData;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,11 +14,21 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class DetailsHR extends JFrame {
 
 	private JPanel contentPane;
 	private static JTable table;
+	private JTextField txtFindName;
+	private JTextField txtFindAge;
+	private JTextField txtFindAddress;
+	private JLabel lblNewLabel;
+	private JLabel lblAge;
+	private JLabel lblAddress;
 
 	/**
 	 * Launch the application.
@@ -64,6 +75,14 @@ public class DetailsHR extends JFrame {
 				{null, null, null, null, null},
 				{null, null, null, null, null},
 				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
+				{null, null, null, null, null},
 			},
 			new String[] {
 				"idHumanResource", "Name", "Address", "WorkDay", "Email"
@@ -71,10 +90,55 @@ public class DetailsHR extends JFrame {
 		));
 		scrollPane.setViewportView(table);
 		
-		JButton btnExit = new JButton("EXIT");
-		btnExit.setFont(new Font("Century Schoolbook", Font.PLAIN, 16));
-		btnExit.setBounds(362, 443, 170, 49);
-		contentPane.add(btnExit);
+		JButton btnFindName = new JButton("FIND");
+		btnFindName.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HR st = new HR();
+				
+				if(txtFindName.getText().length()==0){
+					showDataDetailsHR(ConnJDBC.findAll());
+				} else {
+					st.setName(txtFindName.getText());
+					showDataDetailsHR(ConnJDBC.findByName(st));
+				}
+				
+			}
+		});
+		btnFindName.setFont(new Font("Century Schoolbook", Font.PLAIN, 16));
+		btnFindName.setBounds(362, 443, 170, 49);
+		contentPane.add(btnFindName);
+		btnFindName.setBackground(new Color(167, 190, 174));
+		
+		txtFindName = new JTextField();
+		txtFindName.setBounds(124, 392, 128, 41);
+		contentPane.add(txtFindName);
+		txtFindName.setColumns(10);
+		
+		txtFindAge = new JTextField();
+		txtFindAge.setColumns(10);
+		txtFindAge.setBounds(377, 392, 128, 41);
+		contentPane.add(txtFindAge);
+		
+		txtFindAddress = new JTextField();
+		txtFindAddress.setColumns(10);
+		txtFindAddress.setBounds(636, 392, 128, 41);
+		contentPane.add(txtFindAddress);
+		
+		lblNewLabel = new JLabel("Name");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setBounds(33, 392, 81, 41);
+		contentPane.add(lblNewLabel);
+		
+		lblAge = new JLabel("Age");
+		lblAge.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAge.setBounds(286, 392, 81, 41);
+		contentPane.add(lblAge);
+		
+		lblAddress = new JLabel("Address");
+		lblAddress.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAddress.setBounds(545, 392, 81, 41);
+		contentPane.add(lblAddress);
+		contentPane.setBackground(new Color(230, 232, 210));
 		showDataDetailsHR(ConnJDBC.findAll());
 	}
 	public static void showDataDetailsHR(List<HR>studentl) {

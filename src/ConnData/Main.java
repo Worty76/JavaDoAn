@@ -33,7 +33,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Project.JframeProject;
+
 import login.IDandPasswords;
 import login.LoginPage;
 
@@ -50,7 +50,7 @@ import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.SystemColor;
 import java.awt.Panel;  
-public class JFrameHR extends JFrame {
+public class Main extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel contentProject;
@@ -69,13 +69,20 @@ public class JFrameHR extends JFrame {
 	private Color ADD = new Color(30, 41, 92);
 	private Color EXIT = new Color(200, 52, 2);
 	private Color REFRESH = new Color(138, 187, 17);
-	private JTextField txtExperience;
+	private JTextField txtEmail;
 	Panel HRcontainer = new Panel();
 	private static JTable table_1;
 	private JTextField txtIdProject;
 	private JTextField txtNameProject;
 	private JTextField txtNOE;
 	JPanel ProjectContainer = new JPanel();
+	JPanel DepartmentContainer = new JPanel();
+	private JTextField textIdProject;
+	private JTextField txtIdDepart;
+	private static JTable table_2;
+	private JTextField txtNameDepart;
+	private JTextField txtNOEDepart;
+	private JTextField textIDDP;
 	
 	/**
 	 * Launch the application.
@@ -92,8 +99,10 @@ public class JFrameHR extends JFrame {
 //					
 //					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
 					
-					JFrameHR frame = new JFrameHR();
+					
+					Main frame = new Main();
 					frame.setVisible(true);
+					frame.setTitle("Human Resource Management");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -106,8 +115,9 @@ public class JFrameHR extends JFrame {
 	 * Create the frame.
 	 */
 //String userID
-	public JFrameHR() { 
-		
+	public Main() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/ConnData/606587.png"))); 
+	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1366, 724);
 		contentPane = new JPanel();
@@ -132,6 +142,7 @@ public class JFrameHR extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				HRcontainer.setVisible(false);
 				ProjectContainer.setVisible(true);
+				DepartmentContainer.setVisible(false);
 				
 			}
 		});
@@ -139,8 +150,16 @@ public class JFrameHR extends JFrame {
 		btnProject.setBounds(987, 19, 111, 36);
 		contentPane.add(btnProject);
 		
-		JButton btnProject_1 = new JButton("Projects");
-		btnProject_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		JButton btnProject_1 = new JButton("Department");
+		btnProject_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DepartmentContainer.setVisible(true);
+				HRcontainer.setVisible(false);
+				ProjectContainer.setVisible(false);
+				
+			}
+		});
+		btnProject_1.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 		btnProject_1.setBounds(1229, 19, 111, 36);
 		contentPane.add(btnProject_1);
 		
@@ -149,88 +168,13 @@ public class JFrameHR extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				HRcontainer.setVisible(true);
 				ProjectContainer.setVisible(false);
+				DepartmentContainer.setVisible(false);
 			}
 		});
 		btnHumanResource.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		btnHumanResource.setBounds(1108, 19, 111, 36);
 		contentPane.add(btnHumanResource);
-		
-		
-		ProjectContainer.setBounds(10, 73, 1350, 435);
-		contentPane.add(ProjectContainer);
-		ProjectContainer.setLayout(null);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(34, 21, 652, 342);
-		ProjectContainer.add(scrollPane_1);
-		
-		table_1 = new JTable();
-		table_1.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				"IDProject", "NameProject", "NumOfEployees"
-			}
-		));
-		table_1.getColumnModel().getColumn(2).setPreferredWidth(80);
-		table_1.getColumnModel().getColumn(2).setMinWidth(80);
-		scrollPane_1.setViewportView(table_1);
-		
-		ProjectContainer.setBackground(myWhite);
-			
-			JLabel lblNewLabel_1_5_1 = new JLabel("IDProject:");
-			lblNewLabel_1_5_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
-			lblNewLabel_1_5_1.setBounds(1021, 15, 93, 36);
-			ProjectContainer.add(lblNewLabel_1_5_1);
-			
-			JLabel lblNewLabel_1_5_1_1 = new JLabel("Name Project:");
-			lblNewLabel_1_5_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
-			lblNewLabel_1_5_1_1.setBounds(1002, 65, 112, 36);
-			ProjectContainer.add(lblNewLabel_1_5_1_1);
-			
-			JLabel lblNewLabel_1_5_1_1_1 = new JLabel("Number Of Employees:");
-			lblNewLabel_1_5_1_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
-			lblNewLabel_1_5_1_1_1.setBounds(948, 112, 159, 36);
-			ProjectContainer.add(lblNewLabel_1_5_1_1_1);
-			
-			txtIdProject = new JTextField();
-			txtIdProject.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-			txtIdProject.setColumns(10);
-			txtIdProject.setBounds(1113, 16, 93, 36);
-			ProjectContainer.add(txtIdProject);
-			
-			txtNameProject = new JTextField();
-			txtNameProject.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-			txtNameProject.setColumns(10);
-			txtNameProject.setBounds(1112, 66, 136, 36);
-			ProjectContainer.add(txtNameProject);
-			
-			txtNOE = new JTextField();
-			txtNOE.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-			txtNOE.setColumns(10);
-			txtNOE.setBounds(1113, 112, 93, 36);
-			ProjectContainer.add(txtNOE);
-			HRcontainer.setBounds(0, 68, 1350, 440);
+			HRcontainer.setBounds(10, 68, 1350, 470);
 			contentPane.add(HRcontainer);
 			HRcontainer.setLayout(null);
 			
@@ -291,7 +235,7 @@ public class JFrameHR extends JFrame {
 			HRcontainer.add(cbGender);
 			
 			JButton btnNewButton = new JButton("Add");
-			btnNewButton.setBounds(1128, 569, 93, 36);
+			btnNewButton.setBounds(1126, 585, 93, 36);
 			btnNewButton.setForeground(Color.WHITE);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -306,16 +250,29 @@ public class JFrameHR extends JFrame {
 						st.setPosition(txtPosition.getText());
 						st.setPart(txtPart.getText());
 						st.setWorkDay(Integer.parseInt(txtWorkDay.getText()));
-						st.setExperience(txtExperience.getText());
+						st.setEmail(txtEmail.getText());
+						st.setIdProject(textIdProject.getText());
+						st.setIdDepartment(textIDDP.getText());
 						ConnJDBC.insert(st);
 						showData(ConnJDBC.findAll());
+						showDataPR(ConnJDBC.findAllPR());
+						showDataDP(ConnJDBC.findAllDP());
 						} else {
+							if(ProjectContainer.isVisible()) {
 							Project st = new Project();
 							st.setIdProject(txtIdProject.getText());
 							st.setNameProject(txtNameProject.getText());
 							st.setNOE(Integer.parseInt(txtNOE.getText()));
 							ConnJDBC.insertPR(st);
 							showDataPR(ConnJDBC.findAllPR());
+							} else {
+								Department st = new Department();
+								st.setIdDepartment(txtIdDepart.getText());
+								st.setNameDepartment(txtNameDepart.getText());
+								st.setNumbersOfEmployeesDepart(txtNOEDepart.getText());			
+								ConnJDBC.insertDP(st);
+								showDataDP(ConnJDBC.findAllDP());
+							}
 							
 						}
 					} catch (Exception e2) {
@@ -329,7 +286,7 @@ public class JFrameHR extends JFrame {
 			
 			
 			JButton btnDelete = new JButton("Delete");
-			btnDelete.setBounds(1229, 569, 96, 36);
+			btnDelete.setBounds(1229, 585, 96, 36);
 			btnDelete.setForeground(Color.WHITE);
 			btnDelete.addActionListener(new ActionListener() {
 				   @Override
@@ -344,10 +301,23 @@ public class JFrameHR extends JFrame {
 	                        options,
 	                        options[0]);
 	                if(result == JOptionPane.YES_OPTION){
-	                     HR st=new HR();
-	  					st.setIdHumanResource(txtIDHM.getText());
-	  					ConnJDBC.delete(st);		 
-	  					showData(ConnJDBC.findAll());     
+	                    if(HRcontainer.isVisible()) {
+	                    	 HR st=new HR();
+	 	  					st.setIdHumanResource(txtID.getText());
+	 	  					ConnJDBC.delete(st);		 
+	 	  					showData(ConnJDBC.findAll()); 
+	 	  					showDataPR(ConnJDBC.findAllPR());   
+                    		showDataDP(ConnJDBC.findAllDP()); 
+	                    } else {
+	                    	if(ProjectContainer.isVisible()) {
+	                    		Project st = new Project();
+	                    		st.setIdProject(txtIdProject.getText());
+	                    		ConnJDBC.deletePR(st);
+	                    		showDataPR(ConnJDBC.findAllPR());   
+	                    		showDataDP(ConnJDBC.findAllDP()); 
+	                    		showData(ConnJDBC.findAll()); 
+	                    	}
+	                    }
 	                }
 				}
 			});
@@ -357,7 +327,7 @@ public class JFrameHR extends JFrame {
 			contentPane.add(btnDelete);
 			
 			JButton btnFind = new JButton("Find");
-			btnFind.setBounds(1025, 616, 93, 36);
+			btnFind.setBounds(1025, 627, 93, 36);
 			btnFind.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					HR st = new HR();
@@ -380,7 +350,7 @@ public class JFrameHR extends JFrame {
 				
 				JButton btnRefresh = new JButton("Refresh");
 				btnRefresh.setForeground(Color.WHITE);
-				btnRefresh.setBounds(1025, 569, 93, 36);
+				btnRefresh.setBounds(1025, 585, 93, 36);
 				btnRefresh.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						txtIDHM.setText("");
@@ -390,7 +360,7 @@ public class JFrameHR extends JFrame {
 						txtPosition.setText("");
 						txtPart.setText("");
 						txtWorkDay.setText("");
-						txtExperience.setText("");
+						txtEmail.setText("");
 					}
 				});
 				btnRefresh.setBackground(REFRESH);
@@ -398,7 +368,7 @@ public class JFrameHR extends JFrame {
 				contentPane.add(btnRefresh);
 				
 				JButton btnUpdate = new JButton("Update");
-				btnUpdate.setBounds(1128, 616, 94, 36);
+				btnUpdate.setBounds(1126, 627, 93, 36);
 				btnUpdate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
@@ -430,56 +400,57 @@ public class JFrameHR extends JFrame {
 				scrollPane.setViewportView(table);
 				table.setModel(new DefaultTableModel(
 					new Object[][] {
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
-						{null, null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, "", null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, "", null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
+						{null, null, null, null, null, null, null, null},
 					},
 					new String[] {
-						"ID HumanResource", "Name", "Age", "Gender", "Address", "Position", "Part", "WorkDay", "Experience"
+						"ID HumanResource", "Name", "Age", "Gender", "Position", "Part", "idProject", "idDepartment"
 					}
 				));
-				table.getColumnModel().getColumn(0).setPreferredWidth(100);
-				table.getColumnModel().getColumn(0).setMinWidth(100);
-				table.getColumnModel().getColumn(2).setPreferredWidth(50);
-				table.getColumnModel().getColumn(2).setMinWidth(50);
-				table.getColumnModel().getColumn(3).setPreferredWidth(60);
-				table.getColumnModel().getColumn(3).setMinWidth(0);
-				table.getColumnModel().getColumn(4).setMinWidth(70);
-				table.getColumnModel().getColumn(5).setMinWidth(30);
-				table.getColumnModel().getColumn(6).setPreferredWidth(100);
-				table.getColumnModel().getColumn(6).setMinWidth(100);
-				table.getColumnModel().getColumn(8).setPreferredWidth(92);
-				table.getColumnModel().getColumn(8).setMinWidth(92);
+				table.getColumnModel().getColumn(0).setPreferredWidth(70);
+				table.getColumnModel().getColumn(0).setMinWidth(70);
+				table.getColumnModel().getColumn(1).setPreferredWidth(90);
+				table.getColumnModel().getColumn(1).setMinWidth(90);
+				table.getColumnModel().getColumn(2).setPreferredWidth(30);
+				table.getColumnModel().getColumn(2).setMinWidth(30);
+				table.getColumnModel().getColumn(3).setPreferredWidth(40);
+				table.getColumnModel().getColumn(3).setMinWidth(40);
+				table.getColumnModel().getColumn(4).setPreferredWidth(50);
+				table.getColumnModel().getColumn(4).setMinWidth(30);
+				table.getColumnModel().getColumn(5).setMinWidth(75);
+				table.getColumnModel().getColumn(7).setPreferredWidth(100);
+				table.getColumnModel().getColumn(7).setMinWidth(100);
 				table.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				
 				JButton btnExit = new JButton("Exit");
-				btnExit.setBounds(1229, 616, 96, 36);
+				btnExit.setBounds(1229, 627, 96, 36);
 				
 				btnExit.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -490,14 +461,14 @@ public class JFrameHR extends JFrame {
 				contentPane.add(btnExit);
 				
 				txtID = new JTextField();
-				txtID.setBounds(1229, 535, 96, 23);
+				txtID.setBounds(1229, 556, 96, 21);
 				txtID.setHorizontalAlignment(SwingConstants.CENTER);
 				txtID.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 				contentPane.add(txtID);
 				txtID.setColumns(10);
 				
 				JLabel lblNewLabel_2 = new JLabel("ID to delete");
-				lblNewLabel_2.setBounds(1239, 519, 75, 14);
+				lblNewLabel_2.setBounds(1237, 542, 75, 14);
 				lblNewLabel_2.setFont(new Font("Century Gothic", Font.BOLD, 11));
 				lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(lblNewLabel_2);
@@ -535,20 +506,193 @@ public class JFrameHR extends JFrame {
 				txtWorkDay.setColumns(10);
 				HRcontainer.add(txtWorkDay);
 				
-				txtExperience = new JTextField();
-				txtExperience.setBounds(1113, 397, 200, 36);
-				txtExperience.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-				txtExperience.setColumns(10);
-				HRcontainer.add(txtExperience);
+				txtEmail = new JTextField();
+				txtEmail.setBounds(1113, 397, 200, 36);
+				txtEmail.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+				txtEmail.setColumns(10);
+				HRcontainer.add(txtEmail);
 				
-				JLabel lblNewLabel_1_4_3_1 = new JLabel("Experience:");
+				JLabel lblNewLabel_1_4_3_1 = new JLabel("Email:");
 				lblNewLabel_1_4_3_1.setBounds(1025, 397, 93, 36);
 				lblNewLabel_1_4_3_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				HRcontainer.add(lblNewLabel_1_4_3_1);
+				
+				textIdProject = new JTextField();
+				textIdProject.setBounds(1113, 439, 200, 31);
+				HRcontainer.add(textIdProject);
+				textIdProject.setColumns(10);
+				
+				JLabel lblNewLabel_1_4_3_1_1 = new JLabel("ID Project:");
+				lblNewLabel_1_4_3_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
+				lblNewLabel_1_4_3_1_1.setBounds(1025, 434, 93, 36);
+				HRcontainer.add(lblNewLabel_1_4_3_1_1);
+				ProjectContainer.setBounds(20, 65, 1350, 435);
+				contentPane.add(ProjectContainer);
+				ProjectContainer.setLayout(null);
+				
+				JScrollPane scrollPane_1 = new JScrollPane();
+				scrollPane_1.setBounds(10, 15, 676, 348);
+				ProjectContainer.add(scrollPane_1);
+				
+				table_1 = new JTable();
+				table_1.setModel(new DefaultTableModel(
+					new Object[][] {
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+					},
+					new String[] {
+						"IDProject", "NameProject", "NumOfEployees"
+					}
+				));
+				table_1.getColumnModel().getColumn(2).setPreferredWidth(80);
+				table_1.getColumnModel().getColumn(2).setMinWidth(80);
+				scrollPane_1.setViewportView(table_1);
+				
+				ProjectContainer.setBackground(myWhite);
+				
+				JLabel lblNewLabel_1_5_1 = new JLabel("IDProject:");
+				lblNewLabel_1_5_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
+				lblNewLabel_1_5_1.setBounds(1021, 15, 93, 36);
+				ProjectContainer.add(lblNewLabel_1_5_1);
+				
+				JLabel lblNewLabel_1_5_1_1 = new JLabel("Name Project:");
+				lblNewLabel_1_5_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
+				lblNewLabel_1_5_1_1.setBounds(1002, 65, 112, 36);
+				ProjectContainer.add(lblNewLabel_1_5_1_1);
+				
+				JLabel lblNewLabel_1_5_1_1_1 = new JLabel("Number Of Employees:");
+				lblNewLabel_1_5_1_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
+				lblNewLabel_1_5_1_1_1.setBounds(952, 111, 159, 36);
+				ProjectContainer.add(lblNewLabel_1_5_1_1_1);
+				
+				txtIdProject = new JTextField();
+				txtIdProject.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+				txtIdProject.setColumns(10);
+				txtIdProject.setBounds(1113, 16, 93, 36);
+				ProjectContainer.add(txtIdProject);
+				
+				txtNameProject = new JTextField();
+				txtNameProject.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+				txtNameProject.setColumns(10);
+				txtNameProject.setBounds(1106, 62, 136, 39);
+				ProjectContainer.add(txtNameProject);
+				
+				txtNOE = new JTextField();
+				txtNOE.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+				txtNOE.setColumns(10);
+				txtNOE.setBounds(1113, 112, 93, 36);
+				ProjectContainer.add(txtNOE);
+				
+				
+				DepartmentContainer.setBounds(30, 65, 1320, 435);
+				contentPane.add(DepartmentContainer);
+				DepartmentContainer.setLayout(null);
+				DepartmentContainer.setBackground(myWhite);
+				
+				txtIdDepart = new JTextField();
+				txtIdDepart.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+				txtIdDepart.setColumns(10);
+				txtIdDepart.setBounds(1107, 21, 126, 38);
+				DepartmentContainer.add(txtIdDepart);
+				
+				JLabel lblNewLabel_1_5_1_2 = new JLabel("ID Department:");
+				lblNewLabel_1_5_1_2.setFont(new Font("Century Gothic", Font.BOLD, 14));
+				lblNewLabel_1_5_1_2.setBounds(996, 21, 108, 30);
+				DepartmentContainer.add(lblNewLabel_1_5_1_2);
+				
+				JScrollPane scrollPane_1_1 = new JScrollPane();
+				scrollPane_1_1.setBounds(10, 29, 676, 348);
+				DepartmentContainer.add(scrollPane_1_1);
+				
+				table_2 = new JTable();
+				table_2.setModel(new DefaultTableModel(
+					new Object[][] {
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+						{null, null, null},
+					},
+					new String[] {
+						"ID Department", "Name Department", "Numbers of employees"
+					}
+				));
+				scrollPane_1_1.setViewportView(table_2);
+				
+				txtNameDepart = new JTextField();
+				txtNameDepart.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+				txtNameDepart.setColumns(10);
+				txtNameDepart.setBounds(1103, 65, 126, 38);
+				DepartmentContainer.add(txtNameDepart);
+				
+				txtNOEDepart = new JTextField();
+				txtNOEDepart.setFont(new Font("Century Gothic", Font.PLAIN, 14));
+				txtNOEDepart.setColumns(10);
+				txtNOEDepart.setBounds(1107, 110, 126, 38);
+				DepartmentContainer.add(txtNOEDepart);
+				
+				JLabel lblNewLabel_1_5_1_2_1 = new JLabel("Name Department:");
+				lblNewLabel_1_5_1_2_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
+				lblNewLabel_1_5_1_2_1.setBounds(965, 61, 130, 38);
+				DepartmentContainer.add(lblNewLabel_1_5_1_2_1);
+				
+				JLabel lblNewLabel_1_5_1_2_1_1 = new JLabel("Number Of Employees:");
+				lblNewLabel_1_5_1_2_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
+				lblNewLabel_1_5_1_2_1_1.setBounds(941, 110, 163, 36);
+				DepartmentContainer.add(lblNewLabel_1_5_1_2_1_1);
+				
+				textIDDP = new JTextField();
+				textIDDP.setBounds(873, 577, 86, 20);
+				contentPane.add(textIDDP);
+				textIDDP.setColumns(10);
+				
+				JButton btnDetails = new JButton("Details Human Resources");
+				btnDetails.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						DetailsHR frame = new DetailsHR();
+						frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+						frame.setVisible(true);
+					}
+				});
+				btnDetails.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+				btnDetails.setBounds(20, 627, 231, 36);
+				contentPane.add(btnDetails);
+				ProjectContainer.setVisible(false);
 			HRcontainer.setVisible(true);
-			ProjectContainer.setVisible(false);
+			DepartmentContainer.setVisible(false);
+			
 		showData(ConnJDBC.findAll());
 		showDataPR(ConnJDBC.findAllPR());
+		showDataDP(ConnJDBC.findAllDP());
 		
 	
 	}
@@ -565,10 +709,12 @@ public class JFrameHR extends JFrame {
 	    	else {gender="Female";}
 	    	tableModel.addRow(new Object [] {
 	    		student.getIdHumanResource() ,student.getName(),student.getAge(),
-	    		gender,student.getAddress(),student.getPosition(), student.getPart(), student.getWorkDay(), student.getExperience()
+	    		gender,student.getPosition(), student.getPart(),
+	    		student.getIdProject(), student.getIdDepartment()
 	    	});
 	    });
 	    }
+	
 	public static void showDataPR(List<Project>projectList) {
 		List<Project>projectList1=new ArrayList<>();
 		projectList1=projectList;
@@ -584,4 +730,48 @@ public class JFrameHR extends JFrame {
 	    	});
 	    });
 	    }
+	
+	public static void showDataDP(List<Department>departmentList) {
+		List<Department>departmentList1=new ArrayList<>();
+		departmentList1=departmentList;
+		DefaultTableModel tableModel;
+	    table_2.getModel();
+	    tableModel=(DefaultTableModel)table_2.getModel();
+	    tableModel.setRowCount(0);
+	    departmentList1.forEach((project) -> { 
+	    	
+	    	tableModel.addRow(new Object [] {
+	    			project.getIdDepartment(),project.getNameDepartment(),
+	    		project.getNumbersOfEmployeesDepart()
+	    	});
+	    });
+	    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

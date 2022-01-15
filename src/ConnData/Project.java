@@ -8,7 +8,7 @@ public class Project {
 	
 	
 	
-	public Project( String idProject, String nameProject, int NOE ) {
+	public Project(String idProject, String nameProject, int NOE ) {
 		
 		this.idProject = idProject;
 		this.nameProject = nameProject;

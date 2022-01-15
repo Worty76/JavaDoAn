@@ -12,7 +12,7 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import ConnData.JFrameHR;
+import ConnData.Main;
 
 public class LoginPage implements ActionListener{
 	private Color crimson = new Color(220, 20, 60);
@@ -66,6 +66,7 @@ public class LoginPage implements ActionListener{
 		frame.getContentPane().add(userPasswordField);
 		frame.getContentPane().add(loginButton);
 		frame.getContentPane().add(resetButton);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginPage.class.getResource("/login/login1.png")));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setSize(698,378);

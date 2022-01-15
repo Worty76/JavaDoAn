@@ -1,6 +1,6 @@
 package ConnData;
 
-public class HR {
+public class HR extends Project{
 
 	private String idHumanResource;
 	private String name;
@@ -9,10 +9,13 @@ public class HR {
 	private String position;
 	private String part;
 	private int workDay;
-	private String experience;
+	private String email;
+	private String idProject;
+	private String idDepartment;
 
-		public HR(String idHumanResource, String name, int age, int gender, String address, String position, String part, int workDay, String experience) {
-		
+
+		public HR(String idHumanResource, String name, int age, int gender, String address, String position, String part, int workDay, String email, String idProject,String idDepartment) {
+			
 			this.idHumanResource = idHumanResource;
 			this.name = name;
 			this.age =age;
@@ -21,14 +24,31 @@ public class HR {
 			this.position = position;
 			this.part = part;
 			this.workDay = workDay;
-			this.experience = experience;
+			this.email = email;
+			this.idProject = idProject;
+			this.idDepartment =idDepartment;
 		}
 		//setter
 		
+		public String getIdDepartment() {
+			return idDepartment;
+		}
+
+		public void setIdDepartment(String idDepartment) {
+			this.idDepartment = idDepartment;
+		}
+
+		public String getIdProject() {
+			return idProject;
+		}
+		
+		public void setIdProject(String idProject) {
+			this.idProject = idProject;
+		}
 		public String getIdHumanResource() {
 			return idHumanResource;
 		}
-
+		
 		public void setIdHumanResource(String idHumanResource) {
 			this.idHumanResource = idHumanResource;
 		}
@@ -49,12 +69,12 @@ public class HR {
 			this.workDay = workDay;
 		}
 
-		public String getExperience() {
-			return experience;
+		public String getEmail() {
+			return email;
 		}
 
-		public void setExperience(String experience) {
-			this.experience = experience;
+		public void setEmail(String email) {
+			this.email = email;
 		}
 
 		public HR() {

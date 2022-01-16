@@ -230,7 +230,116 @@ public class ConnJDBC {
 	 
 	 
 	 
+	// ------------------------------------------------------------ find those who have joined ----------------------------
 	 
+	 public static List<HR> findAllThoseWhoHaveJoined(){
+		 List<HR> studentList = new ArrayList<>();
+		 String query = "select * from humanresource where idProject <> ''";
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 HR st = new HR(rs.getString("idHumanResource"),
+						 rs.getString("name"),rs.getInt("age"),
+						 rs.getInt("gender"),
+						 rs.getString("address"),
+						 rs.getString("position"),
+						 rs.getString("part"),
+						 rs.getInt("workDay"),
+						 rs.getString("email"),
+						 rs.getString("idProject"),
+						 rs.getString("idDepartment")
+						 );
+				 studentList.add(st);
+			 }
+		 } catch(Exception e){
+			 
+		 }
+		 return studentList;
+	 }
+	 
+	 public static List<HR> findAllThoseWhoHaveNotJoined(){
+		 List<HR> studentList = new ArrayList<>();
+		 String query = "select * from humanresource where idProject is null";
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 HR st = new HR(rs.getString("idHumanResource"),
+						 rs.getString("name"),rs.getInt("age"),
+						 rs.getInt("gender"),
+						 rs.getString("address"),
+						 rs.getString("position"),
+						 rs.getString("part"),
+						 rs.getInt("workDay"),
+						 rs.getString("email"),
+						 rs.getString("idProject"),
+						 rs.getString("idDepartment")
+						 );
+				 studentList.add(st);
+			 }
+		 } catch(Exception e){
+			 
+		 }
+		 return studentList;
+	 }
+	 
+	 public static List<HR> findAllThoseInTheProject(HR s){
+		 List<HR> studentList = new ArrayList<>();
+		 String query = " select * from humanresource where idProject = '" + s.getIdProject() + "'";
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 HR st = new HR(rs.getString("idHumanResource"),
+						 rs.getString("name"),rs.getInt("age"),
+						 rs.getInt("gender"),
+						 rs.getString("address"),
+						 rs.getString("position"),
+						 rs.getString("part"),
+						 rs.getInt("workDay"),
+						 rs.getString("email"),
+						 rs.getString("idProject"),
+						 rs.getString("idDepartment")
+						 );
+				 studentList.add(st);
+			 }
+		 } catch(Exception e){
+			 
+		 }
+		 return studentList;
+	 }
+	 
+	 public static List<HR> findAllThoseInTheDepartment(HR s){
+		 List<HR> studentList = new ArrayList<>();
+		 String query = " select * from humanresource where idDepartment = '" + s.getIdDepartment() + "'";
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 HR st = new HR(rs.getString("idHumanResource"),
+						 rs.getString("name"),rs.getInt("age"),
+						 rs.getInt("gender"),
+						 rs.getString("address"),
+						 rs.getString("position"),
+						 rs.getString("part"),
+						 rs.getInt("workDay"),
+						 rs.getString("email"),
+						 rs.getString("idProject"),
+						 rs.getString("idDepartment")
+						 );
+				 studentList.add(st);
+			 }
+		 } catch(Exception e){
+			 
+		 }
+		 return studentList;
+	 }
+	
 	 
 	 
 }

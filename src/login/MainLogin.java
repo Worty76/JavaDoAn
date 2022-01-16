@@ -2,11 +2,11 @@ package login;
 
 public class MainLogin {
 
-	public static void main(String[] args) {
-		
-		IDandPasswords idandPasswords = new IDandPasswords();
-				
-		LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
-
-	}
+//	public static void main(String[] args) {
+//		
+//		IDandPasswords idandPasswords = new IDandPasswords();
+//				
+//		LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
+//
+//	}
 }

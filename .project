@@ -35,5 +35,10 @@
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/login1.png</locationURI>
 		</link>
+		<link>
+			<name>src/login/vku.png</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/Downloads/vku.png</locationURI>
+		</link>
 	</linkedResources>
 </projectDescription>

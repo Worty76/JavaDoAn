@@ -1,4 +1,4 @@
-package ConnData;
+package Detailshumanresource;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,6 +10,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import ConnData.ConnJDBC;
+import ConnData.HR;
+
 import javax.swing.JButton;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -24,11 +28,7 @@ public class DetailsHR extends JFrame {
 	private JPanel contentPane;
 	private static JTable table;
 	private JTextField txtFindName;
-	private JTextField txtFindAge;
-	private JTextField txtFindAddress;
 	private JLabel lblNewLabel;
-	private JLabel lblAge;
-	private JLabel lblAddress;
 
 	/**
 	 * Launch the application.
@@ -57,7 +57,7 @@ public class DetailsHR extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(42, 38, 844, 343);
+		scrollPane.setBounds(42, 38, 860, 343);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -105,39 +105,19 @@ public class DetailsHR extends JFrame {
 			}
 		});
 		btnFindName.setFont(new Font("Century Schoolbook", Font.PLAIN, 16));
-		btnFindName.setBounds(362, 443, 170, 49);
+		btnFindName.setBounds(393, 444, 170, 49);
 		contentPane.add(btnFindName);
 		btnFindName.setBackground(new Color(167, 190, 174));
 		
 		txtFindName = new JTextField();
-		txtFindName.setBounds(124, 392, 128, 41);
+		txtFindName.setBounds(409, 392, 128, 41);
 		contentPane.add(txtFindName);
 		txtFindName.setColumns(10);
 		
-		txtFindAge = new JTextField();
-		txtFindAge.setColumns(10);
-		txtFindAge.setBounds(377, 392, 128, 41);
-		contentPane.add(txtFindAge);
-		
-		txtFindAddress = new JTextField();
-		txtFindAddress.setColumns(10);
-		txtFindAddress.setBounds(636, 392, 128, 41);
-		contentPane.add(txtFindAddress);
-		
 		lblNewLabel = new JLabel("Name");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setBounds(33, 392, 81, 41);
+		lblNewLabel.setBounds(331, 392, 81, 41);
 		contentPane.add(lblNewLabel);
-		
-		lblAge = new JLabel("Age");
-		lblAge.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAge.setBounds(286, 392, 81, 41);
-		contentPane.add(lblAge);
-		
-		lblAddress = new JLabel("Address");
-		lblAddress.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAddress.setBounds(545, 392, 81, 41);
-		contentPane.add(lblAddress);
 		contentPane.setBackground(new Color(230, 232, 210));
 		showDataDetailsHR(ConnJDBC.findAll());
 	}

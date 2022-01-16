@@ -15,6 +15,11 @@ import javax.swing.*;
 import ConnData.Main;
 
 public class LoginPage implements ActionListener{
+	private Color myWhite = new Color(230, 232, 210);
+	private Color ADD = new Color(35, 78, 112);
+	private Color EXIT = new Color(200, 52, 2);
+	private Color REFRESH = new Color(138, 187, 17);
+	private Color redirect = new Color(167, 190, 174);
 	private Color crimson = new Color(220, 20, 60);
 	JFrame frame = new JFrame("LOGIN");
 	JButton loginButton = new JButton("Login");
@@ -66,9 +71,10 @@ public class LoginPage implements ActionListener{
 		frame.getContentPane().add(userPasswordField);
 		frame.getContentPane().add(loginButton);
 		frame.getContentPane().add(resetButton);
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginPage.class.getResource("/login/login1.png")));
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setBackground(myWhite);
 		frame.setResizable(false);
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginPage.class.getResource("/login/vku.png")));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(698,378);
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
@@ -80,6 +86,7 @@ public class LoginPage implements ActionListener{
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 20));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(419, 24, 198, 35);
+		
 		frame.getContentPane().add(lblNewLabel);
 		panel.setBounds(0, -11, 346, 364);
 		
@@ -115,9 +122,9 @@ public class LoginPage implements ActionListener{
 					frame.dispose();
 //					WelcomePage welcomePage = new WelcomePage(userID);
 					try {
-						Main frame = new Main(userID);
-						frame.setVisible(true);
-						frame.setTitle("Human Resource Management");
+//						Main frame = new Main(userID);
+//						frame.setVisible(true);
+//						frame.setTitle("Human Resource Management");
 					} catch (Exception x) {
 						x.printStackTrace();
 					}
@@ -134,6 +141,4 @@ public class LoginPage implements ActionListener{
 			}
 		}
 	}
-	
-
 }

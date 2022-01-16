@@ -97,23 +97,22 @@ public class ConnJDBC {
 	 }
 	
 	 public static void Update(HR st) {
-		String query = "Update humanresource set idHumanResource=?,name=?,age=?,gender=?,address=?,position=?,part=?,workDay=?,Email=? where id='"+st.getIdHumanResource()+"'";
+		String query = "ALTER TABLE humanresource NOCHECK CONSTRAINT ALL; Update humanresource set name=?,age=?,gender=?,address=?,position=?,part=?,workDay=?,Email=?,idProject='" + st.getIdProject() + "', idDepartment='" + st.getIdDepartment() + "'  where idHumanResource='"+st.getIdHumanResource()+"'; ALTER TABLE humanresource CHECK CONSTRAINT ALL;";
 		
 		 try {
 			Connection connection = getConnection();
 			PreparedStatement pstmt= connection.prepareStatement(query);
-			pstmt.setString(1, st.getIdHumanResource());
-			 pstmt.setString(2, st.getName());
-			 pstmt.setInt(3, st.getAge());
-			 pstmt.setInt(4, st.getGender());	
-			 pstmt.setString(5, st.getAddress());
-			 pstmt.setString(6, st.getPosition());
-			 pstmt.setString(7, st.getPart());
-			 pstmt.setInt(8, st.getWorkDay());
-			 pstmt.setString(9, st.getEmail());
+			 pstmt.setString(1, st.getName());
+			 pstmt.setInt(2, st.getAge());
+			 pstmt.setInt(3, st.getGender());	
+			 pstmt.setString(4, st.getAddress());
+			 pstmt.setString(5, st.getPosition());
+			 pstmt.setString(6, st.getPart());
+			 pstmt.setInt(7, st.getWorkDay());
+			 pstmt.setString(8, st.getEmail());
 			pstmt.executeUpdate();
 		} catch (Exception e) {
-			// TODO: handle exception
+			// TODO: handle exception	
 			JOptionPane.showMessageDialog(null, "Not Found! ");
 		}
 	 }	
@@ -178,7 +177,7 @@ public class ConnJDBC {
 		 return projectList;
 	 }
 	 public static void deletePR(Project st) {
-		 String query="delete from projects where id ='"+ st.getIdProject() + "'";
+		 String query="delete from projects where idProject ='"+ st.getIdProject() + "'";
 		try {
 			Connection connection = getConnection();
 			PreparedStatement pstmt=connection.prepareStatement(query);
@@ -188,7 +187,19 @@ public class ConnJDBC {
 		} 
 	 }
 
-
+	 public static void UpdatePR(Project st) {
+			String query = "Update projects set nameProject=?, numberOfEmployees=? where idProject = '" + st.getIdProject() + "'";			
+			 try {
+				Connection connection = getConnection();
+				PreparedStatement pstmt= connection.prepareStatement(query);
+				 pstmt.setString(1, st.getNameProject());
+				 pstmt.setInt(2, st.getNOE());	
+				pstmt.executeUpdate();
+			} catch (Exception e) {
+				// TODO: handle exception	
+				JOptionPane.showMessageDialog(null, "Not Found! ");
+			}
+		 }	
 	 
 // ------------------------------------------------------------------ crud department-------------------------------------------------------------
 	 
@@ -200,7 +211,7 @@ public class ConnJDBC {
 			 PreparedStatement pstmt = connection.prepareStatement(query);
 			 pstmt.setString(1, st.getIdDepartment());
 			 pstmt.setString(2, st.getNameDepartment());
-			 pstmt.setString(3, st.getNumbersOfEmployeesDepart());
+			 pstmt.setInt(3, st.getNumbersOfEmployeesDepart());
 			 pstmt.execute();
 		 } catch (Exception e ) {	
 			 
@@ -218,7 +229,7 @@ public class ConnJDBC {
 				 Department st = new Department(
 						 rs.getString("idDepartment"),
 						 rs.getString("nameDepartment"),
-						 rs.getString("numberOfEmployeesDepart")
+						 rs.getInt("numberOfEmployeesDepart")
 						 );
 				 departmentList.add(st);
 			 }
@@ -227,6 +238,32 @@ public class ConnJDBC {
 		 }
 		 return departmentList;
 	 }
+	 
+	 public static void deleteDP(Department st) {
+		 String query="delete from department where idDepartment ='"+ st.getIdDepartment() + "'";
+		try {
+			Connection connection = getConnection();
+			PreparedStatement pstmt=connection.prepareStatement(query);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			// TODO: handle exception
+		} 
+	 }
+	 public static void UpdateDP(Department st) {
+			String query = "Update department set nameDepartment=?, numberOfEmployeesDepart=? where idDepartment ='" + st.getIdDepartment() + "'";			
+			 try {
+				Connection connection = getConnection();
+				PreparedStatement pstmt= connection.prepareStatement(query);
+				 
+				 pstmt.setString(1, st.getNameDepartment());
+				 pstmt.setInt(2, st.getNumbersOfEmployeesDepart());	
+			
+				pstmt.executeUpdate();
+			} catch (Exception e) {
+				// TODO: handle exception	
+				JOptionPane.showMessageDialog(null, "Not Found! ");
+			}
+		 }	
 	 
 	 
 	 

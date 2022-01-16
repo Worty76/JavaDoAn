@@ -69,11 +69,11 @@ public class Main extends javax.swing.JFrame  {
 	private static boolean check = false;
 	private JTextField txtPart;
 	private JTextField txtWorkDay;
-	private Color myWhite = new Color(230, 232, 210);
+	private Color myWhite = new Color(188, 255, 185);
 	private Color ADD = new Color(35, 78, 112);
 	private Color EXIT = new Color(200, 52, 2);
 	private Color REFRESH = new Color(138, 187, 17);
-	private Color redirect = new Color(167, 190, 174);
+	private Color redirect = new Color(247, 230, 173);
 	private JTextField txtEmail;
 	Panel HRcontainer = new Panel();
 	private static JTable table_1;
@@ -246,10 +246,6 @@ public class Main extends javax.swing.JFrame  {
 						showData(ConnJDBC.findAll());
 						showDataPR(ConnJDBC.findAllPR());
 						showDataDP(ConnJDBC.findAllDP());
-					
-						
-						
-						
 						} else {
 							if(ProjectContainer.isVisible()) {
 							Project st = new Project();
@@ -262,7 +258,7 @@ public class Main extends javax.swing.JFrame  {
 								Department st = new Department();
 								st.setIdDepartment(txtIdDepart.getText());
 								st.setNameDepartment(txtNameDepart.getText());
-								st.setNumbersOfEmployeesDepart(txtNOEDepart.getText());			
+								st.setNumbersOfEmployeesDepart(Integer.parseInt(txtNOEDepart.getText()));			
 								ConnJDBC.insertDP(st);
 								showDataDP(ConnJDBC.findAllDP());
 							}
@@ -304,17 +300,27 @@ public class Main extends javax.swing.JFrame  {
 	                    } else {
 	                    	if(ProjectContainer.isVisible()) {
 	                    		Project st = new Project();
-	                    		st.setIdProject(txtIdProject.getText());
+	                    		st.setIdProject(txtID.getText());
 	                    		ConnJDBC.deletePR(st);
 	                    		showDataPR(ConnJDBC.findAllPR());   
 	                    		showDataDP(ConnJDBC.findAllDP()); 
 	                    		showData(ConnJDBC.findAll()); 
+	                    	} else {
+	                    		Department st = new Department();
+	                    		st.setIdDepartment(txtID.getText());
+	                    		ConnJDBC.deleteDP(st);		 
+		 	  					showData(ConnJDBC.findAll()); 
+		 	  					showDataPR(ConnJDBC.findAllPR());   
+	                    		showDataDP(ConnJDBC.findAllDP()); 
 	                    	}
 	                    }
 	                }
 				}
 			});
 			
+		
+
+				
 			btnDelete.setBackground(new Color(184, 80, 67));
 			btnDelete.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			contentPane.add(btnDelete);
@@ -338,7 +344,7 @@ public class Main extends javax.swing.JFrame  {
 			
 			btnFind.setFont(new Font("Century Gothic", Font.BOLD, 14));
 			contentPane.add(btnFind);
-			btnFind.setBackground(redirect);
+			btnFind.setBackground(new Color(217, 215, 241));
 				
 				JButton btnRefresh = new JButton("Refresh");
 				btnRefresh.setForeground(Color.WHITE);
@@ -364,6 +370,7 @@ public class Main extends javax.swing.JFrame  {
 				btnUpdate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
+						if(HRcontainer.isVisible()) {
 							HR st=new HR();
 							st.setIdHumanResource(txtIDHM.getText());
 							st.setName(txtName.getText());
@@ -371,19 +378,47 @@ public class Main extends javax.swing.JFrame  {
 							st.setGender(cbGender.getSelectedIndex());
 							st.setAddress(txtAddress.getText());
 							st.setPosition(txtPosition.getText());
+							st.setPart(txtPart.getText());
+							st.setWorkDay(Integer.parseInt(txtWorkDay.getText()));
+							st.setEmail(txtEmail.getText());
+							st.setIdProject(textIdProject.getText());
+							st.setIdDepartment(textIDDP.getText());
 							ConnJDBC.Update(st);
+							showData(ConnJDBC.findAll());
+	 	  					showDataPR(ConnJDBC.findAllPR());   
+                    		showDataDP(ConnJDBC.findAllDP()); 
+						} else {
+							if(ProjectContainer.isVisible()) {
+								Project st = new Project();
+								st.setIdProject(txtIdProject.getText());
+								st.setNameProject(txtNameProject.getText());
+								st.setNOE(Integer.parseInt(txtNOE.getText()));
+								ConnJDBC.UpdatePR(st);
+								showData(ConnJDBC.findAll());
+		 	  					showDataPR(ConnJDBC.findAllPR());   
+	                    		showDataDP(ConnJDBC.findAllDP()); 
+							} else if(DepartmentContainer.isVisible()) {
+								Department st = new Department();
+								st.setIdDepartment(txtIdDepart.getText());
+								st.setNameDepartment(txtNameDepart.getText());
+								st.setNumbersOfEmployeesDepart(Integer.parseInt(txtNOEDepart.getText()));
+								ConnJDBC.UpdateDP(st);
+								showData(ConnJDBC.findAll());
+		 	  					showDataPR(ConnJDBC.findAllPR());   
+	                    		showDataDP(ConnJDBC.findAllDP()); 
+							}
+						}
 							
 						} catch (Exception e2) {
 							// TODO: handle exception
 							
 						}
 						
-						showData(ConnJDBC.findAll());
 					}
 				});
 				btnUpdate.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				contentPane.add(btnUpdate);
-				btnUpdate.setBackground(redirect);
+				btnUpdate.setBackground(new Color(217, 215, 241));
 				
 				JButton btnExit = new JButton("Exit");
 				btnExit.setBounds(1229, 627, 96, 36);
@@ -395,7 +430,7 @@ public class Main extends javax.swing.JFrame  {
 				});
 				btnExit.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				contentPane.add(btnExit);
-				btnExit.setBackground(redirect);
+				btnExit.setBackground(new Color(217, 215, 241));
 				txtID = new JTextField();
 				txtID.setBounds(1229, 556, 96, 21);
 				txtID.setHorizontalAlignment(SwingConstants.CENTER);
@@ -499,15 +534,15 @@ public class Main extends javax.swing.JFrame  {
 				});
 				btnEmployeesInThe.setForeground(Color.BLACK);
 				btnEmployeesInThe.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-				btnEmployeesInThe.setBackground(new Color(167, 190, 174));
+				btnEmployeesInThe.setBackground(new Color(247, 230, 173));
 				btnEmployeesInThe.setBounds(841, 295, 231, 36);
 				ProjectContainer.add(btnEmployeesInThe);
 				
 				JButton btnDetails_1_1 = new JButton("Details Project");
 				btnDetails_1_1.setForeground(Color.BLACK);
 				btnDetails_1_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-				btnDetails_1_1.setBackground(new Color(167, 190, 174));
 				btnDetails_1_1.setBounds(841, 248, 231, 36);
+				btnDetails_1_1.setBackground(new Color(247, 230, 173));
 				ProjectContainer.add(btnDetails_1_1);
 				
 				txtIdProjectDetails = new JTextField();
@@ -612,7 +647,7 @@ public class Main extends javax.swing.JFrame  {
 				});
 				btnDetails_1_1_1.setForeground(Color.BLACK);
 				btnDetails_1_1_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-				btnDetails_1_1_1.setBackground(new Color(167, 190, 174));
+				btnDetails_1_1_1.setBackground(new Color(247, 230, 173));
 				btnDetails_1_1_1.setBounds(832, 242, 233, 38);
 				DepartmentContainer.add(btnDetails_1_1_1);
 				
@@ -826,9 +861,9 @@ public class Main extends javax.swing.JFrame  {
 						frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 					}
 				});
+				btnHmHaventJoin.setBackground(new Color(247, 230, 173));
 				btnHmHaventJoin.setForeground(Color.BLACK);
 				btnHmHaventJoin.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-				btnHmHaventJoin.setBackground(new Color(167, 190, 174));
 				btnHmHaventJoin.setBounds(296, 375, 171, 36);
 				HRcontainer.add(btnHmHaventJoin);
 				
@@ -840,14 +875,26 @@ public class Main extends javax.swing.JFrame  {
 						frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 					}
 				});
+				
+				btnHmHaveJoined.setBackground(new Color(247, 230, 173));
 				btnHmHaveJoined.setForeground(Color.BLACK);
 				btnHmHaveJoined.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-				btnHmHaveJoined.setBackground(new Color(167, 190, 174));
 				btnHmHaveJoined.setBounds(497, 375, 171, 36);
 				HRcontainer.add(btnHmHaveJoined);
+				
+				JPanel panel = new JPanel();
+				panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+				panel.setBounds(515, 11, 342, 51);
+				contentPane.add(panel);
+				panel.setLayout(null);
 				HRcontainer.setVisible(true);
+				panel.setBackground(new Color(252, 255, 166));
 				
-				
+				JLabel lblNewLabel_5 = new JLabel("New label");
+				lblNewLabel_5.setBackground(Color.WHITE);
+				lblNewLabel_5.setIcon(new ImageIcon(Main.class.getResource("/login/vkubgss.png")));
+				lblNewLabel_5.setBounds(20, 585, 554, 89);
+				contentPane.add(lblNewLabel_5);
 				
 				ProjectContainer.setVisible(false);
 			DepartmentContainer.setVisible(false);
@@ -857,6 +904,13 @@ public class Main extends javax.swing.JFrame  {
 		showDataDP(ConnJDBC.findAllDP());
 		
 	
+	}
+	public class CirclePanel extends JPanel {
+
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        g.drawOval(0, 0, g.getClipBounds().width, g.getClipBounds().height);
+	    }
 	}
 	public static void showData(List<HR>studentl) {
 		List<HR>listStudent=new ArrayList<>();

@@ -3,10 +3,10 @@ package ConnData;
 public class Department {
 	private String idDepartment;
 	private String nameDepartment;
-	private String numbersOfEmployeesDepart;
+	private int numbersOfEmployeesDepart;
 	
 	
-	public Department(String idDepartment, String nameDepartment, String numbersOfEmployeesDepart) {
+	public Department(String idDepartment, String nameDepartment, int numbersOfEmployeesDepart) {
 		
 		this.idDepartment = idDepartment;
 		this.nameDepartment = nameDepartment;
@@ -39,12 +39,12 @@ public class Department {
 	}
 
 
-	public String getNumbersOfEmployeesDepart() {
+	public int getNumbersOfEmployeesDepart() {
 		return numbersOfEmployeesDepart;
 	}
 
 
-	public void setNumbersOfEmployeesDepart(String numbersOfEmployeesDepart) {
+	public void setNumbersOfEmployeesDepart(int numbersOfEmployeesDepart) {
 		this.numbersOfEmployeesDepart = numbersOfEmployeesDepart;
 	}
 	

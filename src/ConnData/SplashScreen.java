@@ -59,7 +59,7 @@ public class SplashScreen extends JWindow {
 					
 //					IDandPasswords idandPasswords = new IDandPasswords();
 //					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
-				
+////				
 
                     execute.setVisible(false);//swapped this around with timer1.stop()
 

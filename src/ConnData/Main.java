@@ -1,7 +1,9 @@
 package ConnData;
 
 import javax.swing.*;
+
 import java.awt.event.*;
+import java.awt.geom.RoundRectangle2D;
 import java.io.*;
 import java.net.URL;
 import java.sql.Date;
@@ -47,9 +49,8 @@ import Detailshumanresource.HMhavejoined;
 import Detailshumanresource.HMhaventjoined;
 import login.IDandPasswords;
 import login.LoginPage;
+import login.LoginPage.FrameDragListener;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.sound.sampled.*;
 
 import java.awt.Graphics;
@@ -60,7 +61,8 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.Toolkit;
 import java.awt.SystemColor;
-import java.awt.Panel;  
+import java.awt.Panel;
+import java.awt.Point;  
 public class Main extends javax.swing.JFrame  {
 
 	private JPanel contentPane;
@@ -118,12 +120,12 @@ public class Main extends javax.swing.JFrame  {
 //					IDandPasswords idandPasswords = new IDandPasswords();
 //					
 //					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
-//				
-
+//					SplashScreen frame = new SplashScreen();
+//					frame.setVisible(true);
 					Main frame = new Main();
 					frame.setVisible(true);
 					frame.setTitle("Human Resource Management");
-                                     
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -137,13 +139,22 @@ public class Main extends javax.swing.JFrame  {
 	 */
 //String userID
 	public Main() {
-		
+		this.addComponentListener(new ComponentAdapter() {
+            @Override
+             public void componentResized(ComponentEvent e) {
+                 setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 5, 5));
+             }
+         });
+		setUndecorated(true);
+		 FrameDragListener frameDragListener = new FrameDragListener(this);
+		 this.addMouseListener(frameDragListener);
+		 this.addMouseMotionListener(frameDragListener);
 	
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 1366, 724);
+		setBounds(100, 100, 1366, 683);
 		contentPane = new JPanel();
 		contentPane.setBackground(myWhite);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		this.setResizable(false);
@@ -1063,7 +1074,8 @@ class HintTextField extends JTextField implements FocusListener {
     return showingHint ? "" : super.getText();
   }
 }
-	
+
+
 	
 	
 	

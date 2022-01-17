@@ -1,18 +1,49 @@
 package ConnData;
 
+import java.sql.Date;
+
 public class Project {
 	
 	private String idProject;
 	private String nameProject;
 	private int NOE;
+	private String startingDay;
+	private String endingDay;
 	
 	
 	
-	public Project(String idProject, String nameProject, int NOE ) {
+	
+	public Project(String idProject, String nameProject, int NOE, String startingDay, String endingDay ) {
 		
 		this.idProject = idProject;
 		this.nameProject = nameProject;
 		this.NOE = NOE;
+		this.startingDay = startingDay;
+		this.endingDay = endingDay;
+	}
+
+
+
+	public String getStartingDay() {
+		return startingDay;
+	}
+
+
+
+	public void setStartingDay(String startingDay) {
+		this.startingDay = startingDay;
+	}
+
+
+
+	public String getEndingDay() {
+		return endingDay;
+	}
+
+
+
+	public void setEndingDay(String endingDay) {
+		this.endingDay = endingDay;
 	}
 
 

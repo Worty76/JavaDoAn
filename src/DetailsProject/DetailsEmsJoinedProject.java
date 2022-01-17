@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import ConnData.ConnJDBC;
 import ConnData.HR;
 import ConnData.Main;
+import java.awt.Color;
 
 public class DetailsEmsJoinedProject extends JFrame {
 
@@ -47,6 +48,7 @@ public class DetailsEmsJoinedProject extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 671, 448);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

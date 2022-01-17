@@ -73,7 +73,7 @@ public class LoginPage implements ActionListener{
 		frame.getContentPane().add(resetButton);
 		frame.getContentPane().setBackground(myWhite);
 		frame.setResizable(false);
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(LoginPage.class.getResource("/login/vku.png")));
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(698,378);
 		frame.getContentPane().setLayout(null);
@@ -94,7 +94,7 @@ public class LoginPage implements ActionListener{
 		panel.add(lblNewLabel_1);
 		
 		lblNewLabel_1.setOpaque(true);
-		lblNewLabel_1.setIcon(new ImageIcon(LoginPage.class.getResource("/login/img.png")));
+		
 		
 	}
 	

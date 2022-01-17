@@ -14,6 +14,10 @@ import javax.swing.table.DefaultTableModel;
 
 import ConnData.ConnJDBC;
 import ConnData.HR;
+import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class HMhaventjoined extends JFrame {
 
@@ -42,17 +46,22 @@ public class HMhaventjoined extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 671, 448);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(28, 27, 604, 331);
+		scrollPane.setBounds(25, 53, 604, 331);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
@@ -77,6 +86,12 @@ public class HMhaventjoined extends JFrame {
 			}
 		));
 		scrollPane.setViewportView(table);
+		
+		JLabel lblNewLabel = new JLabel("Employees have not joined any project");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		lblNewLabel.setBounds(109, 11, 445, 27);
+		contentPane.add(lblNewLabel);
 		showData(ConnJDBC.findAllThoseWhoHaveNotJoined());
 	}
 	
@@ -97,5 +112,4 @@ public class HMhaventjoined extends JFrame {
 	    	});
 	    });
 	    }
-
 }

@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import ConnData.ConnJDBC;
 import ConnData.HR;
+import java.awt.Color;
 
 public class HMhavejoined extends JFrame {
 
@@ -44,6 +45,7 @@ public class HMhavejoined extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 671, 448);
 		contentPane = new JPanel();
+		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);

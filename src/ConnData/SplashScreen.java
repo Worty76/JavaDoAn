@@ -7,6 +7,9 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+import login.IDandPasswords;
+import login.LoginPage;
+
 public class SplashScreen extends JWindow {
 
     static boolean isRegistered;
@@ -53,9 +56,10 @@ public class SplashScreen extends JWindow {
 
                 if (count == 50) {
 
-                	Main frame = new Main();
-					frame.setVisible(true);
-					frame.setTitle("Human Resource Management");
+					
+//					IDandPasswords idandPasswords = new IDandPasswords();
+//					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
+				
 
                     execute.setVisible(false);//swapped this around with timer1.stop()
 

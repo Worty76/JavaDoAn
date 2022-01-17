@@ -3,6 +3,7 @@ package ConnData;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -142,18 +143,22 @@ public class ConnJDBC {
 //-------------------------------------------------------------------crud project--------------------------------------------------------------
 	 
 	 public static void insertPR(Project st) {
-		 String query="insert into projects(idProject,nameProject,numberOfEmployees) values(?,?,?);";
-		 
+		 String query="insert into projects(idProject,nameProject,numberOfEmployees,startingDay,endingDay) values(?,?,?,?,?);";
+		 	 String s = st.getStartingDay();
+			 Date d = Date.valueOf(s);
+			 String z = st.getEndingDay();
+			 Date c = Date.valueOf(z);
 		 try {
 			 Connection connection = getConnection();
 			 PreparedStatement pstmt = connection.prepareStatement(query);
 			 pstmt.setString(1, st.getIdProject());
 			 pstmt.setString(2, st.getNameProject());
 			 pstmt.setInt(3, st.getNOE());
+			 pstmt.setDate(4,d);
+			 pstmt.setDate(5,c);
 			 pstmt.execute();
 		 } catch (Exception e ) {	
 			 
-			 System.out.println("rr here");
 		 }
 	 } 
 	 public static List<Project> findAllPR(){
@@ -167,7 +172,9 @@ public class ConnJDBC {
 				 Project st = new Project(
 						 rs.getString("idProject"),
 						 rs.getString("nameProject"),
-						 rs.getInt("numberOfEmployees")
+						 rs.getInt("numberOfEmployees"),
+						 rs.getString("startingDay"),
+						 rs.getString("endingDay")
 						 );
 				 projectList.add(st);
 			 }

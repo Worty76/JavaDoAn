@@ -81,7 +81,7 @@ public class ConnJDBC {
 			 pstmt.setString(11, st.getIdDepartment());
 			 pstmt.execute();
 		 } catch (Exception e ) {	
-			 JOptionPane.showMessageDialog(null, "Duplicating idhm or invalid idProject or idDepartment", "Error", JOptionPane.ERROR_MESSAGE);
+			 JOptionPane.showMessageDialog(null, "Duplicating idhm or invalid idProject or idDepartment or missing fields or invalid fields", "Error", JOptionPane.ERROR_MESSAGE);
 			 System.out.println("rr here");
 		 }
 	 } 
@@ -140,6 +140,83 @@ public class ConnJDBC {
 		 return studentl;
 	 }
 
+	 public static void Update2(String st) {
+			String query = "select * from humanresource where idHumanResource = '" + st + "'";
+			 try {
+				 Connection connection = getConnection();
+				 Statement stmt = connection.createStatement();
+				 ResultSet rs=stmt.executeQuery(query);
+					while(rs.next()) {
+				 		 rs.getString("name");
+						 rs.getInt("age");
+						 rs.getInt("gender");
+						 rs.getString("address");
+						 rs.getString("position"); 
+						 rs.getString("part");
+						 rs.getInt("workDay");
+						 rs.getString("Email"); 
+						 rs.getString("idProject"); 
+						 rs.getString("idDepartment");	
+					}
+			} catch (Exception e) {
+				// TODO: handle exception	
+				JOptionPane.showMessageDialog(null, "Not Found! ");
+			}
+			
+		 }	
+	 
+	 
+	 public static int numberHR() {
+		 int rt = 0;
+		 String query = "select count(idHumanResource) as 'soluong' from humanresource";
+			 try {
+				 Connection connection = getConnection();
+				 Statement stmt = connection.createStatement();
+				 ResultSet rs=stmt.executeQuery(query);
+				 while (rs.next()) {
+						rt = rs.getInt(1);
+				 };
+						 
+			} catch (Exception e) {
+				// TODO: handle exception	
+			
+			}
+			return rt;
+		 }	
+	 public static int numberPR() {
+		 int rt = 0;
+		 String query = "select count(idProject) as 'soluong' from projects";
+			 try {
+				 Connection connection = getConnection();
+				 Statement stmt = connection.createStatement();
+				 ResultSet rs=stmt.executeQuery(query);
+				 while (rs.next()) {
+						rt = rs.getInt(1);
+				 };
+						 
+			} catch (Exception e) {
+				// TODO: handle exception	
+			
+			}
+			return rt;
+		 }	
+	 public static int numberDP() {
+		 int rt = 0;
+		 String query = "select count(idDepartment) as 'soluong' from department";
+			 try {
+				 Connection connection = getConnection();
+				 Statement stmt = connection.createStatement();
+				 ResultSet rs=stmt.executeQuery(query);
+				 while (rs.next()) {
+						rt = rs.getInt(1);
+				 };
+						 
+			} catch (Exception e) {
+				// TODO: handle exception	
+				
+			}
+			return rt;
+		 }	
 //-------------------------------------------------------------------crud project--------------------------------------------------------------
 	 
 	 public static void insertPR(Project st) {
@@ -153,7 +230,7 @@ public class ConnJDBC {
 			 PreparedStatement pstmt = connection.prepareStatement(query);
 			 pstmt.setString(1, st.getIdProject());
 			 pstmt.setString(2, st.getNameProject());
-			 pstmt.setInt(3, st.getNOE());
+			 pstmt.setInt(3, 0);
 			 pstmt.setDate(4,d);
 			 pstmt.setDate(5,c);
 			 pstmt.execute();
@@ -218,7 +295,7 @@ public class ConnJDBC {
 			 PreparedStatement pstmt = connection.prepareStatement(query);
 			 pstmt.setString(1, st.getIdDepartment());
 			 pstmt.setString(2, st.getNameDepartment());
-			 pstmt.setInt(3, st.getNumbersOfEmployeesDepart());
+			 pstmt.setInt(3, 0);
 			 pstmt.execute();
 		 } catch (Exception e ) {	
 			 
@@ -364,6 +441,7 @@ public class ConnJDBC {
 			 Connection connection = getConnection();
 			 Statement stmt = connection.createStatement();
 			 ResultSet rs=stmt.executeQuery(query);
+			 
 			 while(rs.next()) {
 				 HR st = new HR(rs.getString("idHumanResource"),
 						 rs.getString("name"),rs.getInt("age"),

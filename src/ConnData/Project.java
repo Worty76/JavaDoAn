@@ -51,9 +51,7 @@ public class Project {
 	public Project() {
 		// TODO Auto-generated constructor stub
 	}
-
-
-
+	
 
 	public String getIdProject() {
 		return idProject;

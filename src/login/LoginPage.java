@@ -11,9 +11,11 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 
 import ConnData.Main;
 import java.awt.Dialog.ModalExclusionType;
+import javax.swing.border.EtchedBorder;
 
 public class LoginPage implements ActionListener{
 	
@@ -35,17 +37,15 @@ public class LoginPage implements ActionListener{
 	HashMap<String,String> logininfo = new HashMap<String,String>();
 	private final JLabel lblNewLabel_1 = new JLabel("");
 	private final JPanel panel = new JPanel();
-	private final JButton btnNewButton_1 = new JButton("-");
 	private final JPanel panel_2 = new JPanel();
 	private final JLabel lblNewLabel_2 = new JLabel("Human Resource Management");
 	
 	public LoginPage(HashMap<String,String> loginInfoOriginal){
-	
 		frame.setUndecorated(true);
 		logininfo = loginInfoOriginal;
 		messageLabel.setForeground(new Color(255, 69, 0));
 		
-		messageLabel.setBounds(523,293,200,43);
+		messageLabel.setBounds(511,293,200,43);
 		messageLabel.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		loginButton.setForeground(Color.BLACK);
 		loginButton.setFont(new Font("Century Gothic", Font.PLAIN, 16));
@@ -114,52 +114,29 @@ public class LoginPage implements ActionListener{
 				System.exit(0);
 			}
 		});
+		btnNewButton.setContentAreaFilled(false);
+		btnNewButton.setFocusPainted(false);
 		btnNewButton.setFont(new Font("Century Gothic", Font.BOLD, 21));
 		btnNewButton.setBackground(Color.white);
 		btnNewButton.setBounds(838, 0, 66, 35);
 		frame.getContentPane().add(btnNewButton);
 		btnNewButton.setBorder(null);
-		btnNewButton_1.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	btnNewButton.setBackground(Color.white);
-		    }
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	btnNewButton.setBackground(Color.white);
-		    }
-		});
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnNewButton_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		btnNewButton_1.setForeground(Color.BLACK);
-		btnNewButton_1.setFont(new Font("Century Gothic", Font.BOLD, 34));
-		btnNewButton_1.setBorder(null);
-		btnNewButton_1.setBackground(Color.WHITE);
-		btnNewButton_1.setBounds(802, -5, 26, 35);
-		
-		frame.getContentPane().add(btnNewButton_1);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(345, 105, 520, 136);
-		panel_1.setBackground(new Color(124, 85, 227));
-		frame.getContentPane().add(panel_1);
-		panel_1.setLayout(null);
-		userIDField.setBounds(202, 38, 200, 25);
-		panel_1.add(userIDField);
-		userIDField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		userIDLabel.setForeground(Color.WHITE);
-		userIDLabel.setBounds(117, 39, 75, 25);
-		panel_1.add(userIDLabel);
-		userIDLabel.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-		userPasswordLabel.setForeground(Color.WHITE);
-		userPasswordLabel.setBounds(117, 80, 75, 25);
-		panel_1.add(userPasswordLabel);
-		userPasswordLabel.setFont(new Font("Century Gothic", Font.PLAIN, 15));
-		userPasswordField.setBounds(202, 80, 200, 25);
-		panel_1.add(userPasswordField);
+		userPasswordField.setBounds(530, 203, 200, 43);
+		frame.getContentPane().add(userPasswordField);
+		userPasswordField.setBorder(new TitledBorder(null, "Password", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		userPasswordField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+		userPasswordLabel.setBounds(430, 213, 75, 30);
+		frame.getContentPane().add(userPasswordLabel);
+		userPasswordLabel.setForeground(Color.BLACK);
+		userPasswordLabel.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+		userIDLabel.setBounds(430, 154, 75, 35);
+		frame.getContentPane().add(userIDLabel);
+		userIDLabel.setForeground(Color.BLACK);
+		userIDLabel.setFont(new Font("Century Gothic", Font.PLAIN, 15));
+		userIDField.setBounds(530, 149, 200, 43);
+		frame.getContentPane().add(userIDField);
+		userIDField.setBorder(new TitledBorder(null, "UserID", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		userIDField.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 		btnNewButton.addMouseListener(new java.awt.event.MouseAdapter() {
 		    public void mouseEntered(java.awt.event.MouseEvent evt) {
 		    	btnNewButton.setBackground(Color.white);
@@ -169,6 +146,7 @@ public class LoginPage implements ActionListener{
 		    	btnNewButton.setBackground(Color.white);
 		    }
 		});
+		frame.setLocationRelativeTo(null);
 		
 	}
 	

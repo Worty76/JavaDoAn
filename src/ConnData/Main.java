@@ -6,7 +6,10 @@ import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 import java.io.*;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,12 +44,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import com.mysql.jdbc.PreparedStatement;
+
 import DetailsDepartment.DetailsEmsJoinedDepartment;
 import DetailsProject.DetailsEmsJoinedProject;
 import DetailsProject.DetailsInformationProject;
 import Detailshumanresource.DetailsHR;
 import Detailshumanresource.HMhavejoined;
 import Detailshumanresource.HMhaventjoined;
+import Update.UpdateHR;
 import login.IDandPasswords;
 import login.LoginPage;
 import login.LoginPage.FrameDragListener;
@@ -64,7 +70,14 @@ import java.awt.SystemColor;
 import java.awt.Panel;
 import java.awt.Point;  
 public class Main extends javax.swing.JFrame  {
-
+	private final Action minimizeAction = new AbstractAction("Minimize")
+    {
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+            setState(JFrame.ICONIFIED);
+        }
+    };
 	private JPanel contentPane;
 	private JPanel contentProject;
 	private JTextField txtName;
@@ -90,14 +103,12 @@ public class Main extends javax.swing.JFrame  {
 	private static JTable table_1;
 	private JTextField txtIdProject;
 	private JTextField txtNameProject;
-	private JTextField txtNOE;
 	JPanel ProjectContainer = new JPanel();
 	JPanel DepartmentContainer = new JPanel();
 	private JTextField textIdProject;
 	private JTextField txtIdDepart;
 	private static JTable table_2;
 	private JTextField txtNameDepart;
-	private JTextField txtNOEDepart;
 	private JTextField textIDDP;
 	JPanel animation1 = new JPanel();
 	JPanel animation3 = new JPanel();
@@ -106,6 +117,11 @@ public class Main extends javax.swing.JFrame  {
 	private JTextField txtIdDepartmentDetails;
 	private JTextField txtStartingDay;
 	private JTextField txtEndingDay;
+	private static String input;
+	JComboBox cbGender = new JComboBox();
+	JLabel lblNewLabel_4 = new JLabel("Projects: 6");
+	JLabel lblNewLabel_4_2 = new JLabel("Human Resources: 7");
+	JLabel lblNewLabel_4_3 = new JLabel("Departments: 2");
 	/**
 	 * Launch the application.
 	 */
@@ -139,6 +155,7 @@ public class Main extends javax.swing.JFrame  {
 	 */
 //String userID
 	public Main() {
+		
 		this.addComponentListener(new ComponentAdapter() {
             @Override
              public void componentResized(ComponentEvent e) {
@@ -151,23 +168,24 @@ public class Main extends javax.swing.JFrame  {
 		 this.addMouseMotionListener(frameDragListener);
 	
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 1366, 683);
+		setBounds(100, 100, 1352, 709);
 		contentPane = new JPanel();
 		contentPane.setBackground(myWhite);
-		contentPane.setBorder(new LineBorder(new Color(0, 0, 0), 2, true));
+		contentPane.setBorder(new LineBorder(ADD, 2, true));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		this.setResizable(false);
 		JLabel lblNewLabel = new JLabel("human resource management");
+		lblNewLabel.setForeground(Color.BLACK);
 		lblNewLabel.setBackground(Color.WHITE);
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 20));
-		lblNewLabel.setBounds(515, 11, 342, 51);
+		lblNewLabel.setBounds(515, 31, 342, 51);
 		contentPane.add(lblNewLabel);
 		JLabel lblNewLabel_3 = new JLabel("Hello!");
 		lblNewLabel_3.setText("Hello ");
 		lblNewLabel_3.setFont(new Font("Century Gothic", Font.PLAIN, 19));
-		lblNewLabel_3.setBounds(32, 18, 163, 36);
+		lblNewLabel_3.setBounds(32, 39, 163, 36);
 	
 		contentPane.add(lblNewLabel_3);
 		
@@ -188,17 +206,33 @@ public class Main extends javax.swing.JFrame  {
 			}
 		});
 		btnProject.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		btnProject.setBounds(960, 19, 111, 36);
+		btnProject.setBounds(960, 39, 111, 36);
 		contentPane.add(btnProject);
 		
+		JButton miniButton = new JButton(minimizeAction);
+		miniButton.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	miniButton.setBackground(ADD);
+		    }
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	miniButton.setBackground(ADD);
+		    }
+		});
+		miniButton.setBorder(null);
+		miniButton.setForeground(Color.WHITE);
+		miniButton.setFont(new Font("Century Gothic", Font.PLAIN, 33));
+		miniButton.setText("-");
+		miniButton.setVisible(true);
 		
-		JComboBox cbGender = new JComboBox();
+		miniButton.setBounds(1279, -5, 45, 21);
+		miniButton.setContentAreaFilled(false);
+		
 		cbGender.setBounds(1113, 162, 109, 36);
 		cbGender.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 		cbGender.setModel(new DefaultComboBoxModel(new String[] {"Male", "Female"}));
 		HRcontainer.add(cbGender);
 		
-		JButton btnProject_1 = new JButton("Department");
+		JButton btnProject_1 = new JButton("Departments");
 		btnProject_1.setForeground(Color.BLACK);
 		btnProject_1.setBackground(redirect);
 		btnProject_1.addActionListener(new ActionListener() {
@@ -213,7 +247,7 @@ public class Main extends javax.swing.JFrame  {
 			}
 		});
 		btnProject_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		btnProject_1.setBounds(1202, 19, 138, 36);
+		btnProject_1.setBounds(1202, 39, 138, 36);
 		contentPane.add(btnProject_1);
 	
 		JButton btnHumanResource = new JButton("HR");
@@ -231,11 +265,11 @@ public class Main extends javax.swing.JFrame  {
 		});
 		
 		btnHumanResource.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-		btnHumanResource.setBounds(1081, 19, 111, 36);
+		btnHumanResource.setBounds(1081, 39, 111, 36);
 		contentPane.add(btnHumanResource);
 		
 			JButton btnNewButton = new JButton("Add");
-			btnNewButton.setBounds(1025, 585, 93, 36);
+			btnNewButton.setBounds(1025, 615, 93, 36);
 			btnNewButton.setForeground(Color.WHITE);
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -264,34 +298,38 @@ public class Main extends javax.swing.JFrame  {
 							st.setIdProject(textIdProject.getText());
 							st.setIdDepartment(textIDDP.getText());
 						}
-
+						
 						ConnJDBC.insert(st);
 						showData(ConnJDBC.findAll());
 						showDataPR(ConnJDBC.findAllPR());
 						showDataDP(ConnJDBC.findAllDP());
+						lblNewLabel_4_2.setText("Human Resources: " + ConnJDBC.numberHR());
 						} else {
 						
 							if(ProjectContainer.isVisible()) {
 							Project st = new Project();
 							st.setIdProject(txtIdProject.getText());
 							st.setNameProject(txtNameProject.getText());
-							st.setNOE(Integer.parseInt(txtNOE.getText()));
+//							st.setNOE(Integer.parseInt(txtNOE.getText()));
 							st.setStartingDay(txtStartingDay.getText());
 							st.setEndingDay(txtEndingDay.getText());
 							ConnJDBC.insertPR(st);
 							showDataPR(ConnJDBC.findAllPR());
+							lblNewLabel_4.setText("Projects: " + ConnJDBC.numberPR());
 							} else {
 								Department st = new Department();
 								st.setIdDepartment(txtIdDepart.getText());
 								st.setNameDepartment(txtNameDepart.getText());
-								st.setNumbersOfEmployeesDepart(Integer.parseInt(txtNOEDepart.getText()));			
+//								st.setNumbersOfEmployeesDepart(Integer.parseInt(txtNOEDepart.getText()));			
 								ConnJDBC.insertDP(st);
 								showDataDP(ConnJDBC.findAllDP());
+								lblNewLabel_4_3.setText("Departments: " + ConnJDBC.numberDP());
 							}
 							
 						}
 					} catch (Exception e2) {
 						// TODO: handle exception
+						
 					}
 				}
 			});
@@ -301,7 +339,7 @@ public class Main extends javax.swing.JFrame  {
 			
 			
 			JButton btnDelete = new JButton("Delete");
-			btnDelete.setBounds(1229, 585, 96, 36);
+			btnDelete.setBounds(1231, 615, 96, 36);
 			btnDelete.setForeground(Color.WHITE);
 			btnDelete.addActionListener(new ActionListener() {
 				   @Override
@@ -323,6 +361,7 @@ public class Main extends javax.swing.JFrame  {
 	 	  					showData(ConnJDBC.findAll()); 
 	 	  					showDataPR(ConnJDBC.findAllPR());   
                     		showDataDP(ConnJDBC.findAllDP()); 
+                    		lblNewLabel_4_2.setText("Human resources: " + ConnJDBC.numberHR());
 	                    } else {
 	                    	if(ProjectContainer.isVisible()) {
 	                    		Project st = new Project();
@@ -331,6 +370,7 @@ public class Main extends javax.swing.JFrame  {
 	                    		showDataPR(ConnJDBC.findAllPR());   
 	                    		showDataDP(ConnJDBC.findAllDP()); 
 	                    		showData(ConnJDBC.findAll()); 
+	                    		lblNewLabel_4.setText("Projects: " + ConnJDBC.numberPR());
 	                    	} else {
 	                    		Department st = new Department();
 	                    		st.setIdDepartment(txtID.getText());
@@ -338,6 +378,8 @@ public class Main extends javax.swing.JFrame  {
 		 	  					showData(ConnJDBC.findAll()); 
 		 	  					showDataPR(ConnJDBC.findAllPR());   
 	                    		showDataDP(ConnJDBC.findAllDP()); 
+	                    		lblNewLabel_4_3.setText("Departments: " + ConnJDBC.numberDP());
+
 	                    	}
 	                    }
 	                }
@@ -352,7 +394,7 @@ public class Main extends javax.swing.JFrame  {
 			contentPane.add(btnDelete);
 			
 			JButton btnFind = new JButton("Find");
-			btnFind.setBounds(1025, 627, 93, 36);
+			btnFind.setBounds(1025, 662, 93, 36);
 			btnFind.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					HR st = new HR();
@@ -373,7 +415,7 @@ public class Main extends javax.swing.JFrame  {
 				
 				JButton btnRefresh = new JButton("Refresh");
 				btnRefresh.setForeground(Color.WHITE);
-				btnRefresh.setBounds(1126, 585, 93, 36);
+				btnRefresh.setBounds(1128, 615, 93, 36);
 				btnRefresh.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(HRcontainer.isVisible()) {
@@ -385,71 +427,77 @@ public class Main extends javax.swing.JFrame  {
 							txtPart.setText("");
 							txtWorkDay.setText("");
 							txtEmail.setText("");
+							textIdProject.setText("");
+							textIDDP.setText("");
 						} else {
 							if(DepartmentContainer.isVisible()) {
 								txtIdDepart.setText("");
 								txtNameDepart.setText("");
-								txtNOEDepart.setText("");
+								
 							} else {
 								txtIdProject.setText("");
 								txtNameProject.setText("");
-								txtNOE.setText("");
+								
 							}
 						}
+						table.clearSelection();
+						table_1.clearSelection();
+						table_2.clearSelection();
+						
 					}
 				});
-				btnRefresh.setBackground(REFRESH);
+				btnRefresh.setBackground(new Color(255, 142, 1));
 				btnRefresh.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				contentPane.add(btnRefresh);
-				
+				 
 				JButton btnUpdate = new JButton("Update");
-				btnUpdate.setBounds(1126, 627, 93, 36);
+				btnUpdate.setBounds(1128, 662, 93, 36);
 				btnUpdate.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
-						if(HRcontainer.isVisible()) {
-							HR st=new HR();
-							st.setIdHumanResource(txtIDHM.getText());
-							st.setName(txtName.getText());
-							st.setAge(Integer.parseInt(txtAge.getText()));
-							st.setGender(cbGender.getSelectedIndex());
-							st.setAddress(txtAddress.getText());
-							st.setPosition(txtPosition.getText());
-							st.setPart(txtPart.getText());
-							st.setWorkDay(Integer.parseInt(txtWorkDay.getText()));
-							st.setEmail(txtEmail.getText());
-							st.setIdProject(textIdProject.getText());
-							st.setIdDepartment(textIDDP.getText());
-							ConnJDBC.Update(st);
-							showData(ConnJDBC.findAll());
-	 	  					showDataPR(ConnJDBC.findAllPR());   
-                    		showDataDP(ConnJDBC.findAllDP()); 
-						} else {
-							if(ProjectContainer.isVisible()) {
-								Project st = new Project();
-								st.setIdProject(txtIdProject.getText());
-								st.setNameProject(txtNameProject.getText());
-								st.setNOE(Integer.parseInt(txtNOE.getText()));
-								ConnJDBC.UpdatePR(st);
+							if(HRcontainer.isVisible()) {
+								HR st=new HR();
+								st.setIdHumanResource(txtIDHM.getText());
+								st.setName(txtName.getText());
+								st.setAge(Integer.parseInt(txtAge.getText()));
+								st.setGender(cbGender.getSelectedIndex());
+								st.setAddress(txtAddress.getText());
+								st.setPosition(txtPosition.getText());
+								st.setPart(txtPart.getText());
+								st.setWorkDay(Integer.parseInt(txtWorkDay.getText()));
+								st.setEmail(txtEmail.getText());
+								st.setIdProject(textIdProject.getText());
+								st.setIdDepartment(textIDDP.getText());
+								ConnJDBC.Update(st);
 								showData(ConnJDBC.findAll());
 		 	  					showDataPR(ConnJDBC.findAllPR());   
 	                    		showDataDP(ConnJDBC.findAllDP()); 
-							} else if(DepartmentContainer.isVisible()) {
-								Department st = new Department();
-								st.setIdDepartment(txtIdDepart.getText());
-								st.setNameDepartment(txtNameDepart.getText());
-								st.setNumbersOfEmployeesDepart(Integer.parseInt(txtNOEDepart.getText()));
-								ConnJDBC.UpdateDP(st);
-								showData(ConnJDBC.findAll());
-		 	  					showDataPR(ConnJDBC.findAllPR());   
-	                    		showDataDP(ConnJDBC.findAllDP()); 
+							} else {
+								if(ProjectContainer.isVisible()) {
+									Project st = new Project();
+									st.setIdProject(txtIdProject.getText());
+									st.setNameProject(txtNameProject.getText());
+//									st.setNOE(Integer.parseInt(txtNOE.getText()));
+									ConnJDBC.UpdatePR(st);
+									showData(ConnJDBC.findAll());
+			 	  					showDataPR(ConnJDBC.findAllPR());   
+		                    		showDataDP(ConnJDBC.findAllDP()); 
+								} else if(DepartmentContainer.isVisible()) {
+									Department st = new Department();
+									st.setIdDepartment(txtIdDepart.getText());
+									st.setNameDepartment(txtNameDepart.getText());
+//									st.setNumbersOfEmployeesDepart(Integer.parseInt(txtNOEDepart.getText()));
+									ConnJDBC.UpdateDP(st);
+									showData(ConnJDBC.findAll());
+			 	  					showDataPR(ConnJDBC.findAllPR());   
+		                    		showDataDP(ConnJDBC.findAllDP()); 
+								}
 							}
-						}
-							
-						} catch (Exception e2) {
-							// TODO: handle exception
-							
-						}
+								
+							} catch (Exception e2) {
+								// TODO: handle exception
+								
+							}
 						
 					}
 				});
@@ -458,7 +506,7 @@ public class Main extends javax.swing.JFrame  {
 				btnUpdate.setBackground(new Color(217, 215, 241));
 				
 				JButton btnExit = new JButton("Exit");
-				btnExit.setBounds(1229, 627, 96, 36);
+				btnExit.setBounds(1231, 662, 96, 36);
 				
 				btnExit.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -469,18 +517,18 @@ public class Main extends javax.swing.JFrame  {
 				contentPane.add(btnExit);
 				btnExit.setBackground(new Color(217, 215, 241));
 				txtID = new JTextField();
-				txtID.setBounds(1229, 556, 96, 21);
+				txtID.setBounds(1231, 585, 96, 21);
 				txtID.setHorizontalAlignment(SwingConstants.CENTER);
 				txtID.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 				contentPane.add(txtID);
 				txtID.setColumns(10);
 				
 				JLabel lblNewLabel_2 = new JLabel("ID to delete");
-				lblNewLabel_2.setBounds(1237, 542, 75, 14);
+				lblNewLabel_2.setBounds(1240, 570, 75, 14);
 				lblNewLabel_2.setFont(new Font("Century Gothic", Font.BOLD, 11));
 				lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(lblNewLabel_2);
-				ProjectContainer.setBounds(10, 68, 1350, 470);
+				ProjectContainer.setBounds(10, 88, 1332, 470);
 				contentPane.add(ProjectContainer);
 				ProjectContainer.setLayout(null);
 				
@@ -517,6 +565,7 @@ public class Main extends javax.swing.JFrame  {
 						"IDProject", "NameProject", "NumOfEployees"
 					}
 				));
+				
 				scrollPane_1.setViewportView(table_1);
 				
 				ProjectContainer.setBackground(myWhite);
@@ -531,11 +580,6 @@ public class Main extends javax.swing.JFrame  {
 				lblNewLabel_1_5_1_1.setBounds(1002, 65, 112, 36);
 				ProjectContainer.add(lblNewLabel_1_5_1_1);
 				
-				JLabel lblNewLabel_1_5_1_1_1 = new JLabel("Number Of Employees:");
-				lblNewLabel_1_5_1_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
-				lblNewLabel_1_5_1_1_1.setBounds(952, 111, 159, 36);
-				ProjectContainer.add(lblNewLabel_1_5_1_1_1);
-				
 				txtIdProject = new JTextField();
 				txtIdProject.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtIdProject.setColumns(10);
@@ -547,12 +591,6 @@ public class Main extends javax.swing.JFrame  {
 				txtNameProject.setColumns(10);
 				txtNameProject.setBounds(1113, 62, 136, 39);
 				ProjectContainer.add(txtNameProject);
-				
-				txtNOE = new JTextField();
-				txtNOE.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-				txtNOE.setColumns(10);
-				txtNOE.setBounds(1113, 112, 93, 36);
-				ProjectContainer.add(txtNOE);
 				
 				JButton btnEmployeesInThe = new JButton("Employees in the project");
 				btnEmployeesInThe.addActionListener(new ActionListener() {
@@ -594,17 +632,17 @@ public class Main extends javax.swing.JFrame  {
 				
 				txtIdProjectDetails = new JTextField();
 				txtIdProjectDetails.setColumns(10);
-				txtIdProjectDetails.setBounds(719, 250, 112, 34);
+				txtIdProjectDetails.setBounds(719, 295, 112, 34);
 				ProjectContainer.add(txtIdProjectDetails);
 				
 				JLabel lblNewLabel_4_1 = new JLabel("ID Project");
-				lblNewLabel_4_1.setBounds(744, 215, 67, 36);
+				lblNewLabel_4_1.setBounds(744, 265, 67, 36);
 				ProjectContainer.add(lblNewLabel_4_1);
 				
 				txtStartingDay = new HintTextField("yyyy-mm-dd");
 				txtStartingDay.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtStartingDay.setColumns(10);
-				txtStartingDay.setBounds(1113, 161, 129, 36);
+				txtStartingDay.setBounds(1113, 112, 129, 36);
 				ProjectContainer.add(txtStartingDay);
 				
 				
@@ -612,21 +650,21 @@ public class Main extends javax.swing.JFrame  {
 				txtEndingDay = new HintTextField("yyyy-mm-dd");
 				txtEndingDay.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtEndingDay.setColumns(10);
-				txtEndingDay.setBounds(1113, 208, 129, 36);
+				txtEndingDay.setBounds(1113, 161, 129, 36);
 				ProjectContainer.add(txtEndingDay);
 				
 				JLabel lblNewLabel_1_5_1_1_1_1 = new JLabel("Starting Day");
 				lblNewLabel_1_5_1_1_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
-				lblNewLabel_1_5_1_1_1_1.setBounds(952, 160, 159, 36);
+				lblNewLabel_1_5_1_1_1_1.setBounds(952, 112, 159, 36);
 				ProjectContainer.add(lblNewLabel_1_5_1_1_1_1);
 				
 				JLabel lblNewLabel_1_5_1_1_1_2 = new JLabel("Ending Day");
 				lblNewLabel_1_5_1_1_1_2.setFont(new Font("Century Gothic", Font.BOLD, 14));
-				lblNewLabel_1_5_1_1_1_2.setBounds(952, 207, 159, 36);
+				lblNewLabel_1_5_1_1_1_2.setBounds(952, 161, 159, 36);
 				ProjectContainer.add(lblNewLabel_1_5_1_1_1_2);
 				
 				
-				DepartmentContainer.setBounds(10, 68, 1320, 435);
+				DepartmentContainer.setBounds(10, 88, 1320, 471);
 				contentPane.add(DepartmentContainer);
 				DepartmentContainer.setLayout(null);
 				DepartmentContainer.setBackground(myWhite);
@@ -679,21 +717,10 @@ public class Main extends javax.swing.JFrame  {
 				txtNameDepart.setBounds(1103, 65, 126, 38);
 				DepartmentContainer.add(txtNameDepart);
 				
-				txtNOEDepart = new JTextField();
-				txtNOEDepart.setFont(new Font("Century Gothic", Font.PLAIN, 14));
-				txtNOEDepart.setColumns(10);
-				txtNOEDepart.setBounds(1103, 110, 126, 38);
-				DepartmentContainer.add(txtNOEDepart);
-				
 				JLabel lblNewLabel_1_5_1_2_1 = new JLabel("Name Department:");
 				lblNewLabel_1_5_1_2_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				lblNewLabel_1_5_1_2_1.setBounds(965, 61, 130, 38);
 				DepartmentContainer.add(lblNewLabel_1_5_1_2_1);
-				
-				JLabel lblNewLabel_1_5_1_2_1_1 = new JLabel("Number Of Employees:");
-				lblNewLabel_1_5_1_2_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
-				lblNewLabel_1_5_1_2_1_1.setBounds(941, 110, 163, 36);
-				DepartmentContainer.add(lblNewLabel_1_5_1_2_1_1);
 				
 				txtIdDepartmentDetails = new JTextField();
 				txtIdDepartmentDetails.setBounds(696, 242, 126, 38);
@@ -728,18 +755,18 @@ public class Main extends javax.swing.JFrame  {
 				DepartmentContainer.add(btnDetails_1_1_1);
 				
 				animation1.setBackground(crimson);
-				animation1.setBounds(980, 59, 70, 3);
+				animation1.setBounds(980, 79, 70, 3);
 				contentPane.add(animation1);
 				
 			
 				animation2.setBackground(crimson);
-				animation2.setBounds(1101, 59, 70, 3);
+				animation2.setBounds(1101, 79, 70, 3);
 				contentPane.add(animation2);
 				
 				animation3.setBackground(crimson);
-				animation3.setBounds(1237, 59, 70, 3);
+				animation3.setBounds(1237, 79, 70, 3);
 				contentPane.add(animation3);
-				HRcontainer.setBounds(10, 68, 1350, 470);
+				HRcontainer.setBounds(10, 88, 1332, 470);
 				contentPane.add(HRcontainer);
 				HRcontainer.setLayout(null);
 				
@@ -959,17 +986,25 @@ public class Main extends javax.swing.JFrame  {
 				HRcontainer.add(btnHmHaveJoined);
 				
 				JPanel panel = new JPanel();
-				panel.setBorder(new LineBorder(new Color(0, 0, 0), 2));
-				panel.setBounds(515, 11, 342, 51);
+				panel.setBorder(new LineBorder(crimson, 2));
+				panel.setBounds(515, 31, 342, 51);
 				contentPane.add(panel);
 				panel.setLayout(null);
 				HRcontainer.setVisible(true);
-				panel.setBackground(new Color(247, 150, 30));
+				panel.setBackground(Color.WHITE);
+				
 				
 				JLabel lblNewLabel_5 = new JLabel("New label");
 				lblNewLabel_5.setIcon(new ImageIcon(Main.class.getResource("/ConnData/vkubgggs-removebg-preview.png")));
 				lblNewLabel_5.setBounds(20, 585, 560, 95);
 				contentPane.add(lblNewLabel_5);
+				
+				JPanel panel_1 = new JPanel();
+				panel_1.setBackground(ADD);
+				panel_1.setBounds(2, 2, 1348, 21);
+				contentPane.add(panel_1);
+				panel_1.setLayout(null);
+				
 				
 				ProjectContainer.setVisible(false);
 			DepartmentContainer.setVisible(false);
@@ -977,8 +1012,63 @@ public class Main extends javax.swing.JFrame  {
 		showData(ConnJDBC.findAll());
 		showDataPR(ConnJDBC.findAllPR());
 		showDataDP(ConnJDBC.findAllDP());
+		panel_1.add(miniButton);
+		miniButton.setBackground(ADD);
+		miniButton.setFocusPainted(false);
 		
+		JButton btnNewButton_1 = new JButton("X");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		btnNewButton_1.addMouseListener(new java.awt.event.MouseAdapter() {
+		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+		    	btnNewButton_1.setBackground(ADD);
+		    }
+		    public void mouseExited(java.awt.event.MouseEvent evt) {
+		    	btnNewButton_1.setBackground(ADD);
+		    }
+		});
+		btnNewButton_1.setContentAreaFilled(false);
+		btnNewButton_1.setForeground(Color.WHITE);
+		btnNewButton_1.setFont(new Font("Century Gothic", Font.PLAIN, 19));
+		btnNewButton_1.setBounds(1315, -3, 32, 23);
+		btnNewButton_1.setFocusPainted(false);
+		btnNewButton_1.setBackground(ADD);
+		btnNewButton_1.setBorder(null);
+		panel_1.add(btnNewButton_1);
+		
+		lblNewLabel_4.setFont(new Font("Century Gothic", Font.PLAIN, 13));
 	
+		lblNewLabel_4.setBounds(145, 67, 96, 21);
+		contentPane.add(lblNewLabel_4);
+		
+		 
+		lblNewLabel_4_2.setFont(new Font("Century Gothic", Font.PLAIN, 13));
+		lblNewLabel_4_2.setBounds(235, 67, 149, 21);
+		contentPane.add(lblNewLabel_4_2);
+		
+		lblNewLabel_4_3.setFont(new Font("Century Gothic", Font.PLAIN, 13));
+		lblNewLabel_4_3.setBounds(394, 67, 111, 21);
+		contentPane.add(lblNewLabel_4_3);
+		this.setLocationRelativeTo(null);
+		
+		table.addMouseListener(new MouseAdapter() {
+		@Override
+			public void mouseClicked(MouseEvent e) {
+				try {
+					int row = table.getSelectedRow();
+					String id =(table.getModel().getValueAt(row, 0).toString());
+					String name =(table.getModel().getValueAt(row, 1).toString());
+					input = id;
+					Update2(input);
+				
+				} catch (Exception z) {
+					// TODO: handle exception
+				}
+			}
+		});
 	}
 	public class CirclePanel extends JPanel {
 
@@ -988,6 +1078,34 @@ public class Main extends javax.swing.JFrame  {
 	    }
 	}
 	
+	public void Update2(String st) {
+		String query = "select * from humanresource where idHumanResource = '" + st + "'";
+		 try {
+			 Connection connection = ConnJDBC.getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+				while(rs.next()) {
+					String gender;
+			    	if(rs.getInt("gender")==0)gender="Male";
+			    	else {gender="Female";}
+					txtIDHM.setText(rs.getString("idHumanResource"));
+					txtName.setText(rs.getString("name"));
+					txtAge.setText(String.valueOf(rs.getInt("age")));
+					cbGender.setSelectedItem(gender);
+					txtAddress.setText(rs.getString("address"));
+					txtPosition.setText(rs.getString("Position"));
+					txtPart.setText(rs.getString("part"));
+					txtWorkDay.setText(String.valueOf(rs.getInt("workDay")));
+					txtEmail.setText(rs.getString("email"));
+					textIdProject.setText(rs.getString("idProject"));
+					textIDDP.setText(rs.getString("idDepartment"));
+				}
+		} catch (Exception e) {
+			// TODO: handle exception	
+			JOptionPane.showMessageDialog(null, "Not Found! ");
+		}
+		
+	 }	
 	public static void showData(List<HR>studentl) {
 		List<HR>listStudent=new ArrayList<>();
 		listStudent=studentl;
@@ -1073,18 +1191,9 @@ class HintTextField extends JTextField implements FocusListener {
   public String getText() {
     return showingHint ? "" : super.getText();
   }
+	
+	
 }
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

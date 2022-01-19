@@ -29,6 +29,9 @@ public class DetailsHR extends JFrame {
 	private static JTable table;
 	private JTextField txtFindName;
 	private JLabel lblNewLabel;
+	private JLabel lblId;
+	private JTextField txtFindIdHumanResource;
+	private JTextField txtFindAge;
 
 	/**
 	 * Launch the application.
@@ -95,30 +98,59 @@ public class DetailsHR extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				HR st = new HR();
 				
-				if(txtFindName.getText().length()==0){
+				if(txtFindName.getText().length()==0 && txtFindIdHumanResource.getText().length() == 0 && txtFindAge.getText().length() == 0){
 					showDataDetailsHR(ConnJDBC.findAll());
 				} else {
-					st.setName(txtFindName.getText());
+					if(txtFindIdHumanResource.getText().length() > 0) {
+						st.setIdHumanResource(txtFindIdHumanResource.getText());
+					}
+					if(txtFindName.getText().length() > 0) {
+						st.setName(txtFindName.getText());
+					}
+					if(txtFindAge.getText().length()>0) {
+						st.setAge(Integer.parseInt(txtFindAge.getText()));
+					}
+					
 					showDataDetailsHR(ConnJDBC.findByName(st));
 				}
 				
 			}
 		});
 		btnFindName.setFont(new Font("Century Schoolbook", Font.PLAIN, 16));
-		btnFindName.setBounds(393, 444, 170, 49);
+		btnFindName.setBounds(419, 450, 118, 41);
 		contentPane.add(btnFindName);
 		btnFindName.setBackground(new Color(167, 190, 174));
 		
 		txtFindName = new JTextField();
-		txtFindName.setBounds(409, 392, 128, 41);
+		txtFindName.setBounds(315, 392, 128, 41);
 		contentPane.add(txtFindName);
 		txtFindName.setColumns(10);
 		
 		lblNewLabel = new JLabel("Name");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setBounds(331, 392, 81, 41);
+		lblNewLabel.setBounds(252, 392, 81, 41);
 		contentPane.add(lblNewLabel);
-		contentPane.setBackground(new Color(230, 232, 210));
+		contentPane.setBackground(Color.WHITE);
+		
+		lblId = new JLabel("ID");
+		lblId.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblId.setBounds(42, 392, 81, 41);
+		contentPane.add(lblId);
+		
+		txtFindIdHumanResource = new JTextField();
+		txtFindIdHumanResource.setColumns(10);
+		txtFindIdHumanResource.setBounds(93, 392, 128, 41);
+		contentPane.add(txtFindIdHumanResource);
+		
+		txtFindAge = new JTextField();
+		txtFindAge.setColumns(10);
+		txtFindAge.setBounds(544, 392, 128, 41);
+		contentPane.add(txtFindAge);
+		
+		JLabel lblAge = new JLabel("Age");
+		lblAge.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAge.setBounds(475, 392, 81, 41);
+		contentPane.add(lblAge);
 		showDataDetailsHR(ConnJDBC.findAll());
 	}
 	public static void showDataDetailsHR(List<HR>studentl) {

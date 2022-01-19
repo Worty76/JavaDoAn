@@ -134,14 +134,14 @@ public class Main extends javax.swing.JFrame  {
 			public void run() {
 				try {
 				
-//					IDandPasswords idandPasswords = new IDandPasswords();
-//					
-//					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
-//					SplashScreen frame = new SplashScreen();
+					IDandPasswords idandPasswords = new IDandPasswords();
+					
+					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
+
+
+//					Main frame = new Main();
 //					frame.setVisible(true);
-					Main frame = new Main();
-					frame.setVisible(true);
-					frame.setTitle("Human Resource Management");
+//					frame.setTitle("Human Resource Management");
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -155,7 +155,7 @@ public class Main extends javax.swing.JFrame  {
 	 * Create the frame.
 	 */
 //String userID
-	public Main() {
+	public Main(String userID) {
 		
 		this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -184,7 +184,7 @@ public class Main extends javax.swing.JFrame  {
 		lblNewLabel.setBounds(515, 31, 342, 51);
 		contentPane.add(lblNewLabel);
 		JLabel lblNewLabel_3 = new JLabel("Hello!");
-		lblNewLabel_3.setText("Hello ");
+		lblNewLabel_3.setText("Hello " + userID);
 		lblNewLabel_3.setFont(new Font("Century Gothic", Font.PLAIN, 19));
 		lblNewLabel_3.setBounds(32, 39, 163, 36);
 	
@@ -278,7 +278,13 @@ public class Main extends javax.swing.JFrame  {
 					try {
 						if(HRcontainer.isVisible()) {
 							
+					if(txtIDHM.getText().length() == 0 || txtName.getText().length() ==0 || txtAge.getText().length() == 0 || txtAddress.getText().length() == 0 
+						|| txtPosition.getText().length() == 0 || txtPart.getText().length() == 0 || txtWorkDay.getText().length()==0 ||txtEmail.getText().length() ==0  ) 
+					{
 					
+						JOptionPane.showMessageDialog(null, "missing fields");
+						
+					} else {
 						HR st = new HR();
 						st.setIdHumanResource(txtIDHM.getText());
 						st.setName(txtName.getText());
@@ -305,32 +311,46 @@ public class Main extends javax.swing.JFrame  {
 						showDataPR(ConnJDBC.findAllPR());
 						showDataDP(ConnJDBC.findAllDP());
 						lblNewLabel_4_2.setText("Human Resources: " + ConnJDBC.numberHR());
+					}
+						
 						} else {
 						
 							if(ProjectContainer.isVisible()) {
-							Project st = new Project();
-							st.setIdProject(txtIdProject.getText());
-							st.setNameProject(txtNameProject.getText());
-//							st.setNOE(Integer.parseInt(txtNOE.getText()));
-							st.setStartingDay(txtStartingDay.getText());
-							st.setEndingDay(txtEndingDay.getText());
-							ConnJDBC.insertPR(st);
-							showDataPR(ConnJDBC.findAllPR());
-							lblNewLabel_4.setText("Projects: " + ConnJDBC.numberPR());
+								if(txtIdProject.getText().length()==0 || txtNameProject.getText().length() ==0 || txtStartingDay.getText().length()==0 || txtEndingDay.getText().length() ==0 ) {
+								JOptionPane.showMessageDialog(null, "missing fields");
+								} else {
+										Project st = new Project();
+										st.setIdProject(txtIdProject.getText());
+										st.setNameProject(txtNameProject.getText());
+//								st.setNOE(Integer.parseInt(txtNOE.getText()));
+										st.setStartingDay(txtStartingDay.getText());
+										st.setEndingDay(txtEndingDay.getText());
+										ConnJDBC.insertPR(st);
+										showDataPR(ConnJDBC.findAllPR());
+										lblNewLabel_4.setText("Projects: " + ConnJDBC.numberPR());
+								}
+						
+							
 							} else {
-								Department st = new Department();
-								st.setIdDepartment(txtIdDepart.getText());
-								st.setNameDepartment(txtNameDepart.getText());
+									
+								if(txtIdDepart.getText().length()==0 || txtNameDepart.getText().length() ==0) {
+									JOptionPane.showMessageDialog(null, "missing fields");
+									
+								} else {
+										Department st = new Department();
+										st.setIdDepartment(txtIdDepart.getText());
+										st.setNameDepartment(txtNameDepart.getText());
 //								st.setNumbersOfEmployeesDepart(Integer.parseInt(txtNOEDepart.getText()));			
-								ConnJDBC.insertDP(st);
-								showDataDP(ConnJDBC.findAllDP());
-								lblNewLabel_4_3.setText("Departments: " + ConnJDBC.numberDP());
+										ConnJDBC.insertDP(st);
+										showDataDP(ConnJDBC.findAllDP());
+										lblNewLabel_4_3.setText("Departments: " + ConnJDBC.numberDP());
+								}
+							
 							}
 							
 						}
 					} catch (Exception e2) {
-					
-						
+						JOptionPane.showMessageDialog(null, e2.getMessage());
 					}
 				}
 			});
@@ -498,7 +518,7 @@ public class Main extends javax.swing.JFrame  {
 								
 							} catch (Exception e2) {
 								// TODO: handle exception
-								
+								JOptionPane.showMessageDialog(null, e2.getMessage());
 							}
 						
 					}
@@ -606,8 +626,7 @@ public class Main extends javax.swing.JFrame  {
 						DetailsProject.DetailsEmsJoinedProject.showDataThoseWhoJoinedProject(ConnJDBC.findAllThoseInTheProject(st));
 						frame.setVisible(true);
 						frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-					}
-						
+					}	
 					}
 				});
 				
@@ -1052,7 +1071,7 @@ public class Main extends javax.swing.JFrame  {
 		contentPane.add(lblNewLabel_4_2);
 		
 		lblNewLabel_4_3.setFont(new Font("Century Gothic", Font.PLAIN, 13));
-		lblNewLabel_4_3.setBounds(394, 67, 111, 21);
+		lblNewLabel_4_3.setBounds(383, 67, 111, 21);
 		contentPane.add(lblNewLabel_4_3);
 		this.setLocationRelativeTo(null);
 		
@@ -1062,7 +1081,6 @@ public class Main extends javax.swing.JFrame  {
 				try {
 					int row = table.getSelectedRow();
 					String id =(table.getModel().getValueAt(row, 0).toString());
-				
 					input = id;
 					UpdateFieldsHR(input);
 				

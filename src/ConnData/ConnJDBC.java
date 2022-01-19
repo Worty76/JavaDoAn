@@ -81,7 +81,7 @@ public class ConnJDBC {
 			 pstmt.setString(11, st.getIdDepartment());
 			 pstmt.execute();
 		 } catch (Exception e ) {	
-			 JOptionPane.showMessageDialog(null, "Duplicating idhm or invalid idProject or idDepartment or missing fields or invalid fields", "Error", JOptionPane.ERROR_MESSAGE);
+			 JOptionPane.showMessageDialog(null, "Duplicating idhm or invalid idProject or idDepartment", "Error", JOptionPane.ERROR_MESSAGE);
 			 System.out.println("rr here");
 		 }
 	 } 
@@ -120,7 +120,7 @@ public class ConnJDBC {
 
 	 public static List<HR> findByName(HR s) {
 		 List<HR> studentl = new ArrayList<>();
-		 String query = "SELECT * FROM humanresource where name='"+ s.getName() + "'";
+		 String query = "SELECT * FROM humanresource where idHumanResource='"+ s.getIdHumanResource() + "' or name ='" + s.getName() + "'";
 		 
 //		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
 //			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;
@@ -299,7 +299,7 @@ public class ConnJDBC {
 			 pstmt.execute();
 		 } catch (Exception e ) {	
 			 
-			 System.out.println("rr here");
+			 JOptionPane.showMessageDialog(null, e.getMessage());
 		 }
 	 } 
 	 public static List<Department> findAllDP(){

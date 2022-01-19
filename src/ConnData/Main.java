@@ -9,6 +9,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -119,9 +120,9 @@ public class Main extends javax.swing.JFrame  {
 	private JTextField txtEndingDay;
 	private static String input;
 	JComboBox cbGender = new JComboBox();
-	JLabel lblNewLabel_4 = new JLabel("Projects: 6");
-	JLabel lblNewLabel_4_2 = new JLabel("Human Resources: 7");
-	JLabel lblNewLabel_4_3 = new JLabel("Departments: 2");
+	JLabel lblNewLabel_4 = new JLabel("Projects: " + ConnJDBC.numberPR());
+	JLabel lblNewLabel_4_2 = new JLabel("Human resources: " + ConnJDBC.numberHR());
+	JLabel lblNewLabel_4_3 = new JLabel("Departments: " + ConnJDBC.numberDP());
 	/**
 	 * Launch the application.
 	 */
@@ -328,7 +329,7 @@ public class Main extends javax.swing.JFrame  {
 							
 						}
 					} catch (Exception e2) {
-						// TODO: handle exception
+					
 						
 					}
 				}
@@ -433,7 +434,8 @@ public class Main extends javax.swing.JFrame  {
 							if(DepartmentContainer.isVisible()) {
 								txtIdDepart.setText("");
 								txtNameDepart.setText("");
-								
+								txtStartingDay.setText("");
+								txtEndingDay.setText("");
 							} else {
 								txtIdProject.setText("");
 								txtNameProject.setText("");
@@ -653,14 +655,14 @@ public class Main extends javax.swing.JFrame  {
 				txtEndingDay.setBounds(1113, 161, 129, 36);
 				ProjectContainer.add(txtEndingDay);
 				
-				JLabel lblNewLabel_1_5_1_1_1_1 = new JLabel("Starting Day");
+				JLabel lblNewLabel_1_5_1_1_1_1 = new JLabel("Starting Day:");
 				lblNewLabel_1_5_1_1_1_1.setFont(new Font("Century Gothic", Font.BOLD, 14));
-				lblNewLabel_1_5_1_1_1_1.setBounds(952, 112, 159, 36);
+				lblNewLabel_1_5_1_1_1_1.setBounds(1012, 112, 99, 36);
 				ProjectContainer.add(lblNewLabel_1_5_1_1_1_1);
 				
-				JLabel lblNewLabel_1_5_1_1_1_2 = new JLabel("Ending Day");
+				JLabel lblNewLabel_1_5_1_1_1_2 = new JLabel("Ending Day:");
 				lblNewLabel_1_5_1_1_1_2.setFont(new Font("Century Gothic", Font.BOLD, 14));
-				lblNewLabel_1_5_1_1_1_2.setBounds(952, 161, 159, 36);
+				lblNewLabel_1_5_1_1_1_2.setBounds(1012, 161, 99, 36);
 				ProjectContainer.add(lblNewLabel_1_5_1_1_1_2);
 				
 				
@@ -1060,16 +1062,45 @@ public class Main extends javax.swing.JFrame  {
 				try {
 					int row = table.getSelectedRow();
 					String id =(table.getModel().getValueAt(row, 0).toString());
-					String name =(table.getModel().getValueAt(row, 1).toString());
+				
 					input = id;
-					Update2(input);
+					UpdateFieldsHR(input);
 				
 				} catch (Exception z) {
 					// TODO: handle exception
 				}
 			}
 		});
+		table_1.addMouseListener(new MouseAdapter() {
+			@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+						int row = table_1.getSelectedRow();
+						String id =(table_1.getModel().getValueAt(row, 0).toString());
+						input = id;
+						UpdateFieldsPR(input);
+					
+					} catch (Exception z) {
+						// TODO: handle exception
+					}
+				}
+			});
+		table_2.addMouseListener(new MouseAdapter() {
+			@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+						int row = table_2.getSelectedRow();
+						String id =(table_2.getModel().getValueAt(row, 0).toString());
+						input = id;
+						UpdateFieldsDP(input);
+					
+					} catch (Exception z) {
+						// TODO: handle exception
+					}
+				}
+			});
 	}
+
 	public class CirclePanel extends JPanel {
 
 	    @Override
@@ -1078,7 +1109,7 @@ public class Main extends javax.swing.JFrame  {
 	    }
 	}
 	
-	public void Update2(String st) {
+	public void UpdateFieldsHR(String st) {
 		String query = "select * from humanresource where idHumanResource = '" + st + "'";
 		 try {
 			 Connection connection = ConnJDBC.getConnection();
@@ -1104,7 +1135,42 @@ public class Main extends javax.swing.JFrame  {
 			// TODO: handle exception	
 			JOptionPane.showMessageDialog(null, "Not Found! ");
 		}
-		
+	 }	
+	
+	public void UpdateFieldsPR(String st) {
+		String query = "select * from projects where idProject = '" + st + "'";
+		 try {
+			 Connection connection = ConnJDBC.getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+				while(rs.next()) {
+				
+					txtIdProject.setText(rs.getString("idProject"));
+					txtNameProject.setText(rs.getString("nameProject"));
+					txtStartingDay.setText(rs.getString("startingDay"));
+					txtEndingDay.setText(rs.getString("endingDay"));
+				}
+		} catch (Exception e) {
+			// TODO: handle exception	
+			JOptionPane.showMessageDialog(null, "Not Found! ");
+		}
+	 }	
+	public void UpdateFieldsDP(String st) {
+		String query = "select * from department where idDepartment = '" + st + "'";
+		 try {
+			 Connection connection = ConnJDBC.getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+				while(rs.next()) {
+					
+					txtIdDepart.setText(rs.getString("idDepartment"));
+					txtNameDepart.setText(rs.getString("nameDepartment"));
+				
+				}
+		} catch (Exception e) {
+			// TODO: handle exception	
+			JOptionPane.showMessageDialog(null, "Not Found! ");
+		}
 	 }	
 	public static void showData(List<HR>studentl) {
 		List<HR>listStudent=new ArrayList<>();

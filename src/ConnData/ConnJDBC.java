@@ -358,6 +358,29 @@ public class ConnJDBC {
 		 }
 		 return projectList;
 	 }
+	 
+	 public static List<Project> findAllProjectsEnded(){
+		 List<Project> projectList = new ArrayList<>();
+		 String query = "SELECT * from projects where endingDay < GETDATE()";
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 Project st = new Project(
+						 rs.getString("idProject"),
+						 rs.getString("nameProject"),
+						 rs.getInt("numberOfEmployees"),
+						 rs.getString("startingDay"),
+						 rs.getString("endingDay")
+						 );
+				 projectList.add(st);
+			 }
+		 } catch(Exception e){
+			 
+		 }
+		 return projectList;
+	 }
 // ------------------------------------------------------------------ crud department-------------------------------------------------------------
 	 
 	 public static void insertDP(Department st) {

@@ -50,6 +50,7 @@ import com.mysql.jdbc.PreparedStatement;
 import DetailsDepartment.DetailsEmsJoinedDepartment;
 import DetailsProject.DetailsEmsJoinedProject;
 import DetailsProject.DetailsInformationProject;
+import DetailsProject.ProjectsEnded;
 import Detailshumanresource.DetailsHR;
 import Detailshumanresource.HMhavejoined;
 import Detailshumanresource.HMhaventjoined;
@@ -594,7 +595,7 @@ public class Main extends javax.swing.JFrame  {
 				lblNewLabel_2.setFont(new Font("Century Gothic", Font.BOLD, 11));
 				lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 				contentPane.add(lblNewLabel_2);
-				ProjectContainer.setBounds(10, 88, 1332, 470);
+				ProjectContainer.setBounds(10, 68, 1332, 470);
 				contentPane.add(ProjectContainer);
 				ProjectContainer.setLayout(null);
 				
@@ -678,7 +679,7 @@ public class Main extends javax.swing.JFrame  {
 				btnEmployeesInThe.setForeground(Color.BLACK);
 				btnEmployeesInThe.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 				btnEmployeesInThe.setBackground(redirect);
-				btnEmployeesInThe.setBounds(841, 295, 231, 36);
+				btnEmployeesInThe.setBounds(841, 295, 223, 36);
 				ProjectContainer.add(btnEmployeesInThe);
 				
 				JButton btnDetails_1_1 = new JButton("Details Project");
@@ -691,7 +692,7 @@ public class Main extends javax.swing.JFrame  {
 					}
 				});
 				btnDetails_1_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-				btnDetails_1_1.setBounds(841, 248, 231, 36);
+				btnDetails_1_1.setBounds(841, 248, 152, 36);
 				btnDetails_1_1.setBackground(redirect);
 				ProjectContainer.add(btnDetails_1_1);
 				
@@ -727,6 +728,20 @@ public class Main extends javax.swing.JFrame  {
 				lblNewLabel_1_5_1_1_1_2.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				lblNewLabel_1_5_1_1_1_2.setBounds(1012, 161, 99, 36);
 				ProjectContainer.add(lblNewLabel_1_5_1_1_1_2);
+				
+				JButton btnDetails_1_1_2 = new JButton("Projects ended");
+				btnDetails_1_1_2.setForeground(Color.BLACK);
+				btnDetails_1_1_2.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+				btnDetails_1_1_2.setBackground(new Color(217, 215, 241));
+				btnDetails_1_1_2.setBounds(841, 201, 152, 36);
+				btnDetails_1_1_2.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ProjectsEnded frame = new ProjectsEnded();
+						frame.setVisible(true);
+						frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+					}
+				});
+				ProjectContainer.add(btnDetails_1_1_2);
 				
 				
 				DepartmentContainer.setBounds(10, 88, 1320, 471);

@@ -70,19 +70,19 @@ public class LoginPage  implements ActionListener{
 		 ImageIcon icon = new ImageIcon(LoginPage.class.getResource("imgoldman.jpg"));
 		
 		
-		JLabel lblHumanResourceManagement = new JLabel("HUMAN RESOURCE MANAGEMENT");
+		JLabel lblHumanResourceManagement = new JLabel("HUMAN RESOURCE MANAGEMENT SYSTEM");
 		lblHumanResourceManagement.setBounds(159, 90, 493, 35);
 		panel_1.add(lblHumanResourceManagement);
 		lblHumanResourceManagement.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHumanResourceManagement.setForeground(Color.WHITE);
+		lblHumanResourceManagement.setForeground(Color.RED);
 		lblHumanResourceManagement.setFont(new Font("Century Gothic", Font.BOLD, 24));
 		
 			
 			
-			JLabel lblNewLabel = new JLabel("SYSTEM");
+			JLabel lblNewLabel = new JLabel("VKU");
 			lblNewLabel.setBounds(303, 55, 198, 35);
 			panel_1.add(lblNewLabel);
-			lblNewLabel.setForeground(Color.WHITE);
+			lblNewLabel.setForeground(Color.ORANGE);
 			lblNewLabel.setFont(new Font("Century Gothic", Font.BOLD, 24));
 			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			
@@ -202,9 +202,9 @@ public class LoginPage  implements ActionListener{
 					frame.dispose();
 //					WelcomePage welcomePage = new WelcomePage(userID);
 					try {
-						Main frame = new Main(userID);
-						frame.setVisible(true);
-						frame.setTitle("Human Resource Management");
+//						Main frame = new Main(userID);
+//						frame.setVisible(true);
+//						frame.setTitle("Human Resource Management");
 					} catch (Exception x) {
 						x.printStackTrace();
 					}

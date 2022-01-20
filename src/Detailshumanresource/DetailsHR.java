@@ -29,8 +29,6 @@ public class DetailsHR extends JFrame {
 	private static JTable table;
 	private JTextField txtFindName;
 	private JLabel lblNewLabel;
-	private JLabel lblId;
-	private JTextField txtFindIdHumanResource;
 	private JTextField txtFindAge;
 
 	/**
@@ -98,20 +96,21 @@ public class DetailsHR extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				HR st = new HR();
 				
-				if(txtFindName.getText().length()==0 && txtFindIdHumanResource.getText().length() == 0 && txtFindAge.getText().length() == 0){
+				if(txtFindName.getText().length()==0 && txtFindAge.getText().length() == 0){
 					showDataDetailsHR(ConnJDBC.findAll());
 				} else {
-					if(txtFindIdHumanResource.getText().length() > 0) {
-						st.setIdHumanResource(txtFindIdHumanResource.getText());
-					}
-					if(txtFindName.getText().length() > 0) {
+					if( txtFindName.getText().length() > 0 && txtFindAge.getText().length()>0 ) {
+				
 						st.setName(txtFindName.getText());
-					}
-					if(txtFindAge.getText().length()>0) {
 						st.setAge(Integer.parseInt(txtFindAge.getText()));
+						showDataDetailsHR(ConnJDBC.findHell3(st));
+					}
+					else if( txtFindName.getText().length() > 0 && txtFindAge.getText().length() == 0) {
+						st.setName(txtFindName.getText());
+						showDataDetailsHR(ConnJDBC.findHell2(st));
 					}
 					
-					showDataDetailsHR(ConnJDBC.findByName(st));
+					
 				}
 				
 			}
@@ -131,16 +130,6 @@ public class DetailsHR extends JFrame {
 		lblNewLabel.setBounds(252, 392, 81, 41);
 		contentPane.add(lblNewLabel);
 		contentPane.setBackground(Color.WHITE);
-		
-		lblId = new JLabel("ID");
-		lblId.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblId.setBounds(42, 392, 81, 41);
-		contentPane.add(lblId);
-		
-		txtFindIdHumanResource = new JTextField();
-		txtFindIdHumanResource.setColumns(10);
-		txtFindIdHumanResource.setBounds(93, 392, 128, 41);
-		contentPane.add(txtFindIdHumanResource);
 		
 		txtFindAge = new JTextField();
 		txtFindAge.setColumns(10);

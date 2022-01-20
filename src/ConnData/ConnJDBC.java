@@ -120,7 +120,7 @@ public class ConnJDBC {
 
 	 public static List<HR> findByName(HR s) {
 		 List<HR> studentl = new ArrayList<>();
-		 String query = "SELECT * FROM humanresource where idHumanResource='"+ s.getIdHumanResource() + "' or name ='" + s.getName() + "'";
+		 String query = "SELECT * FROM humanresource where name ='" + s.getName() + "'";
 		 
 //		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
 //			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;
@@ -272,6 +272,9 @@ public class ConnJDBC {
 	 }
 
 	 public static void UpdatePR(Project st) {
+
+		 
+
 			String query = "Update projects set nameProject=?, numberOfEmployees=? where idProject = '" + st.getIdProject() + "'";			
 			 try {
 				Connection connection = getConnection();
@@ -285,6 +288,76 @@ public class ConnJDBC {
 			}
 		 }	
 	 
+	 public static List<Project> findbyNameProject(Project s) {
+		 List<Project> projectList = new ArrayList<>();
+		 String query = "SELECT * FROM projects where nameProject ='" + s.getNameProject() + "'";
+		 
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 Project st = new Project(
+						 rs.getString("idProject"),
+						 rs.getString("nameProject"),
+						 rs.getInt("numberOfEmployees"),
+						 rs.getString("startingDay"),
+						 rs.getString("endingDay")
+						 );
+						 projectList.add(st);
+			 }	
+		 } catch(Exception e){
+			 
+		 }
+		 return projectList;
+	 }
+	 
+	 public static List<Project> findbyStartingDay(Project s) {
+		 List<Project> projectList = new ArrayList<>();
+		 String query = "SELECT * FROM projects where nameProject ='" + s.getNameProject() + "'and startingDay = '" + s.getStartingDay() + "'";
+		 
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 Project st = new Project(
+						 rs.getString("idProject"),
+						 rs.getString("nameProject"),
+						 rs.getInt("numberOfEmployees"),
+						 rs.getString("startingDay"),
+						 rs.getString("endingDay")
+						 );
+						 projectList.add(st);
+			 }	
+		 } catch(Exception e){
+			 
+		 }
+		 return projectList;
+	 }
+	 public static List<Project> findbyEndingDay(Project s) {
+		 List<Project> projectList = new ArrayList<>();
+		 String query = "SELECT * FROM projects where nameProject ='" + s.getNameProject() + "'and startingDay = '" + s.getStartingDay() + "' and endingDay = '" + s.getEndingDay() + "'";
+		 
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 Project st = new Project(
+						 rs.getString("idProject"),
+						 rs.getString("nameProject"),
+						 rs.getInt("numberOfEmployees"),
+						 rs.getString("startingDay"),
+						 rs.getString("endingDay")
+						 );
+						 projectList.add(st);
+			 }	
+		 } catch(Exception e){
+			 
+		 }
+		 return projectList;
+	 }
 // ------------------------------------------------------------------ crud department-------------------------------------------------------------
 	 
 	 public static void insertDP(Department st) {
@@ -348,6 +421,27 @@ public class ConnJDBC {
 				JOptionPane.showMessageDialog(null, "Not Found! ");
 			}
 		 }	
+	 public static List<Department> findbyNameDepartment(Department s) {
+		 List<Department> departmentList  = new ArrayList<>();
+		 String query = "SELECT * FROM department where nameDepartment ='" + s.getNameDepartment() + "'";
+		 
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 Department st = new Department(
+						 rs.getString("idDepartment"),
+						 rs.getString("nameDepartment"),
+						 rs.getInt("numberOfEmployeesDepart")
+						 );
+				 departmentList.add(st);
+			 }	
+		 } catch(Exception e){
+			 
+		 }
+		 return departmentList;
+	 }
 	 
 	 
 	 
@@ -464,4 +558,84 @@ public class ConnJDBC {
 	
 	 
 	 
+	//------------------------------------------------------FIND HELL --------------------------------------------------------------------------
+	 //------------------------------------------------------WARNING!------------------------------------------------------------------------------
+
+	 public static List<HR> findHell2(HR s) {
+		 List<HR> studentl = new ArrayList<>();
+		 String query = "SELECT * FROM humanresource where name ='" + s.getName() + "' and age = " + s.getAge() + "";
+		 
+//		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
+//			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 HR st = new HR(rs.getString("idHumanResource"),rs.getString("name"),rs.getInt("age"),
+						 rs.getInt("gender"),rs.getString("address"),rs.getString("position"), rs.getString("part"), rs.getInt("workDay"), rs.getString("Email"), 
+						 rs.getString("idProject"), rs.getString("idDepartment"));
+				 studentl.add(st);
+			 }	
+		 } catch(Exception e){
+			 
+		 }
+		 return studentl;
+	 }
+
+	 public static List<HR> findHell3(HR s) {
+		 List<HR> studentl = new ArrayList<>();
+		 String query = "SELECT * FROM humanresource where name ='" + s.getName() + "' and age = " + s.getAge() + " and address = '" + s.getAddress() + "'";
+		  
+//		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
+//			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 HR st = new HR(rs.getString("idHumanResource"),rs.getString("name"),rs.getInt("age"),
+						 rs.getInt("gender"),rs.getString("address"),rs.getString("position"), rs.getString("part"), rs.getInt("workDay"), rs.getString("Email"), 
+						 rs.getString("idProject"), rs.getString("idDepartment"));
+				 studentl.add(st);
+			 }	
+		 } catch(Exception e){
+			 
+		 }
+		 return studentl;
+	 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

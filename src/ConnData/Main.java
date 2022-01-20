@@ -134,14 +134,14 @@ public class Main extends javax.swing.JFrame  {
 			public void run() {
 				try {
 				
-					IDandPasswords idandPasswords = new IDandPasswords();
-					
-					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
+//					IDandPasswords idandPasswords = new IDandPasswords();
+//					
+//					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
 
 
-//					Main frame = new Main();
-//					frame.setVisible(true);
-//					frame.setTitle("Human Resource Management");
+					Main frame = new Main();
+					frame.setVisible(true);
+					frame.setTitle("Human Resource Management");
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -155,7 +155,7 @@ public class Main extends javax.swing.JFrame  {
 	 * Create the frame.
 	 */
 //String userID
-	public Main(String userID) {
+	public Main() {
 		
 		this.addComponentListener(new ComponentAdapter() {
             @Override
@@ -184,7 +184,7 @@ public class Main extends javax.swing.JFrame  {
 		lblNewLabel.setBounds(515, 31, 342, 51);
 		contentPane.add(lblNewLabel);
 		JLabel lblNewLabel_3 = new JLabel("Hello!");
-		lblNewLabel_3.setText("Hello " + userID);
+		lblNewLabel_3.setText("Hello ");
 		lblNewLabel_3.setFont(new Font("Century Gothic", Font.PLAIN, 19));
 		lblNewLabel_3.setBounds(32, 39, 163, 36);
 	
@@ -418,14 +418,58 @@ public class Main extends javax.swing.JFrame  {
 			btnFind.setBounds(1025, 662, 93, 36);
 			btnFind.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+				
+				if(HRcontainer.isVisible()) {
 					HR st = new HR();
-					
-					if(txtName.getText().length()==0){
+					if(txtName.getText().length()==0 && txtAge.getText().length() == 0 && txtAddress.getText().length()==0){
 						showData(ConnJDBC.findAll());
-					} else {
+					} else if (txtName.getText().length() > 0 && txtAge.getText().length() > 0 && txtAddress.getText().length() >0){
+						st.setName(txtName.getText());
+						st.setAge(Integer.parseInt(txtAge.getText()));
+						st.setAddress(txtAddress.getText());
+						showData(ConnJDBC.findHell3(st));
+					} else if (txtName.getText().length() > 0 && txtAge.getText().length() == 0 && txtAddress.getText().length() == 0) {
 						st.setName(txtName.getText());
 						showData(ConnJDBC.findByName(st));
+					} else if (txtName.getText().length() > 0 && txtAge.getText().length() > 0 && txtAddress.getText().length() == 0) {
+						st.setName(txtName.getText());
+						st.setAge(Integer.parseInt(txtAge.getText()));
+						showData(ConnJDBC.findHell2(st));
 					}
+				} else {
+					if(ProjectContainer.isVisible()) {
+						Project st = new Project();
+						if(txtNameProject.getText().length() == 0 && txtStartingDay.getText().length() == 0 && txtEndingDay.getText().length()==0) {
+							showDataPR(ConnJDBC.findAllPR());
+						} 
+						else if (txtNameProject.getText().length() > 0 && txtStartingDay.getText().length() == 0 && txtEndingDay.getText().length()==0) {
+							st.setNameProject(txtNameProject.getText());
+							showDataPR(ConnJDBC.findbyNameProject(st));
+						}
+						else if (txtNameProject.getText().length() > 0 && txtStartingDay.getText().length() > 0 && txtEndingDay.getText().length()==0) {
+							st.setNameProject(txtNameProject.getText());
+							st.setStartingDay(txtStartingDay.getText());
+							showDataPR(ConnJDBC.findbyStartingDay(st));
+						}
+						else if (txtNameProject.getText().length() > 0 && txtStartingDay.getText().length() > 0 && txtEndingDay.getText().length()>0) {
+							st.setNameProject(txtNameProject.getText());
+							st.setStartingDay(txtStartingDay.getText());
+							st.setEndingDay(txtEndingDay.getText());
+							showDataPR(ConnJDBC.findbyEndingDay(st));
+						}
+					} else if (DepartmentContainer.isVisible()) {
+							
+							if(txtNameDepart.getText().length() == 0) {
+								showDataDP(ConnJDBC.findAllDP());
+							} else if (txtNameDepart.getText().length() > 0) {
+								Department st = new Department();
+								st.setNameDepartment(txtNameDepart.getText());
+								showDataDP(ConnJDBC.findbyNameDepartment(st));
+							}
+					}
+					
+				}
+					
 					
 				}
 			
@@ -1241,9 +1285,6 @@ public class Main extends javax.swing.JFrame  {
 	    }
 	}
 	
-	
-	
-
 class HintTextField extends JTextField implements FocusListener {
 
   private final String hint;

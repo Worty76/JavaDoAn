@@ -52,6 +52,7 @@ public class CheckYesNoDP extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		YesImSureDP.setForeground(Color.WHITE);
 		
 		
 	
@@ -59,6 +60,7 @@ public class CheckYesNoDP extends JFrame {
 		YesImSureDP.setBounds(28, 124, 163, 33);
 		YesImSureDP.setBackground(new Color(220, 20, 60));
 		contentPane.add(YesImSureDP);
+		NoIWillConsiderDP.setForeground(Color.WHITE);
 		
 		
 		

@@ -99,7 +99,20 @@ public class ConnJDBC {
 	 }
 	
 	 public static void Update(HR st) {
-		String query = "ALTER TABLE humanresource NOCHECK CONSTRAINT ALL; Update humanresource set name=?,age=?,gender=?,address=?,position=?,part=?,workDay=?,Email=?,idProject='" + st.getIdProject() + "', idDepartment='" + st.getIdDepartment() + "'  where idHumanResource='"+st.getIdHumanResource()+"'; ALTER TABLE humanresource CHECK CONSTRAINT ALL;";
+		 String s = st.getIdProject();
+		 String z = st.getIdDepartment();
+		 String query = "";
+		 if(s == "NULL" && z == "NULL") {
+			 query = "ALTER TABLE humanresource NOCHECK CONSTRAINT ALL; Update humanresource set name=?,age=?,gender=?,address=?,position=?,part=?,workDay=?,Email=?,idProject=" + st.getIdProject() + ", idDepartment=" + st.getIdDepartment() + "  where idHumanResource='"+st.getIdHumanResource()+"'; ALTER TABLE humanresource CHECK CONSTRAINT ALL;";
+		 } else if(s != "NULL" && z == "NULL") {
+				query = "ALTER TABLE humanresource NOCHECK CONSTRAINT ALL; Update humanresource set name=?,age=?,gender=?,address=?,position=?,part=?,workDay=?,Email=?,idProject='" + st.getIdProject() + "', idDepartment=" + st.getIdDepartment() + "  where idHumanResource='"+st.getIdHumanResource()+"'; ALTER TABLE humanresource CHECK CONSTRAINT ALL;";
+
+		 } else if(s == "NULL" && z != "NULL") {
+				query = "ALTER TABLE humanresource NOCHECK CONSTRAINT ALL; Update humanresource set name=?,age=?,gender=?,address=?,position=?,part=?,workDay=?,Email=?,idProject=" + st.getIdProject() + ", idDepartment='" + st.getIdDepartment() + "'  where idHumanResource='"+st.getIdHumanResource()+"'; ALTER TABLE humanresource CHECK CONSTRAINT ALL;";
+
+		 } else if(s != "NULL" && z != "NULL") {
+				query = "ALTER TABLE humanresource NOCHECK CONSTRAINT ALL; Update humanresource set name=?,age=?,gender=?,address=?,position=?,part=?,workDay=?,Email=?,idProject='" + st.getIdProject() + "', idDepartment='" + st.getIdDepartment() + "'  where idHumanResource='"+st.getIdHumanResource()+"'; ALTER TABLE humanresource CHECK CONSTRAINT ALL;";
+		 };
 		
 		 try {
 			Connection connection = getConnection();
@@ -141,7 +154,7 @@ public class ConnJDBC {
 	 }
 	 public static List<HR> findByName(HR s) {
 		 List<HR> studentl = new ArrayList<>();
-		 String query = "SELECT * FROM humanresource where name like'" + s.getName() + "%'";
+		 String query = "SELECT * FROM humanresource where name like'%" + s.getName() + "%'";
 		 
 //		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
 //			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;
@@ -298,22 +311,19 @@ public class ConnJDBC {
 	 }
 
 	 public static void UpdatePR(Project st) {
-
-	
-
 			String query = "Update projects set nameProject=?,startingDay=?,endingDay=? where idProject = '" + st.getIdProject() + "'";			
 			 try {
 				 
-				Connection connection = getConnection();
-				PreparedStatement pstmt= connection.prepareStatement(query);
+				 Connection connection = getConnection();
+				 PreparedStatement pstmt= connection.prepareStatement(query);
 				 pstmt.setString(1, st.getNameProject());
-				  String s = st.getStartingDay();
-				  Date d = Date.valueOf(s);
+				 String s = st.getStartingDay();
+				 Date d = Date.valueOf(s);
 				 pstmt.setDate(2, d);
 				 String z = st.getEndingDay();
 				 Date c = Date.valueOf(z);
 				 pstmt.setDate(3, c);
-				pstmt.executeUpdate();
+				 pstmt.executeUpdate();
 			} catch (Exception e) {
 				// TODO: handle exception	
 				JOptionPane.showMessageDialog(null, "Not Found! ");
@@ -333,8 +343,8 @@ public class ConnJDBC {
 						 rs.getString("idProject"),
 						 rs.getString("nameProject"),
 						 rs.getInt("numberOfEmployees"),
-						 rs.getString("startingDay"),
-						 rs.getString("endingDay")
+						 rs.getString("endingDay"),
+						 rs.getString("startingDay")
 						 );
 						 projectList.add(st);
 			 }	
@@ -351,13 +361,17 @@ public class ConnJDBC {
 			 Connection connection = getConnection();
 			 Statement stmt = connection.createStatement();
 			 ResultSet rs=stmt.executeQuery(query);
+			 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 			 while(rs.next()) {
+				 String z = sdf2.format(sdf.parse(rs.getString("startingDay")));
+				 String d = sdf2.format(sdf.parse(rs.getString("endingDay")));
 				 Project st = new Project(
 						 rs.getString("idProject"),
 						 rs.getString("nameProject"),
 						 rs.getInt("numberOfEmployees"),
-						 rs.getString("startingDay"),
-						 rs.getString("endingDay")
+						 z,
+						 d
 						 );
 						 projectList.add(st);
 			 }	
@@ -368,14 +382,19 @@ public class ConnJDBC {
 	 }
 	 
 	 public static List<Project> findbyStartingDay(Project s) {
+		 
 		 List<Project> projectList = new ArrayList<>();
-		 String query = "SELECT * FROM projects where nameProject like '" + s.getNameProject() + "%'and startingDay like '" + s.getStartingDay() + "%'";
+		 String query = "SELECT * FROM projects where nameProject like '%" + s.getNameProject() + "%'and startingDay like '%" + s.getStartingDay() + "%'";
 		 
 		 try {
 			 Connection connection = getConnection();
 			 Statement stmt = connection.createStatement();
 			 ResultSet rs=stmt.executeQuery(query);
+			 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 			 while(rs.next()) {
+				 String z = sdf2.format(sdf.parse(rs.getString("startingDay")));
+				 String d = sdf2.format(sdf.parse(rs.getString("endingDay")));
 				 Project st = new Project(
 						 rs.getString("idProject"),
 						 rs.getString("nameProject"),
@@ -392,19 +411,23 @@ public class ConnJDBC {
 	 }
 	 public static List<Project> findbyEndingDay(Project s) {
 		 List<Project> projectList = new ArrayList<>();
-		 String query = "SELECT * FROM projects where nameProject like'" + s.getNameProject() + "%'and startingDay like '" + s.getStartingDay() + "%' and endingDay like '" + s.getEndingDay() + "%'";
+		 String query = "SELECT * FROM projects where nameProject like '%" + s.getNameProject() + "%'and startingDay like '%" + s.getStartingDay() + "%' and endingDay like '%" + s.getEndingDay() + "%'";
 		 
 		 try {
 			 Connection connection = getConnection();
 			 Statement stmt = connection.createStatement();
 			 ResultSet rs=stmt.executeQuery(query);
+			 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 			 while(rs.next()) {
+				 String z = sdf2.format(sdf.parse(rs.getString("startingDay")));
+				 String d = sdf2.format(sdf.parse(rs.getString("endingDay")));
 				 Project st = new Project(
 						 rs.getString("idProject"),
 						 rs.getString("nameProject"),
 						 rs.getInt("numberOfEmployees"),
-						 rs.getString("startingDay"),
-						 rs.getString("endingDay")
+						 z,
+						 d
 						 );
 						 projectList.add(st);
 			 }	

@@ -369,7 +369,7 @@ public class Main extends javax.swing.JFrame  {
 					
 	                    if(HRcontainer.isVisible()) {
 	                    	CheckYesNoHR frame = new CheckYesNoHR(input);
-	                    	
+	                    	frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	    					frame.setVisible(true);
 	                    	CheckYesNoHR.NoIWillConsiderHR.addActionListener(new ActionListener() {
 	                			public void actionPerformed(ActionEvent e) {
@@ -391,7 +391,7 @@ public class Main extends javax.swing.JFrame  {
 	                    } else {
 	                    	if(ProjectContainer.isVisible()) {
 	                    		CheckYesNoPR frame = new CheckYesNoPR(input);
-		                    	
+	                    		frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		    					frame.setVisible(true);
 		    					CheckYesNoPR.NoIWillConsiderPR.addActionListener(new ActionListener() {
 		                			public void actionPerformed(ActionEvent e) {
@@ -412,7 +412,7 @@ public class Main extends javax.swing.JFrame  {
 	                    		
 	                    	} else {
 								CheckYesNoDP frame = new CheckYesNoDP(input);
-		                    	
+								frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		    					frame.setVisible(true);
 		    					CheckYesNoDP.NoIWillConsiderDP.addActionListener(new ActionListener() {
 		                			public void actionPerformed(ActionEvent e) {
@@ -469,6 +469,8 @@ public class Main extends javax.swing.JFrame  {
 					}
 				} else {
 					if(ProjectContainer.isVisible()) {
+						SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+						SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 						Project st = new Project();
 						if(txtNameProject.getText().length() == 0 && txtStartingDay.getText().length() == 0 && txtEndingDay.getText().length()==0) {
 							showDataPR(ConnJDBC.findAllPR());
@@ -478,15 +480,32 @@ public class Main extends javax.swing.JFrame  {
 							showDataPR(ConnJDBC.findbyNameProject(st));
 						}
 						else if (txtNameProject.getText().length() > 0 && txtStartingDay.getText().length() > 0 && txtEndingDay.getText().length()==0) {
-							st.setNameProject(txtNameProject.getText());
-							st.setStartingDay(txtStartingDay.getText());
-							showDataPR(ConnJDBC.findbyStartingDay(st));
+							try {
+								
+								String z = sdf2.format(sdf.parse(txtStartingDay.getText()));
+								st.setNameProject(txtNameProject.getText());
+								st.setStartingDay(z);
+								showDataPR(ConnJDBC.findbyStartingDay(st));
+								
+							} catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
 						}
 						else if (txtNameProject.getText().length() > 0 && txtStartingDay.getText().length() > 0 && txtEndingDay.getText().length()>0) {
-							st.setNameProject(txtNameProject.getText());
-							st.setStartingDay(txtStartingDay.getText());
-							st.setEndingDay(txtEndingDay.getText());
-							showDataPR(ConnJDBC.findbyEndingDay(st));
+							 try {
+								String z = sdf2.format(sdf.parse(txtStartingDay.getText()));
+								String d = sdf2.format(sdf.parse(txtEndingDay.getText()));
+								st.setNameProject(txtNameProject.getText());
+								st.setStartingDay(z);
+								st.setEndingDay(d);
+								showDataPR(ConnJDBC.findbyEndingDay(st));
+							 } catch (ParseException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
 						}
 					} else if (DepartmentContainer.isVisible()) {
 							
@@ -564,8 +583,19 @@ public class Main extends javax.swing.JFrame  {
 								st.setPart(txtPart.getText());
 								st.setWorkDay(Integer.parseInt(txtWorkDay.getText()));
 								st.setEmail(txtEmail.getText());
-								st.setIdProject(textIdProject.getText());
+								if(textIdProject.getText().length()==0 && textIDDP.getText().length()==0) {
+									st.setIdProject("NULL");
+									st.setIdDepartment("NULL");
+								} else if (textIdProject.getText().length()>0 && textIDDP.getText().length()==0) {
+									st.setIdProject(textIdProject.getText());
+									st.setIdDepartment("NULL");
+								} else if (textIdProject.getText().length()==0 && textIDDP.getText().length()>0) {
+									st.setIdProject("NULL");
+									st.setIdDepartment(textIDDP.getText());
+								} else if ( textIdProject.getText().length()>0 && textIDDP.getText().length()>0 ) {
+										st.setIdProject(textIdProject.getText());
 								st.setIdDepartment(textIDDP.getText());
+								}
 								ConnJDBC.Update(st);
 								showData(ConnJDBC.findAll());
 		 	  					showDataPR(ConnJDBC.findAllPR());   
@@ -1221,8 +1251,6 @@ public class Main extends javax.swing.JFrame  {
 			 ResultSet rs=stmt.executeQuery(query);
 			 
 				while(rs.next()) {
-				
-					
 					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 					SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 					txtIdProject.setText(rs.getString("idProject"));

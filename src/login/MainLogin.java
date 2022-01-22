@@ -16,7 +16,7 @@ public class MainLogin {
 	
 	public static void main(String[] args) { 		
 		 SwingUtilities.invokeLater(() -> { 
-	       
+			 
  	IDandPasswords idandPasswords = new IDandPasswords();
 		LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
 		 }); 

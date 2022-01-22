@@ -3,6 +3,7 @@ package DetailsProject;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -17,6 +18,9 @@ import ConnData.Project;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import javax.swing.SwingConstants;
 
 public class DetailsInformationProject extends JFrame {
@@ -32,8 +36,8 @@ public class DetailsInformationProject extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DetailsInformationProject frame = new DetailsInformationProject();
-					frame.setVisible(true);
+//					DetailsInformationProject frame = new DetailsInformationProject();
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -105,12 +109,23 @@ public class DetailsInformationProject extends JFrame {
 		table.getModel();
 	    tableModel=(DefaultTableModel)table.getModel();
 	    tableModel.setRowCount(0);
-	    
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 	    projectList1.forEach((project) -> { 
+	    	String startingDay;
+	    	String endingDay;
+			try {
+				startingDay = sdf.format(sdf2.parse(project.getStartingDay()));
+				endingDay = sdf.format(sdf2.parse(project.getEndingDay()));
 				tableModel.addRow(new Object [] {
-	    			project.getIdProject(),project.getNameProject(),
-	    		project.getNOE(), project.getStartingDay(), project.getEndingDay()
-	    	});
+		    			project.getIdProject(),project.getNameProject(),
+		    		project.getNOE(), startingDay, endingDay
+		    	});
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+				
 			
 	    });
 	    }

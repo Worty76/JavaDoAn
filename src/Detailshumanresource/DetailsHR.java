@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class DetailsHR extends JFrame {
 
@@ -30,6 +31,7 @@ public class DetailsHR extends JFrame {
 	private JTextField txtFindName;
 	private JLabel lblNewLabel;
 	private JTextField txtFindAge;
+	private JTextField txtFindAddress;
 
 	/**
 	 * Launch the application.
@@ -58,35 +60,35 @@ public class DetailsHR extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(42, 38, 860, 343);
+		scrollPane.setBounds(10, 62, 918, 352);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
+				{null, null, null, null, null, null},
 			},
 			new String[] {
-				"idHumanResource", "Name", "Address", "WorkDay", "Email"
+				"idHumanResource", "Name", "Age", "Address", "WorkDay", "Email"
 			}
 		));
 		scrollPane.setViewportView(table);
@@ -96,18 +98,24 @@ public class DetailsHR extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				HR st = new HR();
 				
-				if(txtFindName.getText().length()==0 && txtFindAge.getText().length() == 0){
+				if(txtFindName.getText().length()==0 && txtFindAge.getText().length() == 0 && txtFindAddress.getText().length() ==0){
 					showDataDetailsHR(ConnJDBC.findAll());
 				} else {
-					if( txtFindName.getText().length() > 0 && txtFindAge.getText().length()>0 ) {
+					if( txtFindName.getText().length() > 0 && txtFindAge.getText().length()>0 &&  txtFindAddress.getText().length() >0) {
 				
 						st.setName(txtFindName.getText());
 						st.setAge(Integer.parseInt(txtFindAge.getText()));
+						st.setAddress(txtFindAddress.getText());
 						showDataDetailsHR(ConnJDBC.findHell3(st));
 					}
-					else if( txtFindName.getText().length() > 0 && txtFindAge.getText().length() == 0) {
+					else if( txtFindName.getText().length() > 0 && txtFindAge.getText().length() > 0 && txtFindAddress.getText().length() == 0 ) {
 						st.setName(txtFindName.getText());
+						st.setAge(Integer.parseInt(txtFindAge.getText()));
 						showDataDetailsHR(ConnJDBC.findHell2(st));
+					} 
+					else if ( txtFindName.getText().length() > 0 && txtFindAge.getText().length() == 0 && txtFindAddress.getText().length() == 0 ) {
+						st.setName(txtFindName.getText());
+						showDataDetailsHR(ConnJDBC.findByName(st));
 					}
 					
 					
@@ -116,30 +124,46 @@ public class DetailsHR extends JFrame {
 			}
 		});
 		btnFindName.setFont(new Font("Century Schoolbook", Font.PLAIN, 16));
-		btnFindName.setBounds(419, 450, 118, 41);
+		btnFindName.setBounds(419, 476, 118, 41);
 		contentPane.add(btnFindName);
 		btnFindName.setBackground(new Color(167, 190, 174));
 		
 		txtFindName = new JTextField();
-		txtFindName.setBounds(315, 392, 128, 41);
+		txtFindName.setBounds(181, 425, 128, 41);
 		contentPane.add(txtFindName);
 		txtFindName.setColumns(10);
 		
 		lblNewLabel = new JLabel("Name");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblNewLabel.setBounds(252, 392, 81, 41);
+		lblNewLabel.setBounds(114, 425, 81, 41);
 		contentPane.add(lblNewLabel);
 		contentPane.setBackground(Color.WHITE);
 		
 		txtFindAge = new JTextField();
 		txtFindAge.setColumns(10);
-		txtFindAge.setBounds(544, 392, 128, 41);
+		txtFindAge.setBounds(409, 424, 128, 41);
 		contentPane.add(txtFindAge);
 		
 		JLabel lblAge = new JLabel("Age");
 		lblAge.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAge.setBounds(475, 392, 81, 41);
+		lblAge.setBounds(349, 424, 81, 41);
 		contentPane.add(lblAge);
+		
+		txtFindAddress = new JTextField();
+		txtFindAddress.setColumns(10);
+		txtFindAddress.setBounds(664, 425, 128, 41);
+		contentPane.add(txtFindAddress);
+		
+		JLabel lblAddress = new JLabel("Address");
+		lblAddress.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAddress.setBounds(581, 423, 81, 41);
+		contentPane.add(lblAddress);
+		
+		JLabel lblNewLabel_1 = new JLabel("employee details");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Century Gothic", Font.PLAIN, 19));
+		lblNewLabel_1.setBounds(275, 11, 360, 40);
+		contentPane.add(lblNewLabel_1);
 		showDataDetailsHR(ConnJDBC.findAll());
 	}
 	public static void showDataDetailsHR(List<HR>studentl) {
@@ -152,7 +176,7 @@ public class DetailsHR extends JFrame {
 	    listStudent.forEach((student) -> { 
 	
 	    	tableModel.addRow(new Object [] {
-	    		student.getIdHumanResource(), student.getName(), student.getAddress(), student.getWorkDay(), student.getEmail()
+	    		student.getIdHumanResource(), student.getName(), student.getAge(),student.getAddress(), student.getWorkDay(), student.getEmail()
 	    	});
 	    });
 	    }

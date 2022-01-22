@@ -17,11 +17,15 @@ import ConnData.HR;
 import ConnData.Project;
 
 import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class ProjectsEnded extends JFrame {
 
 	private JPanel contentPane;
 	private static JTable table;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -44,7 +48,7 @@ public class ProjectsEnded extends JFrame {
 	 */
 	public ProjectsEnded() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 671, 448);
+		setBounds(100, 100, 671, 472);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,7 +56,7 @@ public class ProjectsEnded extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 40, 635, 358);
+		scrollPane.setBounds(10, 64, 635, 358);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -86,6 +90,12 @@ public class ProjectsEnded extends JFrame {
 			}
 		));
 		scrollPane.setViewportView(table);
+		
+		lblNewLabel = new JLabel("Projects ended");
+		lblNewLabel.setFont(new Font("Century Gothic", Font.PLAIN, 19));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(63, 11, 519, 42);
+		contentPane.add(lblNewLabel);
 		showDataProjectsEnded(ConnJDBC.findAllProjectsEnded());
 
 	

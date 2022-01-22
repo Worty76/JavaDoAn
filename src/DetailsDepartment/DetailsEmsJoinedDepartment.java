@@ -14,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 
 import ConnData.HR;
 import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class DetailsEmsJoinedDepartment extends JFrame {
 
@@ -41,7 +43,7 @@ public class DetailsEmsJoinedDepartment extends JFrame {
 	 */
 	public DetailsEmsJoinedDepartment() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 671, 448);
+		setBounds(100, 100, 671, 450);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,7 +51,7 @@ public class DetailsEmsJoinedDepartment extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 33, 635, 342);
+		scrollPane.setBounds(10, 58, 635, 342);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -83,6 +85,11 @@ public class DetailsEmsJoinedDepartment extends JFrame {
 			}
 		));
 		scrollPane.setViewportView(table);
+		
+		JLabel lblNewLabel = new JLabel("details of employees who participated in the project");
+		lblNewLabel.setFont(new Font("Century Gothic", Font.PLAIN, 19));
+		lblNewLabel.setBounds(92, 11, 493, 36);
+		contentPane.add(lblNewLabel);
 	}
 	public static void showDataThoseWhoJoinedDepartment(List<HR>studentl) {
 		List<HR>listStudent=new ArrayList<>();
@@ -101,5 +108,4 @@ public class DetailsEmsJoinedDepartment extends JFrame {
 	    	});
 	    });
 	    }
-
 }

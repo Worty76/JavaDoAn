@@ -54,7 +54,6 @@ import DetailsProject.ProjectsEnded;
 import Detailshumanresource.DetailsHR;
 import Detailshumanresource.HMhavejoined;
 import Detailshumanresource.HMhaventjoined;
-import Update.UpdateHR;
 import login.IDandPasswords;
 import login.LoginPage;
 import login.LoginPage.FrameDragListener;
@@ -87,7 +86,6 @@ public class Main extends javax.swing.JFrame  {
 	private JTextField txtPosition;
 	private JTextField txtAddress;
 	private static JTable table;
-	private static JTextField txtID;
 	private JTextField txtIDHM;
 	private static int result;
 	private static boolean check = false;
@@ -115,8 +113,6 @@ public class Main extends javax.swing.JFrame  {
 	JPanel animation1 = new JPanel();
 	JPanel animation3 = new JPanel();
 	JPanel animation2 = new JPanel();
-	private JTextField txtIdProjectDetails;
-	private JTextField txtIdDepartmentDetails;
 	private JTextField txtStartingDay;
 	private JTextField txtEndingDay;
 	private static String input;
@@ -134,7 +130,7 @@ public class Main extends javax.swing.JFrame  {
 			
 			public void run() {
 				try {
-				
+//				
 //					IDandPasswords idandPasswords = new IDandPasswords();
 //					
 //					LoginPage loginPage = new LoginPage(idandPasswords.getLoginInfo());
@@ -143,7 +139,7 @@ public class Main extends javax.swing.JFrame  {
 					Main frame = new Main();
 					frame.setVisible(true);
 					frame.setTitle("Human Resource Management");
-					
+				
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -164,13 +160,16 @@ public class Main extends javax.swing.JFrame  {
                  setShape(new RoundRectangle2D.Double(0, 0, getWidth(), getHeight(), 5, 5));
              }
          });
+		
 		setUndecorated(true);
+		
 		 FrameDragListener frameDragListener = new FrameDragListener(this);
 		 this.addMouseListener(frameDragListener);
 		 this.addMouseMotionListener(frameDragListener);
-	
+		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 1352, 709);
+		
 		contentPane = new JPanel();
 		contentPane.setBackground(myWhite);
 		contentPane.setBorder(new LineBorder(ADD, 2, true));
@@ -220,6 +219,7 @@ public class Main extends javax.swing.JFrame  {
 		    	miniButton.setBackground(ADD);
 		    }
 		});
+		
 		miniButton.setBorder(null);
 		miniButton.setForeground(Color.WHITE);
 		miniButton.setFont(new Font("Century Gothic", Font.PLAIN, 33));
@@ -366,45 +366,75 @@ public class Main extends javax.swing.JFrame  {
 			btnDelete.addActionListener(new ActionListener() {
 				   @Override
 				public void actionPerformed(ActionEvent e) {
-					   Object[] options = {"Có, chắc rồi", "Không, tôi đã thay đổi ý định"};
-	                 result = JOptionPane.showOptionDialog(null,
-	                        "Bạn có chắc muốn xoá nhân sự này",
-	                        "Xác nhận",
-	                        JOptionPane.YES_NO_CANCEL_OPTION,
-	                        JOptionPane.QUESTION_MESSAGE,
-	                        null,
-	                        options,
-	                        options[0]);
-	                if(result == JOptionPane.YES_OPTION){
+					
 	                    if(HRcontainer.isVisible()) {
-	                    	 HR st=new HR();
-	 	  					st.setIdHumanResource(txtID.getText());
-	 	  					ConnJDBC.delete(st);		 
-	 	  					showData(ConnJDBC.findAll()); 
-	 	  					showDataPR(ConnJDBC.findAllPR());   
-                    		showDataDP(ConnJDBC.findAllDP()); 
-                    		lblNewLabel_4_2.setText("Human resources: " + ConnJDBC.numberHR());
+	                    	CheckYesNoHR frame = new CheckYesNoHR(input);
+	                    	
+	    					frame.setVisible(true);
+	                    	CheckYesNoHR.NoIWillConsiderHR.addActionListener(new ActionListener() {
+	                			public void actionPerformed(ActionEvent e) {
+	                				
+	                				frame.dispose();
+	                			}
+	                		});
+	                    	CheckYesNoHR.YesImSureHR.addActionListener(new ActionListener() {
+	                			public void actionPerformed(ActionEvent e) {
+	                				ConnJDBC.delete(input);		 
+			 	  					showData(ConnJDBC.findAll()); 
+			 	  					showDataPR(ConnJDBC.findAllPR());   
+		                    		showDataDP(ConnJDBC.findAllDP()); 
+		                    		lblNewLabel_4_2.setText("Human resources: " + ConnJDBC.numberHR());
+		                    		frame.dispose();
+	                			}
+	                		});
+	 	  					
 	                    } else {
 	                    	if(ProjectContainer.isVisible()) {
-	                    		Project st = new Project();
-	                    		st.setIdProject(txtID.getText());
-	                    		ConnJDBC.deletePR(st);
-	                    		showDataPR(ConnJDBC.findAllPR());   
-	                    		showDataDP(ConnJDBC.findAllDP()); 
-	                    		showData(ConnJDBC.findAll()); 
-	                    		lblNewLabel_4.setText("Projects: " + ConnJDBC.numberPR());
+	                    		CheckYesNoPR frame = new CheckYesNoPR(input);
+		                    	
+		    					frame.setVisible(true);
+		    					CheckYesNoPR.NoIWillConsiderPR.addActionListener(new ActionListener() {
+		                			public void actionPerformed(ActionEvent e) {
+		                				
+		                				frame.dispose();
+		                			}
+		                		});
+		    					CheckYesNoPR.YesImSurePR.addActionListener(new ActionListener() {
+		                			public void actionPerformed(ActionEvent e) {
+		                				ConnJDBC.deletePR(input);
+			                    		showDataPR(ConnJDBC.findAllPR());   
+			                    		showDataDP(ConnJDBC.findAllDP()); 
+			                    		showData(ConnJDBC.findAll()); 
+			                    		lblNewLabel_4.setText("Projects: " + ConnJDBC.numberPR());
+			                    		frame.dispose();
+		                			}
+		                		});
+	                    		
 	                    	} else {
-	                    		Department st = new Department();
-	                    		st.setIdDepartment(txtID.getText());
-	                    		ConnJDBC.deleteDP(st);		 
-		 	  					showData(ConnJDBC.findAll()); 
-		 	  					showDataPR(ConnJDBC.findAllPR());   
-	                    		showDataDP(ConnJDBC.findAllDP()); 
-	                    		lblNewLabel_4_3.setText("Departments: " + ConnJDBC.numberDP());
+								CheckYesNoDP frame = new CheckYesNoDP(input);
+		                    	
+		    					frame.setVisible(true);
+		    					CheckYesNoDP.NoIWillConsiderDP.addActionListener(new ActionListener() {
+		                			public void actionPerformed(ActionEvent e) {
+		                				
+		                				frame.dispose();
+		                			}
+		                		});
+		    					CheckYesNoDP.YesImSureDP.addActionListener(new ActionListener() {
+		                			public void actionPerformed(ActionEvent e) {
+		                				ConnJDBC.deleteDP(input);		 
+				 	  					showData(ConnJDBC.findAll()); 
+				 	  					showDataPR(ConnJDBC.findAllPR());   
+			                    		showDataDP(ConnJDBC.findAllDP()); 
+			                    		lblNewLabel_4_3.setText("Departments: " + ConnJDBC.numberDP());
+			                    		frame.dispose();
+		                			}
+		                		});
+	                    		
 
 	                    	}
 	                    }
-	                }
+	                
 				}
 			});
 			
@@ -499,11 +529,12 @@ public class Main extends javax.swing.JFrame  {
 							if(DepartmentContainer.isVisible()) {
 								txtIdDepart.setText("");
 								txtNameDepart.setText("");
-								txtStartingDay.setText("");
-								txtEndingDay.setText("");
+								
 							} else {
 								txtIdProject.setText("");
 								txtNameProject.setText("");
+								txtStartingDay.setText("");
+								txtEndingDay.setText("");
 								
 							}
 						}
@@ -545,6 +576,8 @@ public class Main extends javax.swing.JFrame  {
 									st.setIdProject(txtIdProject.getText());
 									st.setNameProject(txtNameProject.getText());
 //									st.setNOE(Integer.parseInt(txtNOE.getText()));
+									st.setStartingDay(txtStartingDay.getText());
+									st.setEndingDay(txtEndingDay.getText());
 									ConnJDBC.UpdatePR(st);
 									showData(ConnJDBC.findAll());
 			 	  					showDataPR(ConnJDBC.findAllPR());   
@@ -583,19 +616,7 @@ public class Main extends javax.swing.JFrame  {
 				btnExit.setFont(new Font("Century Gothic", Font.BOLD, 14));
 				contentPane.add(btnExit);
 				btnExit.setBackground(new Color(217, 215, 241));
-				txtID = new JTextField();
-				txtID.setBounds(1231, 585, 96, 21);
-				txtID.setHorizontalAlignment(SwingConstants.CENTER);
-				txtID.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-				contentPane.add(txtID);
-				txtID.setColumns(10);
-				
-				JLabel lblNewLabel_2 = new JLabel("ID to delete");
-				lblNewLabel_2.setBounds(1240, 570, 75, 14);
-				lblNewLabel_2.setFont(new Font("Century Gothic", Font.BOLD, 11));
-				lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
-				contentPane.add(lblNewLabel_2);
-				ProjectContainer.setBounds(10, 68, 1332, 470);
+				ProjectContainer.setBounds(10, 88, 1332, 470);
 				contentPane.add(ProjectContainer);
 				ProjectContainer.setLayout(null);
 				
@@ -662,24 +683,20 @@ public class Main extends javax.swing.JFrame  {
 				JButton btnEmployeesInThe = new JButton("Employees in the project");
 				btnEmployeesInThe.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-					if(txtIdProjectDetails.getText().length() == 0){
-					JOptionPane.showMessageDialog(null, "you have not filled the field yet!");
-					} else { 
-							DetailsEmsJoinedProject frame = new DetailsEmsJoinedProject();
-						HR st = new HR();
-						st.setIdProject(txtIdProjectDetails.getText());
-						DetailsProject.DetailsEmsJoinedProject.showDataThoseWhoJoinedProject(ConnJDBC.findAllThoseInTheProject(st));
+
+						DetailsEmsJoinedProject frame = new DetailsEmsJoinedProject(input);
+						DetailsProject.DetailsEmsJoinedProject.showDataThoseWhoJoinedProject(ConnJDBC.findAllThoseInTheProject(input));
 						frame.setVisible(true);
 						frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 					}	
 					}
-				});
+				);
 				
 				
 				btnEmployeesInThe.setForeground(Color.BLACK);
 				btnEmployeesInThe.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 				btnEmployeesInThe.setBackground(redirect);
-				btnEmployeesInThe.setBounds(841, 295, 223, 36);
+				btnEmployeesInThe.setBounds(696, 295, 244, 36);
 				ProjectContainer.add(btnEmployeesInThe);
 				
 				JButton btnDetails_1_1 = new JButton("Details Project");
@@ -692,28 +709,17 @@ public class Main extends javax.swing.JFrame  {
 					}
 				});
 				btnDetails_1_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
-				btnDetails_1_1.setBounds(841, 248, 152, 36);
+				btnDetails_1_1.setBounds(696, 248, 152, 36);
 				btnDetails_1_1.setBackground(redirect);
 				ProjectContainer.add(btnDetails_1_1);
 				
-				txtIdProjectDetails = new JTextField();
-				txtIdProjectDetails.setColumns(10);
-				txtIdProjectDetails.setBounds(719, 295, 112, 34);
-				ProjectContainer.add(txtIdProjectDetails);
-				
-				JLabel lblNewLabel_4_1 = new JLabel("ID Project");
-				lblNewLabel_4_1.setBounds(744, 265, 67, 36);
-				ProjectContainer.add(lblNewLabel_4_1);
-				
-				txtStartingDay = new HintTextField("yyyy-mm-dd");
+				txtStartingDay = new JTextField();
 				txtStartingDay.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtStartingDay.setColumns(10);
 				txtStartingDay.setBounds(1113, 112, 129, 36);
 				ProjectContainer.add(txtStartingDay);
 				
-				
-				
-				txtEndingDay = new HintTextField("yyyy-mm-dd");
+				txtEndingDay = new JTextField();
 				txtEndingDay.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				txtEndingDay.setColumns(10);
 				txtEndingDay.setBounds(1113, 161, 129, 36);
@@ -733,7 +739,7 @@ public class Main extends javax.swing.JFrame  {
 				btnDetails_1_1_2.setForeground(Color.BLACK);
 				btnDetails_1_1_2.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 				btnDetails_1_1_2.setBackground(new Color(217, 215, 241));
-				btnDetails_1_1_2.setBounds(841, 201, 152, 36);
+				btnDetails_1_1_2.setBounds(696, 201, 152, 36);
 				btnDetails_1_1_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						ProjectsEnded frame = new ProjectsEnded();
@@ -742,6 +748,11 @@ public class Main extends javax.swing.JFrame  {
 					}
 				});
 				ProjectContainer.add(btnDetails_1_1_2);
+				
+				JLabel lblNewLabel_6 = new JLabel("*dd-mm-yyyy");
+				lblNewLabel_6.setFont(new Font("Century Gothic", Font.PLAIN, 12));
+				lblNewLabel_6.setBounds(1169, 201, 177, 24);
+				ProjectContainer.add(lblNewLabel_6);
 				
 				
 				DepartmentContainer.setBounds(10, 88, 1320, 471);
@@ -802,36 +813,23 @@ public class Main extends javax.swing.JFrame  {
 				lblNewLabel_1_5_1_2_1.setBounds(965, 61, 130, 38);
 				DepartmentContainer.add(lblNewLabel_1_5_1_2_1);
 				
-				txtIdDepartmentDetails = new JTextField();
-				txtIdDepartmentDetails.setBounds(696, 242, 126, 38);
-				DepartmentContainer.add(txtIdDepartmentDetails);
-				txtIdDepartmentDetails.setColumns(10);
-				
-				JLabel lblnewLabelrandom = new JLabel("⁯ID Department");
-				lblnewLabelrandom.setHorizontalAlignment(SwingConstants.CENTER);
-				lblnewLabelrandom.setBounds(714, 220, 87, 20);
-				DepartmentContainer.add(lblnewLabelrandom);
-				
 				JButton btnDetails_1_1_1 = new JButton("Employees in Department");
 				btnDetails_1_1_1.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(txtIdDepartmentDetails.getText().length() == 0) {
-							JOptionPane.showMessageDialog(null, "you have not filled the field yet!");
-						} else { 
+						
 							DetailsEmsJoinedDepartment frame = new DetailsEmsJoinedDepartment();
-							HR st = new HR();
-							st.setIdDepartment(txtIdDepartmentDetails.getText());
-							DetailsDepartment.DetailsEmsJoinedDepartment.showDataThoseWhoJoinedDepartment(ConnJDBC.findAllThoseInTheDepartment(st));
+						
+							DetailsDepartment.DetailsEmsJoinedDepartment.showDataThoseWhoJoinedDepartment(ConnJDBC.findAllThoseInTheDepartment(input));
 							frame.setVisible(true);
 							frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 						}
 						
 					}
-				});
+				);
 				btnDetails_1_1_1.setForeground(Color.BLACK);
 				btnDetails_1_1_1.setFont(new Font("Century Gothic", Font.PLAIN, 16));
 				btnDetails_1_1_1.setBackground(redirect);
-				btnDetails_1_1_1.setBounds(832, 242, 233, 38);
+				btnDetails_1_1_1.setBounds(696, 242, 233, 38);
 				DepartmentContainer.add(btnDetails_1_1_1);
 				
 				animation1.setBackground(crimson);
@@ -1046,7 +1044,7 @@ public class Main extends javax.swing.JFrame  {
 				});
 				btnHmHaventJoin.setBackground(redirect);
 				btnHmHaventJoin.setForeground(Color.BLACK);
-				btnHmHaventJoin.setFont(new Font("Century Gothic", Font.PLAIN, 16));
+				btnHmHaventJoin.setFont(new Font("Century Gothic", Font.PLAIN, 14));
 				btnHmHaventJoin.setBounds(296, 375, 171, 36);
 				HRcontainer.add(btnHmHaventJoin);
 				
@@ -1215,17 +1213,22 @@ public class Main extends javax.swing.JFrame  {
 	 }	
 	
 	public void UpdateFieldsPR(String st) {
+	
 		String query = "select * from projects where idProject = '" + st + "'";
 		 try {
 			 Connection connection = ConnJDBC.getConnection();
 			 Statement stmt = connection.createStatement();
 			 ResultSet rs=stmt.executeQuery(query);
+			 
 				while(rs.next()) {
 				
+					
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 					txtIdProject.setText(rs.getString("idProject"));
 					txtNameProject.setText(rs.getString("nameProject"));
-					txtStartingDay.setText(rs.getString("startingDay"));
-					txtEndingDay.setText(rs.getString("endingDay"));
+					txtStartingDay.setText(sdf.format(sdf2.parse(rs.getString("startingDay"))));
+					txtEndingDay.setText(sdf.format(sdf2.parse(rs.getString("endingDay"))));
 				}
 		} catch (Exception e) {
 			// TODO: handle exception	
@@ -1239,10 +1242,8 @@ public class Main extends javax.swing.JFrame  {
 			 Statement stmt = connection.createStatement();
 			 ResultSet rs=stmt.executeQuery(query);
 				while(rs.next()) {
-					
 					txtIdDepart.setText(rs.getString("idDepartment"));
 					txtNameDepart.setText(rs.getString("nameDepartment"));
-				
 				}
 		} catch (Exception e) {
 			// TODO: handle exception	
@@ -1275,7 +1276,7 @@ public class Main extends javax.swing.JFrame  {
 	    table_1.getModel();
 	    tableModel=(DefaultTableModel)table_1.getModel();
 	    tableModel.setRowCount(0);
-	    
+	   
 	    projectList1.forEach((project) -> { 
 				tableModel.addRow(new Object [] {
 	    			project.getIdProject(),project.getNameProject(),project.getNOE()
@@ -1331,8 +1332,6 @@ class HintTextField extends JTextField implements FocusListener {
   public String getText() {
     return showingHint ? "" : super.getText();
   }
-	
-	
 }
 	
 	

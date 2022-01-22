@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -86,8 +87,8 @@ public class ConnJDBC {
 		 }
 	 } 
 
-	 public static void delete(HR st) {
-		 String query="delete from humanresource where idhumanresource ='"+ st.getIdHumanResource() + "'";
+	 public static void delete(String input) {
+		 String query="delete from humanresource where idhumanresource ='"+ input + "'";
 		try {
 			Connection connection = getConnection();
 			PreparedStatement pstmt=connection.prepareStatement(query);
@@ -117,10 +118,30 @@ public class ConnJDBC {
 			JOptionPane.showMessageDialog(null, "Not Found! ");
 		}
 	 }	
-
+	 public static List<HR> findById(String input) {
+		 List<HR> studentl = new ArrayList<>();
+		 String query = "SELECT * FROM humanresource where idHumanResource ='" + input + "'";
+		 
+//		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
+//			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 HR st = new HR(rs.getString("idHumanResource"),rs.getString("name"),rs.getInt("age"),
+						 rs.getInt("gender"),rs.getString("address"),rs.getString("position"), rs.getString("part"), rs.getInt("workDay"), rs.getString("Email"), 
+						 rs.getString("idProject"), rs.getString("idDepartment"));
+				 studentl.add(st);
+			 }	
+		 } catch(Exception e){
+			 
+		 }
+		 return studentl;
+	 }
 	 public static List<HR> findByName(HR s) {
 		 List<HR> studentl = new ArrayList<>();
-		 String query = "SELECT * FROM humanresource where name ='" + s.getName() + "'";
+		 String query = "SELECT * FROM humanresource where name like'" + s.getName() + "%'";
 		 
 //		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
 //			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;
@@ -207,9 +228,11 @@ public class ConnJDBC {
 				 Connection connection = getConnection();
 				 Statement stmt = connection.createStatement();
 				 ResultSet rs=stmt.executeQuery(query);
-				 while (rs.next()) {
+				if(rs.next()) {
 						rt = rs.getInt(1);
-				 };
+				 } else {
+					 
+				 }
 						 
 			} catch (Exception e) {
 				// TODO: handle exception	
@@ -221,17 +244,20 @@ public class ConnJDBC {
 	 
 	 public static void insertPR(Project st) {
 		 String query="insert into projects(idProject,nameProject,numberOfEmployees,startingDay,endingDay) values(?,?,?,?,?);";
-		 	 String s = st.getStartingDay();
-			 Date d = Date.valueOf(s);
-			 String z = st.getEndingDay();
-			 Date c = Date.valueOf(z);
+		 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		 SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+		 
 		 try {
 			 Connection connection = getConnection();
 			 PreparedStatement pstmt = connection.prepareStatement(query);
 			 pstmt.setString(1, st.getIdProject());
 			 pstmt.setString(2, st.getNameProject());
 			 pstmt.setInt(3, 0);
+			 String s = sdf2.format(sdf.parse(st.getStartingDay()));
+			 Date d = Date.valueOf(s);
 			 pstmt.setDate(4,d);
+			 String z = sdf2.format(sdf.parse(st.getEndingDay()));
+			 Date c = Date.valueOf(z);
 			 pstmt.setDate(5,c);
 			 pstmt.execute();
 		 } catch (Exception e ) {	
@@ -260,8 +286,8 @@ public class ConnJDBC {
 		 }
 		 return projectList;
 	 }
-	 public static void deletePR(Project st) {
-		 String query="delete from projects where idProject ='"+ st.getIdProject() + "'";
+	 public static void deletePR(String input) {
+		 String query="delete from projects where idProject ='"+ input + "'";
 		try {
 			Connection connection = getConnection();
 			PreparedStatement pstmt=connection.prepareStatement(query);
@@ -273,14 +299,20 @@ public class ConnJDBC {
 
 	 public static void UpdatePR(Project st) {
 
-		 
+	
 
-			String query = "Update projects set nameProject=?, numberOfEmployees=? where idProject = '" + st.getIdProject() + "'";			
+			String query = "Update projects set nameProject=?,startingDay=?,endingDay=? where idProject = '" + st.getIdProject() + "'";			
 			 try {
+				 
 				Connection connection = getConnection();
 				PreparedStatement pstmt= connection.prepareStatement(query);
 				 pstmt.setString(1, st.getNameProject());
-				 pstmt.setInt(2, st.getNOE());	
+				  String s = st.getStartingDay();
+				  Date d = Date.valueOf(s);
+				 pstmt.setDate(2, d);
+				 String z = st.getEndingDay();
+				 Date c = Date.valueOf(z);
+				 pstmt.setDate(3, c);
 				pstmt.executeUpdate();
 			} catch (Exception e) {
 				// TODO: handle exception	
@@ -288,9 +320,32 @@ public class ConnJDBC {
 			}
 		 }	
 	 
+	 public static List<Project> findbyIdProject(String input) {
+		 List<Project> projectList = new ArrayList<>();
+		 String query = "SELECT * FROM projects where idProject = '" + input + "'";
+		 
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 Project st = new Project(
+						 rs.getString("idProject"),
+						 rs.getString("nameProject"),
+						 rs.getInt("numberOfEmployees"),
+						 rs.getString("startingDay"),
+						 rs.getString("endingDay")
+						 );
+						 projectList.add(st);
+			 }	
+		 } catch(Exception e){
+			 
+		 }
+		 return projectList;
+	 }
 	 public static List<Project> findbyNameProject(Project s) {
 		 List<Project> projectList = new ArrayList<>();
-		 String query = "SELECT * FROM projects where nameProject ='" + s.getNameProject() + "'";
+		 String query = "SELECT * FROM projects where nameProject like '" + s.getNameProject() + "%'";
 		 
 		 try {
 			 Connection connection = getConnection();
@@ -314,7 +369,7 @@ public class ConnJDBC {
 	 
 	 public static List<Project> findbyStartingDay(Project s) {
 		 List<Project> projectList = new ArrayList<>();
-		 String query = "SELECT * FROM projects where nameProject ='" + s.getNameProject() + "'and startingDay = '" + s.getStartingDay() + "'";
+		 String query = "SELECT * FROM projects where nameProject like '" + s.getNameProject() + "%'and startingDay like '" + s.getStartingDay() + "%'";
 		 
 		 try {
 			 Connection connection = getConnection();
@@ -337,7 +392,7 @@ public class ConnJDBC {
 	 }
 	 public static List<Project> findbyEndingDay(Project s) {
 		 List<Project> projectList = new ArrayList<>();
-		 String query = "SELECT * FROM projects where nameProject ='" + s.getNameProject() + "'and startingDay = '" + s.getStartingDay() + "' and endingDay = '" + s.getEndingDay() + "'";
+		 String query = "SELECT * FROM projects where nameProject like'" + s.getNameProject() + "%'and startingDay like '" + s.getStartingDay() + "%' and endingDay like '" + s.getEndingDay() + "%'";
 		 
 		 try {
 			 Connection connection = getConnection();
@@ -362,6 +417,30 @@ public class ConnJDBC {
 	 public static List<Project> findAllProjectsEnded(){
 		 List<Project> projectList = new ArrayList<>();
 		 String query = "SELECT * from projects where endingDay < GETDATE()";
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 Project st = new Project(
+						 rs.getString("idProject"),
+						 rs.getString("nameProject"),
+						 rs.getInt("numberOfEmployees"),
+						 rs.getString("startingDay"),
+						 rs.getString("endingDay")
+						 );
+				 projectList.add(st);
+			 }
+		 } catch(Exception e){
+			 
+		 }
+		 return projectList;
+	 }
+	 
+		
+	 public static List<Project> findAllPRtest(String input){
+		 List<Project> projectList = new ArrayList<>();
+		 String query = "SELECT * FROM projects where id = '" + input + "'";
 		 try {
 			 Connection connection = getConnection();
 			 Statement stmt = connection.createStatement();
@@ -419,8 +498,9 @@ public class ConnJDBC {
 		 return departmentList;
 	 }
 	 
-	 public static void deleteDP(Department st) {
-		 String query="delete from department where idDepartment ='"+ st.getIdDepartment() + "'";
+	 
+	 public static void deleteDP(String input) {
+		 String query="delete from department where idDepartment ='"+ input + "'";
 		try {
 			Connection connection = getConnection();
 			PreparedStatement pstmt=connection.prepareStatement(query);
@@ -430,14 +510,13 @@ public class ConnJDBC {
 		} 
 	 }
 	 public static void UpdateDP(Department st) {
-			String query = "Update department set nameDepartment=?, numberOfEmployeesDepart=? where idDepartment ='" + st.getIdDepartment() + "'";			
+		
+			String query = "Update department set nameDepartment=? where idDepartment ='" + st.getIdDepartment() + "'";			
 			 try {
 				Connection connection = getConnection();
 				PreparedStatement pstmt= connection.prepareStatement(query);
 				 
 				 pstmt.setString(1, st.getNameDepartment());
-				 pstmt.setInt(2, st.getNumbersOfEmployeesDepart());	
-			
 				pstmt.executeUpdate();
 			} catch (Exception e) {
 				// TODO: handle exception	
@@ -446,7 +525,28 @@ public class ConnJDBC {
 		 }	
 	 public static List<Department> findbyNameDepartment(Department s) {
 		 List<Department> departmentList  = new ArrayList<>();
-		 String query = "SELECT * FROM department where nameDepartment ='" + s.getNameDepartment() + "'";
+		 String query = "SELECT * FROM department where nameDepartment like'" + s.getNameDepartment() + "%'";
+		 
+		 try {
+			 Connection connection = getConnection();
+			 Statement stmt = connection.createStatement();
+			 ResultSet rs=stmt.executeQuery(query);
+			 while(rs.next()) {
+				 Department st = new Department(
+						 rs.getString("idDepartment"),
+						 rs.getString("nameDepartment"),
+						 rs.getInt("numberOfEmployeesDepart")
+						 );
+				 departmentList.add(st);
+			 }	
+		 } catch(Exception e){
+			 
+		 }
+		 return departmentList;
+	 }
+	 public static List<Department> findbyIdDepartment(String input) {
+		 List<Department> departmentList  = new ArrayList<>();
+		 String query = "SELECT * FROM department where idDepartment ='" + input + "'";
 		 
 		 try {
 			 Connection connection = getConnection();
@@ -524,9 +624,9 @@ public class ConnJDBC {
 		 return studentList;
 	 }
 	 
-	 public static List<HR> findAllThoseInTheProject(HR s){
+	 public static List<HR> findAllThoseInTheProject(String input){
 		 List<HR> studentList = new ArrayList<>();
-		 String query = " select * from humanresource where idProject = '" + s.getIdProject() + "'";
+		 String query = " select * from humanresource where idProject = '" + input + "'";
 		 try {
 			 Connection connection = getConnection();
 			 Statement stmt = connection.createStatement();
@@ -551,9 +651,9 @@ public class ConnJDBC {
 		 return studentList;
 	 }
 	 
-	 public static List<HR> findAllThoseInTheDepartment(HR s){
+	 public static List<HR> findAllThoseInTheDepartment(String input){
 		 List<HR> studentList = new ArrayList<>();
-		 String query = " select * from humanresource where idDepartment = '" + s.getIdDepartment() + "'";
+		 String query = " select * from humanresource where idDepartment = '" + input + "'";
 		 try {
 			 Connection connection = getConnection();
 			 Statement stmt = connection.createStatement();
@@ -586,7 +686,7 @@ public class ConnJDBC {
 
 	 public static List<HR> findHell2(HR s) {
 		 List<HR> studentl = new ArrayList<>();
-		 String query = "SELECT * FROM humanresource where name ='" + s.getName() + "' and age = " + s.getAge() + "";
+		 String query = "SELECT * FROM humanresource where name like '" + s.getName() + "%'" +" and age like '" + s.getAge() + "%'";
 		 
 //		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
 //			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;
@@ -608,7 +708,7 @@ public class ConnJDBC {
 
 	 public static List<HR> findHell3(HR s) {
 		 List<HR> studentl = new ArrayList<>();
-		 String query = "SELECT * FROM humanresource where name ='" + s.getName() + "' and age = " + s.getAge() + " and address = '" + s.getAddress() + "'";
+		 String query = "SELECT * FROM humanresource where name like '" + s.getName() + "%' and age like '" + s.getAge() + "%' and address like '" + s.getAddress() + "%'";
 		  
 //		 + s.getAddress() + "'" + " and position = '" + s.getPosition() + "'" + " and part = '"
 //			+ s.getPart() + "'" + " and workDay= '" + s.getWorkDay() + "'" + " and idProject = '" + s.getIdProject() + "'" + " and idDepartment= '" + s.getIdDepartment() + "'" ;

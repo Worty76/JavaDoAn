@@ -41,7 +41,7 @@ public class LoginPage  implements ActionListener{
 	private final JLabel lblNewLabel_1 = new JLabel("User ID:");
 	private final JLabel lblNewLabel_2 = new JLabel("Password:");
 	private final JPanel panel = new JPanel();
-	private final JLabel lblNewLabel_1_1 = new JLabel("New label");
+	private final JLabel lblNewLabel_1_1 = new JLabel("");
 	
 	public LoginPage(HashMap<String,String> loginInfoOriginal){
 		
@@ -74,7 +74,7 @@ public class LoginPage  implements ActionListener{
 		lblHumanResourceManagement.setBounds(159, 90, 493, 35);
 		panel_1.add(lblHumanResourceManagement);
 		lblHumanResourceManagement.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHumanResourceManagement.setForeground(Color.RED);
+		lblHumanResourceManagement.setForeground(Color.WHITE);
 		lblHumanResourceManagement.setFont(new Font("Century Gothic", Font.BOLD, 24));
 		
 			
@@ -163,7 +163,7 @@ public class LoginPage  implements ActionListener{
 			panel.setBounds(2, 2, 804, 508);
 			
 			panel_1.add(panel);
-			lblNewLabel_1_1.setIcon(new ImageIcon(LoginPage.class.getResource("/Update/universe2.png")));
+			lblNewLabel_1_1.setIcon(new ImageIcon(LoginPage.class.getResource("/login/universe2.png")));
 			lblNewLabel_1_1.setBounds(0, 0, 805, 510);
 			
 			panel.add(lblNewLabel_1_1);

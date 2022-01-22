@@ -21,16 +21,6 @@
 			<locationURI>PARENT-2-PROJECT_LOC/Downloads/human.png</locationURI>
 		</link>
 		<link>
-			<name>src/Update/universe.jpg</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/src/login/universe.jpg</locationURI>
-		</link>
-		<link>
-			<name>src/Update/universe2.png</name>
-			<type>1</type>
-			<locationURI>PROJECT_LOC/src/login/universe2.png</locationURI>
-		</link>
-		<link>
 			<name>src/login/login1.png</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/login1.png</locationURI>

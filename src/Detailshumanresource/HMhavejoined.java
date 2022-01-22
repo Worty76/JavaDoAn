@@ -17,11 +17,15 @@ import javax.swing.table.DefaultTableModel;
 import ConnData.ConnJDBC;
 import ConnData.HR;
 import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class HMhavejoined extends JFrame {
 
 	private JPanel contentPane;
 	private static JTable table;
+	private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -51,12 +55,25 @@ public class HMhavejoined extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(41, 25, 547, 336);
+		scrollPane.setBounds(10, 62, 635, 336);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
+				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null},
@@ -74,6 +91,12 @@ public class HMhavejoined extends JFrame {
 			}
 		));
 		scrollPane.setViewportView(table);
+		
+		lblNewLabel = new JLabel("Employees have joined project");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("Century Gothic", Font.PLAIN, 19));
+		lblNewLabel.setBounds(103, 11, 431, 40);
+		contentPane.add(lblNewLabel);
 		showData(ConnJDBC.findAllThoseWhoHaveJoined());
 	}
 	

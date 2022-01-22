@@ -19,6 +19,9 @@ import ConnData.ConnJDBC;
 import ConnData.HR;
 import ConnData.Main;
 import java.awt.Color;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class DetailsEmsJoinedProject extends JFrame {
 
@@ -32,8 +35,8 @@ public class DetailsEmsJoinedProject extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DetailsEmsJoinedProject frame = new DetailsEmsJoinedProject();
-					frame.setVisible(true);
+//					DetailsEmsJoinedProject frame = new DetailsEmsJoinedProject();
+//					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -44,7 +47,7 @@ public class DetailsEmsJoinedProject extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DetailsEmsJoinedProject() {
+	public DetailsEmsJoinedProject(String input) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 671, 448);
 		contentPane = new JPanel();
@@ -54,7 +57,7 @@ public class DetailsEmsJoinedProject extends JFrame {
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(31, 32, 601, 342);
+		scrollPane.setBounds(10, 56, 635, 342);
 		contentPane.add(scrollPane);
 		
 		table5 = new JTable();
@@ -85,6 +88,12 @@ public class DetailsEmsJoinedProject extends JFrame {
 		));
 		scrollPane.setViewportView(table5);
 		
+		JLabel lblNewLabel = new JLabel("Employees in the project");
+		lblNewLabel.setFont(new Font("Century Gothic", Font.PLAIN, 18));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(82, 11, 481, 32);
+		contentPane.add(lblNewLabel);
+		
 	}
 	
 	public static void showDataThoseWhoJoinedProject(List<HR>studentl) {
@@ -104,5 +113,4 @@ public class DetailsEmsJoinedProject extends JFrame {
 	    	});
 	    });
 	    }
-
 }

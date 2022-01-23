@@ -197,6 +197,9 @@ public class Main extends javax.swing.JFrame  {
 		btnProject.setBackground(redirect);
 		btnProject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				table.clearSelection();
+				table_2.clearSelection();
+				input = "";
 				HRcontainer.setVisible(false);
 				ProjectContainer.setVisible(true);
 				DepartmentContainer.setVisible(false);
@@ -239,6 +242,9 @@ public class Main extends javax.swing.JFrame  {
 		btnProject_1.setBackground(redirect);
 		btnProject_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				table.clearSelection();
+				table_2.clearSelection();
+				input = "";
 				DepartmentContainer.setVisible(true);
 				HRcontainer.setVisible(false);
 				ProjectContainer.setVisible(false);
@@ -257,8 +263,11 @@ public class Main extends javax.swing.JFrame  {
 		btnHumanResource.setBackground(redirect);
 		btnHumanResource.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				table_1.clearSelection();
+				table_2.clearSelection();
 				HRcontainer.setVisible(true);
 				ProjectContainer.setVisible(false);
+				input = "";
 				DepartmentContainer.setVisible(false);
 				animation1.setVisible(false);
 				animation3.setVisible(false);
@@ -373,7 +382,6 @@ public class Main extends javax.swing.JFrame  {
 	    					frame.setVisible(true);
 	                    	CheckYesNoHR.NoIWillConsiderHR.addActionListener(new ActionListener() {
 	                			public void actionPerformed(ActionEvent e) {
-	                				
 	                				frame.dispose();
 	                			}
 	                		});
@@ -544,17 +552,19 @@ public class Main extends javax.swing.JFrame  {
 							txtEmail.setText("");
 							textIdProject.setText("");
 							textIDDP.setText("");
+							input = "";
 						} else {
 							if(DepartmentContainer.isVisible()) {
 								txtIdDepart.setText("");
 								txtNameDepart.setText("");
+								input = "";
 								
 							} else {
 								txtIdProject.setText("");
 								txtNameProject.setText("");
 								txtStartingDay.setText("");
 								txtEndingDay.setText("");
-								
+								input = "";
 							}
 						}
 						table.clearSelection();
@@ -1161,6 +1171,8 @@ public class Main extends javax.swing.JFrame  {
 		lblNewLabel_4_3.setBounds(383, 67, 111, 21);
 		contentPane.add(lblNewLabel_4_3);
 		this.setLocationRelativeTo(null);
+		
+	
 		
 		table.addMouseListener(new MouseAdapter() {
 		@Override

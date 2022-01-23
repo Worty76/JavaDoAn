@@ -313,14 +313,17 @@ public class ConnJDBC {
 	 public static void UpdatePR(Project st) {
 			String query = "Update projects set nameProject=?,startingDay=?,endingDay=? where idProject = '" + st.getIdProject() + "'";			
 			 try {
-				 
+				 SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				 SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+				
 				 Connection connection = getConnection();
 				 PreparedStatement pstmt= connection.prepareStatement(query);
+				 
 				 pstmt.setString(1, st.getNameProject());
-				 String s = st.getStartingDay();
+				 String s =  sdf2.format(sdf.parse(st.getStartingDay()));
 				 Date d = Date.valueOf(s);
 				 pstmt.setDate(2, d);
-				 String z = st.getEndingDay();
+				 String z = sdf2.format(sdf.parse(st.getEndingDay()));
 				 Date c = Date.valueOf(z);
 				 pstmt.setDate(3, c);
 				 pstmt.executeUpdate();

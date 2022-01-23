@@ -50,6 +50,7 @@ public class CheckYesNoHR extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		YesImSureHR.setForeground(Color.WHITE);
 		
 		
 	
@@ -57,6 +58,7 @@ public class CheckYesNoHR extends JFrame {
 		YesImSureHR.setBounds(28, 124, 163, 33);
 		YesImSureHR.setBackground(new Color(220, 20, 60));
 		contentPane.add(YesImSureHR);
+		NoIWillConsiderHR.setForeground(Color.WHITE);
 		
 		
 		

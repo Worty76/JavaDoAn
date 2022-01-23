@@ -52,6 +52,7 @@ public class CheckYesNoPR extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		YesImSurePR.setForeground(Color.WHITE);
 		
 		
 	
@@ -59,6 +60,7 @@ public class CheckYesNoPR extends JFrame {
 		YesImSurePR.setBounds(28, 124, 163, 33);
 		YesImSurePR.setBackground(new Color(220, 20, 60));
 		contentPane.add(YesImSurePR);
+		NoIWillConsiderPR.setForeground(Color.WHITE);
 		
 		
 		
